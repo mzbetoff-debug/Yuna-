@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0e1a">
+<title>YUNA · Seu Universo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+html,body{background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
+body{padding-bottom:80px}
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:12px 16px}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.logo i{font-size:26px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo h1{font-size:24px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px}
+.logo span{font-size:9px;color:#94a3b8;letter-spacing:1.5px;display:block}
+.user-avatar{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.06);border:2px solid rgba(167,139,250,.4);display:flex;align-items:center;justify-content:center;font-size:16px;color:#cbd5e1;text-decoration:none;overflow:hidden;transition:.2s}
+.user-avatar:active{transform:scale(.95)}
+.user-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.user-avatar.logged{border-color:#a78bfa;box-shadow:0 0 0 3px rgba(167,139,250,.2)}
+.search-bar{position:relative}
+.search-bar input{width:100%;padding:12px 14px 12px 42px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:#e2e8f0;font-size:14px;outline:none}
+.search-bar input:focus{border-color:#a78bfa}
+.search-bar input::placeholder{color:#64748b}
+.search-bar i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#64748b}
+.hero{margin:16px;padding:28px 22px;border-radius:24px;background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(139,92,246,.18));border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;right:-20%;width:280px;height:280px;background:radial-gradient(circle,rgba(236,72,153,.35),transparent 70%);filter:blur(50px)}
+.hero-content{position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);padding:5px 12px;border-radius:50px;font-size:11px;color:#c4b5fd;margin-bottom:12px;border:1px solid rgba(167,139,250,.2)}
+.hero h2{font-size:22px;font-weight:800;line-height:1.2;margin-bottom:10px;background:linear-gradient(135deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:#cbd5e1;font-size:13px;line-height:1.5;margin-bottom:16px}
+.hero-btn{background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;padding:12px 22px;border-radius:50px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(236,72,153,.35)}
+.section{padding:0 16px;margin-top:24px}
+.section-header h3{font-size:17px;font-weight:700;color:#f1f5f9;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.section-header h3 i{color:#ec4899}
+.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cat-card{background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:18px 8px;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center}
+.cat-card:active{transform:scale(.95);border-color:rgba(167,139,250,.3);background:rgba(139,92,246,.08)}
+.cat-icon{font-size:28px;margin-bottom:10px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cat-name{font-size:13px;font-weight:600;color:#f1f5f9;margin-bottom:2px}
+.cat-count{font-size:10px;color:#64748b}
+.anime-highlight{background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(139,92,246,.15));border:1px solid rgba(167,139,250,.25);border-radius:20px;padding:20px;display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;margin-top:12px;transition:.2s}
+.anime-highlight:active{transform:scale(.98)}
+.anime-highlight .ah-icon{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#ec4899,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;flex-shrink:0;box-shadow:0 8px 20px rgba(236,72,153,.3)}
+.anime-highlight .ah-info{flex:1}
+.anime-highlight .ah-info h4{font-size:16px;font-weight:800;color:#f1f5f9;margin-bottom:4px}
+.anime-highlight .ah-info p{font-size:12px;color:#c4b5fd;line-height:1.4}
+.anime-highlight .ah-arrow{color:#a78bfa;font-size:20px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,14,26,.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06);padding:8px 0;display:flex;justify-content:space-around;z-index:99}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px;color:#64748b;font-size:10px;text-decoration:none;cursor:pointer;background:none;border:none}
+.nav-item i{font-size:18px}
+.nav-item.active{color:#a78bfa}
+.nav-item.active i{color:#ec4899}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <a class="logo" href="home.html">
+      <i class="fas fa-compass"></i>
+      <div>
+        <h1>YUNA</h1>
+        <span>SEU UNIVERSO</span>
+      </div>
+    </a>
+    <a class="user-avatar" id="userAvatar" href="login.html">
+      <i class="fas fa-user" id="avatarIcon"></i>
+      <img id="avatarPhoto" src="" alt="" style="display:none">
+    </a>
+  </div>
+  <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input type="text" id="busca" placeholder="Buscar em YUNA..." onkeypress="buscar(event)">
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-sparkles"></i> Novo em 2025</div>
+    <h2>Explore filmes, séries, músicas e muito mais</h2>
+    <p>YUNA reúne os melhores conteúdos do entretenimento mundial.</p>
+    <a class="hero-btn" href="#categorias">
+      <i class="fas fa-play"></i> Começar
+    </a>
+  </div>
+</section>
+
+<section class="section" id="categorias">
+  <div class="section-header">
+    <h3><i class="fas fa-th-large"></i> Categorias</h3>
+  </div>
+  <div class="categories">
+    <a class="cat-card" href="https://www.khanacademy.org" target="_blank">
+      <i class="fas fa-graduation-cap cat-icon"></i>
+      <span class="cat-name">Estudos</span>
+      <span class="cat-count">842</span>
+    </a>
+    <a class="cat-card" href="https://open.spotify.com" target="_blank">
+      <i class="fas fa-music cat-icon"></i>
+      <span class="cat-name">Música</span>
+      <span class="cat-count">15.2k</span>
+    </a>
+    <a class="cat-card" href="https://www.youtube.com" target="_blank">
+      <i class="fas fa-video cat-icon"></i>
+      <span class="cat-name">Vídeos</span>
+      <span class="cat-count">8.4k</span>
+    </a>
+    <a class="cat-card" href="animes.html">
+      <i class="fas fa-dragon cat-icon"></i>
+      <span class="cat-name">Animes</span>
+      <span class="cat-count">Reconhecer</span>
+    </a>
+    <a class="cat-card" href="https://www.imdb.com" target="_blank">
+      <i class="fas fa-film cat-icon"></i>
+      <span class="cat-name">Filmes</span>
+      <span class="cat-count">2.8k</span>
+    </a>
+    <a class="cat-card" href="https://www.netflix.com" target="_blank">
+      <i class="fas fa-tv cat-icon"></i>
+      <span class="cat-name">Séries</span>
+      <span class="cat-count">1.5k</span>
+    </a>
+  </div>
+
+  <a class="anime-highlight" href="animes.html">
+    <div class="ah-icon"><i class="fas fa-camera"></i></div>
+    <div class="ah-info">
+      <h4>🎌 Reconhecer Anime</h4>
+      <p>Envie um print e descubra qual é + onde assistir</p>
+    </div>
+    <i class="fas fa-chevron-right ah-arrow"></i>
+  </a>
+</section>
+
+<nav class="bottom-nav">
+  <a class="nav-item active" href="home.html">
+    <i class="fas fa-home"></i><span>Início</span>
+  </a>
+  <a class="nav-item" href="animes.html">
+    <i class="fas fa-dragon"></i><span>Animes</span>
+  </a>
+  <a class="nav-item" href="https://open.spotify.com" target="_blank">
+    <i class="fas fa-music"></i><span>Música</span>
+  </a>
+  <a class="nav-item" href="login.html">
+    <i class="fas fa-user"></i><span>Perfil</span>
+  </a>
+</nav>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+    authDomain: "yuna-8fe24.firebaseapp.com",
+    projectId: "yuna-8fe24",
+    storageBucket: "yuna-8fe24.firebasestorage.app",
+    messagingSenderId: "531340097112",
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    const avatar = document.getElementById('userAvatar');
+    const icon = document.getElementById('avatarIcon');
+    const photo = document.getElementById('avatarPhoto');
+
+    if (user && user.photoURL) {
+      photo.src = user.photoURL;
+      photo.style.display = 'block';
+      icon.style.display = 'none';
+      avatar.classList.add('logged');
+      console.log('👤 Logado:', user.displayName);
+    } else {
+      icon.style.display = 'block';
+      photo.style.display = 'none';
+      avatar.classList.remove('logged');
+      console.log('🔓 Não logado');
+    }
+  });
+</script>
+
+<script>
+function buscar(e) {
+  if (e.key === 'Enter' && e.target.value.trim()) {
+    const termo = encodeURIComponent(e.target.value);
+    window.open('https://www.google.com/search?q=' + termo, '_blank');
+    e.target.value = '';
+  }
+}
+</script>
+
+</body>
+  </html>
