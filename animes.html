@@ -279,4 +279,59 @@ function mostrarResultado(anime, match, similaridade) {
         <a class="btn-action btn-crunchy" href="https://www.crunchyroll.com/search?q=${tituloBusca}" target="_blank">
           <i class="fas fa-play"></i> Buscar na Crunchyroll
         </a>
-        <a class="btn-action btn-netflix" href="https://www.netflix.com
+        <a class="btn-action btn-netflix" href="https://www.netflix.com/search?q=${tituloBusca}" target="_blank">
+          <i class="fas fa-play"></i> Buscar na Netflix
+        </a>
+        <a class="btn-action btn-ani" href="https://anilist.co/anime/${anime.id}" target="_blank">
+          <i class="fas fa-info-circle"></i> Ver ficha completa
+        </a>
+        <button class="btn-retry" onclick="resetar()">
+          <i class="fas fa-camera"></i> Reconhecer outra imagem
+        </button>
+      </div>
+    </div>
+  `;
+
+  resultado.innerHTML = html;
+  resultado.classList.add('show');
+  document.getElementById('preview').style.display = 'none';
+
+  setTimeout(() => {
+    resultado.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function formatarTempo(segundos) {
+  if (!segundos && segundos !== 0) return '—';
+  const min = Math.floor(segundos / 60);
+  const seg = Math.floor(segundos % 60);
+  return `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
+}
+
+function mostrarErro(mensagem) {
+  const resultado = document.getElementById('resultado');
+  resultado.innerHTML = `
+    <div class="erro-box">
+      ${mensagem}
+      <button class="btn-retry" onclick="resetar()">
+        <i class="fas fa-redo"></i> Tentar novamente
+      </button>
+    </div>
+  `;
+  resultado.classList.add('show');
+  document.getElementById('preview').style.display = 'none';
+}
+
+function resetar() {
+  document.getElementById('uploadSection').style.display = 'block';
+  document.getElementById('preview').style.display = 'none';
+  document.getElementById('previewImg').src = '';
+  document.getElementById('resultado').classList.remove('show');
+  document.getElementById('resultado').innerHTML = '';
+  document.getElementById('fileInput').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+  </html>
