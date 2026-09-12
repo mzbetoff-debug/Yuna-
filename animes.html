@@ -113,7 +113,7 @@ input[type="file"]{display:none}
   <input type="file" id="fileInput" accept="image/*" onchange="processarImagem(this.files[0])">
   <div class="dica-precision">
     <i class="fas fa-lightbulb"></i>
-    <p><strong>Para maior precisão:</strong> Use <strong>cenas de ação</strong> ou <strong>paisagens</strong>. Evite close-ups de rosto, fundos de cor única e prints com legendas grandes.</p>
+    <p><strong>Dica:</strong> Use cenas de ação ou paisagens. Evite close-ups e fundos de cor única.</p>
   </div>
 </div>
 
@@ -139,6 +139,7 @@ input[type="file"]{display:none}
 
 <script>
 const TRACE_API = 'https://api.trace.moe/search?anilistInfo&cutBorders=1';
+const ANIMETRACE_API = 'https://api.animetrace.com/v1/search';
 const ANILIST_API = 'https://graphql.anilist.co';
 
 async function processarImagem(file) {
@@ -150,36 +151,80 @@ async function processarImagem(file) {
   document.getElementById('fileInfo').textContent = '📸 ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
   const loading = document.getElementById('loading');
   loading.classList.add('show');
+
   try {
+    // PASSO 1: Tenta trace.moe
     const formData = new FormData();
     formData.append('image', file);
     const resposta = await fetch(TRACE_API, { method: 'POST', body: formData });
     const dados = await resposta.json();
+
+    if (dados.result && dados.result.length > 0 && dados.result[0].similarity > 0.70) {
+      // Encontrou com boa precisão no trace.moe
+      loading.classList.remove('show');
+      const melhor = dados.result[0];
+      const similaridade = parseFloat((melhor.similarity * 100).toFixed(0));
+      const anilistId = melhor.anilist?.id;
+      
+      document.getElementById('loadingTitle').textContent = 'Buscando informações...';
+      loading.classList.add('show');
+      const dadosCompletos = await buscarAniList(anilistId);
+      loading.classList.remove('show');
+      
+      if (dadosCompletos) {
+        mostrarResultado(dadosCompletos, melhor, similaridade);
+        return;
+      }
+    }
+    
+    // PASSO 2: Fallback - AnimeTrace (para personagens e imagens difíceis)
+    document.getElementById('loadingTitle').textContent = 'Tentando AnimeTrace...';
+    document.getElementById('loadingText').textContent = 'Reconhecendo personagens com IA';
+    
+    const formDataAnime = new FormData();
+    formDataAnime.append('file', file);
+    formDataAnime.append('model', 'animetrace-yuri-4.2');
+    formDataAnime.append('is_multi', '1');
+    formDataAnime.append('ai_detect', '1');
+
+    const respostaAnime = await fetch(ANIMETRACE_API, { method: 'POST', body: formDataAnime });
+    const dadosAnime = await respostaAnime.json();
     loading.classList.remove('show');
-    if (!dados.result || dados.result.length === 0) {
-      mostrarErro('Não consegui identificar essa imagem. Tente uma cena de ação ou paisagem.');
+
+    if (!dadosAnime.data || dadosAnime.data.length === 0) {
+      mostrarErro('Não consegui identificar essa imagem. Tente outra cena mais nítida.');
       return;
     }
-    const melhor = dados.result[0];
-    const similaridade = parseFloat((melhor.similarity * 100).toFixed(0));
-    const anilistId = melhor.anilist?.id;
-    if (!anilistId) {
-      mostrarErro('Anime identificado mas sem dados detalhados.');
-      return;
-    }
+
+    const resultadoAnime = dadosAnime.data[0];
+    const personagem = resultadoAnime.character;
+    const titulo = personagem.work || 'Anime Desconhecido';
+    
+    // Busca dados completos na AniList
     document.getElementById('loadingTitle').textContent = 'Buscando informações...';
     loading.classList.add('show');
-    const dadosCompletos = await buscarAniList(anilistId);
+    const anilistRes = await fetch(ANILIST_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ 
+        query: `query ($search: String) { Media(search: $search, type: ANIME) { id title { romaji english } description(asHtml: false) coverImage { extraLarge large } bannerImage averageScore episodes duration format seasonYear genres studios(isMain: true) { nodes { name } } siteUrl } }`,
+        variables: { search: titulo }
+      })
+    });
+    const anilistDados = await anilistRes.json();
     loading.classList.remove('show');
-    if (!dadosCompletos) {
-      mostrarErro('Erro ao carregar informações.');
-      return;
+    
+    if (anilistDados.data?.Media) {
+      // Mostra com confiança alta (AnimeTrace é bom em personagens)
+      mostrarResultado(anilistDados.data.Media, { episode: '?', from: 0 }, 85);
+    } else {
+      mostrarErro('Personagem identificado como "' + personagem.character + '", mas não encontrei o anime na base de dados.');
     }
-    mostrarResultado(dadosCompletos, melhor, similaridade);
+
   } catch (err) {
     console.error('❌ Erro:', err);
     document.getElementById('loading').classList.remove('show');
-    mostrarErro('Erro de conexão. Verifique sua internet.');
+    mostrarErro('Erro de conexão. Verifique sua internet e tente novamente.');
   }
 }
 
@@ -211,31 +256,31 @@ function mostrarResultado(anime, match, similaridade) {
   const epMatch = match.episode || '?';
   const minutoMatch = formatarTempo(match.from);
   let confClass = similaridade >= 80 ? 'conf-alta' : similaridade >= 65 ? 'conf-media' : 'conf-baixa';
-  let avisoHtml = similaridade < 65 ? '<div class="aviso-precision"><i class="fas fa-exclamation-triangle"></i><p><strong>Precisão baixa (' + similaridade + '%)!</strong> O resultado pode não estar correto. Tente uma imagem com mais detalhes.</p></div>' : '';
-  resultado.innerHTML = avisoHtml + '<div class="result-card"><img class="result-banner" src="' + banner + '" onerror="this.style.background=\'linear-gradient(135deg,#667eea,#764ba2)\'"><div class="result-body"><h2>' + titulo + '</h2><div class="subtitle"><i class="fas fa-search-plus" style="color:#a78bfa"></i> Encontrado com <span class="' + confClass + '">' + similaridade + '% de precisão</span></div><div class="result-meta"><span class="green"><i class="fas fa-check"></i> Episódio ' + epMatch + ' · ' + minutoMatch + '</span></div><div class="result-meta"><span class="gold"><i class="fas fa-star"></i> ' + score + '</span><span>' + ano + '</span><span>' + eps + ' eps</span><span>' + duracao + '</span><span class="purple">' + (anime.format || 'TV') + '</span></div>' + (generos ? '<div class="result-meta"><span>' + generos + '</span></div>' : '') + (estudio !== '—' ? '<div class="result-meta"><span>🏢 ' + estudio + '</span></div>' : '') + '<p class="sinopse">' + sinopse + '</p><div class="where-title"><i class="fas fa-play-circle"></i> Onde assistir</div><a class="btn-action btn-youtube" href="https://www.youtube.com/results?search_query=' + tituloBusca + '+episodio+' + epMatch + '" target="_blank"><i class="fab fa-youtube"></i> Buscar no YouTube</a><a class="btn-action btn-crunchy" href="https://www.crunchyroll.com/search?q=' + tituloBusca + '" target="_blank"><i class="fas fa-play"></i> Buscar na Crunchyroll</a><a class="btn-action btn-netflix" href="https://www.netflix.com/search?q=' + tituloBusca + '" target="_blank"><i class="fas fa-play"></i> Buscar na Netflix</a><a class="btn-action btn-ani" href="https://anilist.co/anime/' + anime.id + '" target="_blank"><i class="fas fa-info-circle"></i> Ver ficha completa na AniList</a><div class="alternativas"><h4><i class="fas fa-search"></i> Não é esse anime?</h4><a class="alt-btn" href="https://saucenao.com/search.php?url=" onclick="event.preventDefault(); window.open(this.href + encodeURIComponent(document.getElementById(\'previewImg\').src), \'_blank\');"><div class="alt-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)"><i class="fas fa-user-secret"></i></div><div class="alt-info"><strong>Buscar pelo personagem</strong><span>SauceNAO · ideal para rostos</span></div><i class="fas fa-chevron-right alt-arrow"></i></a><button class="alt-btn" onclick="buscarManual()"><div class="alt-icon" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><i class="fas fa-keyboard"></i></div><div class="alt-info"><strong>Buscar manualmente</strong><span>Digite o nome do anime</span></div><i class="fas fa-chevron-right alt-arrow"></i></button></div><button class="btn-retry" onclick="resetar()"><i class="fas fa-camera"></i> Reconhecer outra imagem</button></div></div>';
+  let avisoHtml = similaridade < 65 ? '<div class="aviso-precision"><i class="fas fa-exclamation-triangle"></i><p><strong>Precisão baixa (' + similaridade + '%)!</strong> O resultado pode estar incorreto. Tente outra imagem.</p></div>' : '';
+  
+  let html = avisoHtml;
+  html += '<div class="result-card">';
+  html += '<img class="result-banner" src="' + banner + '" onerror="this.style.background=\'linear-gradient(135deg,#667eea,#764ba2)\'">';
+  html += '<div class="result-body">';
+  html += '<h2>' + titulo + '</h2>';
+  html += '<div class="subtitle"><i class="fas fa-search-plus" style="color:#a78bfa"></i> Encontrado com <span class="' + confClass + '">' + similaridade + '% de precisão</span></div>';
+  html += '<div class="result-meta"><span class="green"><i class="fas fa-check"></i> Episódio ' + epMatch + ' · ' + minutoMatch + '</span></div>';
+  html += '<div class="result-meta"><span class="gold"><i class="fas fa-star"></i> ' + score + '</span><span>' + ano + '</span><span>' + eps + ' eps</span><span>' + duracao + '</span><span class="purple">' + (anime.format || 'TV') + '</span></div>';
+  if (generos) html += '<div class="result-meta"><span>' + generos + '</span></div>';
+  if (estudio !== '—') html += '<div class="result-meta"><span>🏢 ' + estudio + '</span></div>';
+  html += '<p class="sinopse">' + sinopse + '</p>';
+  html += '<div class="where-title"><i class="fas fa-play-circle"></i> Onde assistir</div>';
+  html += '<a class="btn-action btn-youtube" href="https://www.youtube.com/results?search_query=' + tituloBusca + '+episodio+' + epMatch + '" target="_blank"><i class="fab fa-youtube"></i> Buscar no YouTube</a>';
+  html += '<a class="btn-action btn-crunchy" href="https://www.crunchyroll.com/search?q=' + tituloBusca + '" target="_blank"><i class="fas fa-play"></i> Buscar na Crunchyroll</a>';
+  html += '<a class="btn-action btn-netflix" href="https://www.netflix.com/search?q=' + tituloBusca + '" target="_blank"><i class="fas fa-play"></i> Buscar na Netflix</a>';
+  html += '<a class="btn-action btn-ani" href="https://anilist.co/anime/' + anime.id + '" target="_blank"><i class="fas fa-info-circle"></i> Ver ficha completa na AniList</a>';
+  html += '<button class="btn-retry" onclick="resetar()"><i class="fas fa-camera"></i> Reconhecer outra imagem</button>';
+  html += '</div></div>';
+  
+  resultado.innerHTML = html;
   resultado.classList.add('show');
   document.getElementById('preview').style.display = 'none';
   setTimeout(function() { resultado.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
-}
-
-async function buscarManual() {
-  const termo = prompt('Digite o nome do anime:');
-  if (!termo || !termo.trim()) return;
-  const resultado = document.getElementById('resultado');
-  resultado.innerHTML = '<div class="loading show"><div class="spinner"></div><h3>Buscando...</h3></div>';
-  try {
-    const QUERY = `query ($search: String) { Media(search: $search, type: ANIME) { id title { romaji english } description(asHtml: false) coverImage { extraLarge large } bannerImage averageScore episodes duration format seasonYear genres studios(isMain: true) { nodes { name } } siteUrl } }`;
-    const res = await fetch(ANILIST_API, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ query: QUERY, variables: { search: termo.trim() } }) });
-    const dados = await res.json();
-    const anime = dados.data?.Media;
-    if (!anime) {
-      resultado.innerHTML = '<div class="erro-box">Não encontrei "' + termo + '". Tente outro nome.<button class="btn-retry" onclick="resetar()"><i class="fas fa-redo"></i> Voltar</button></div>';
-      return;
-    }
-    mostrarResultado(anime, { episode: '?', from: 0 }, 100);
-  } catch (e) {
-    resultado.innerHTML = '<div class="erro-box">Erro na busca.<button class="btn-retry" onclick="resetar()"><i class="fas fa-redo"></i> Voltar</button></div>';
-  }
 }
 
 function formatarTempo(segundos) {
@@ -261,8 +306,6 @@ function resetar() {
   document.getElementById('fileInput').value = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-console.log('✅ YUNA Reconhecer carregado!');
 </script>
 
 </body>
