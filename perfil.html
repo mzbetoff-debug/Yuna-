@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e1a">
+<title>YUNA · Perfil</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+html,body{background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
+body{padding-bottom:90px}
+body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:12px 16px}
+.header-top{display:flex;justify-content:space-between;align-items:center}
+.back-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#cbd5e1;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.logo i{font-size:22px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.perfil-wrap{padding:16px;max-width:500px;margin:0 auto}
+
+.perfil-card{background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(139,92,246,.15));border:1px solid rgba(167,139,250,.2);border-radius:24px;padding:28px 20px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px}
+.perfil-card::before{content:'';position:absolute;top:-40%;right:-20%;width:280px;height:280px;background:radial-gradient(circle,rgba(236,72,153,.3),transparent 70%);filter:blur(50px);pointer-events:none}
+
+.avatar-wrapper{position:relative;width:120px;height:120px;margin:0 auto 16px}
+.avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#8b5cf6);padding:3px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;z-index:2}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.camera-btn{position:absolute;bottom:5px;right:5px;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#8b5cf6);border:3px solid #0a0e1a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;z-index:3;box-shadow:0 4px 12px rgba(236,72,153,.5)}
+.camera-btn:active{transform:scale(.9)}
+
+.perfil-nome{font-size:24px;font-weight:800;color:#f1f5f9;margin-bottom:6px;position:relative;z-index:2}
+.perfil-status{display:inline-block;background:rgba(167,139,250,.2);color:#c4b5fd;padding:6px 16px;border-radius:50px;font-size:12px;font-weight:600;border:1px solid rgba(167,139,250,.3);position:relative;z-index:2}
+
+.info-card{background:rgba(18,24,42,.7);border-radius:20px;border:1px solid rgba(255,255,255,.05);overflow:hidden;margin-bottom:20px}
+.info-item{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.05);gap:12px}
+.info-item:last-child{border-bottom:none}
+.info-item .label{color:#94a3b8;font-size:14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.info-item .label i{color:#a78bfa;font-size:14px;width:20px}
+.info-item .valor{color:#f1f5f9;font-size:14px;font-weight:600;text-align:right;word-break:break-word}
+
+.opcoes-titulo{font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin:20px 0 12px;padding-left:4px}
+
+.opcao-btn{display:flex;align-items:center;gap:14px;background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;width:100%;text-align:left;color:inherit;text-decoration:none;transition:.2s}
+.opcao-btn:active{background:rgba(18,24,42,.95);transform:scale(.98)}
+.opcao-btn .icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
+.opcao-btn .texto{flex:1}
+.opcao-btn .texto h4{font-size:15px;font-weight:600;color:#f1f5f9;margin-bottom:2px}
+.opcao-btn .texto p{font-size:12px;color:#94a3b8}
+.opcao-btn .seta{color:#64748b;font-size:14px}
+
+.btn-sair{width:100%;padding:16px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:16px;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px}
+.btn-sair:active{background:rgba(239,68,68,.25);transform:scale(.98)}
+
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:2000;display:none;justify-content:center;align-items:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:rgba(22,28,46,.99);border-radius:24px;padding:24px;width:100%;max-width:380px;border:1px solid rgba(255,255,255,.08)}
+.modal h3{font-size:18px;font-weight:700;color:#f1f5f9;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.modal h3 i{color:#ec4899}
+.modal p{font-size:13px;color:#94a3b8;margin-bottom:16px}
+.modal .grupo{position:relative;margin-bottom:14px}
+.modal .grupo i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#64748b}
+.modal .grupo input{width:100%;padding:14px 16px 14px 44px;background:rgba(0,0,0,.3);border:1px solid #334155;border-radius:14px;color:#e2e8f0;font-size:14px;outline:none}
+.modal-btns{display:flex;gap:10px;margin-top:16px}
+.modal-btn{flex:1;padding:12px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;border:none}
+.modal-btn.cancel{background:rgba(255,255,255,.06);color:#cbd5e1;border:1px solid rgba(255,255,255,.08)}
+.modal-btn.confirm{background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff}
+
+.foto-opcoes{display:flex;flex-direction:column;gap:10px}
+.foto-opt{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;cursor:pointer}
+.foto-opt .ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
+.foto-opt .tx{flex:1}
+.foto-opt .tx strong{display:block;font-size:14px;color:#f1f5f9}
+.foto-opt .tx span{font-size:11px;color:#94a3b8}
+
+.loading{display:none;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;gap:16px}
+.loading.show{display:flex}
+.spinner{width:50px;height:50px;border:4px solid rgba(167,139,250,.2);border-top-color:#a78bfa;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="loading show" id="loading">
+  <div class="spinner"></div>
+  <p style="color:#94a3b8">Carregando perfil...</p>
+</div>
+
+<div class="header">
+  <div class="header-top">
+    <a class="back-btn" href="home.html"><i class="fas fa-arrow-left"></i></a>
+    <a class="logo" href="home.html"><i class="fas fa-compass"></i><h1>YUNA</h1></a>
+    <div style="width:40px"></div>
+  </div>
+</div>
+
+<div class="perfil-wrap">
+  <div class="perfil-card">
+    <div class="avatar-wrapper">
+      <div class="avatar">
+        <img id="userPhoto" src="https://via.placeholder.com/120" alt="Avatar">
+      </div>
+      <button class="camera-btn" onclick="abrirModalFoto()"><i class="fas fa-camera"></i></button>
+    </div>
+    <div class="perfil-nome" id="userName">Usuário</div>
+    <div class="perfil-status">🎮 NOOB</div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-item">
+      <div class="label"><i class="fas fa-at"></i> Usuário</div>
+      <div class="valor" id="infoUsuario">—</div>
+    </div>
+    <div class="info-item">
+      <div class="label"><i class="fas fa-envelope"></i> E-mail</div>
+      <div class="valor" id="infoEmail">—</div>
+    </div>
+    <div class="info-item">
+      <div class="label"><i class="fas fa-calendar-check"></i> Membro desde</div>
+      <div class="valor" id="infoMembro">—</div>
+    </div>
+    <div class="info-item">
+      <div class="label"><i class="fas fa-star"></i> Status do cargo</div>
+      <div class="valor">Conta gratuita</div>
+    </div>
+  </div>
+
+  <div class="opcoes-titulo">⚙️ Configurações</div>
+
+  <button class="opcao-btn" onclick="abrirModalNome()">
+    <div class="icon" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"><i class="fas fa-user-edit"></i></div>
+    <div class="texto"><h4>Mudar nome</h4><p>Editar seu nome de exibição</p></div>
+    <i class="fas fa-chevron-right seta"></i>
+  </button>
+
+  <button class="opcao-btn" onclick="abrirModalFoto()">
+    <div class="icon" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"><i class="fas fa-image"></i></div>
+    <div class="texto"><h4>Mudar foto de perfil</h4><p>Escolher ou enviar nova foto</p></div>
+    <i class="fas fa-chevron-right seta"></i>
+  </button>
+
+  <a class="opcao-btn" href="home.html">
+    <div class="icon" style="background:linear-gradient(135deg,#667eea,#764ba2)"><i class="fas fa-home"></i></div>
+    <div class="texto"><h4>Voltar para Início</h4><p>Ir para a página principal</p></div>
+    <i class="fas fa-chevron-right seta"></i>
+  </a>
+
+  <button class="btn-sair" onclick="fazerLogout()">
+    <i class="fas fa-sign-out-alt"></i> Sair da conta
+  </button>
+</div>
+
+<div class="modal-overlay" id="modalNome">
+  <div class="modal">
+    <h3><i class="fas fa-user-edit"></i> Mudar nome</h3>
+    <p>Digite seu novo nome de exibição:</p>
+    <div class="grupo">
+      <i class="fas fa-user"></i>
+      <input type="text" id="novoNomeInput" placeholder="Seu novo nome" maxlength="30">
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="fecharModal('modalNome')">Cancelar</button>
+      <button class="modal-btn confirm" onclick="salvarNome()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalFoto">
+  <div class="modal">
+    <h3><i class="fas fa-image"></i> Foto de perfil</h3>
+    <p>Escolha uma opção:</p>
+    <div class="foto-opcoes">
+      <label class="foto-opt">
+        <div class="ic" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><i class="fas fa-upload"></i></div>
+        <div class="tx"><strong>Enviar do celular</strong><span>PNG, JPG ou WebP</span></div>
+        <input type="file" id="fotoUpload" accept="image/*" style="display:none" onchange="uploadFoto(this)">
+      </label>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="fecharModal('modalFoto')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut, updateProfile, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+    authDomain: "yuna-8fe24.firebaseapp.com",
+    projectId: "yuna-8fe24",
+    storageBucket: "yuna-8fe24.firebasestorage.app",
+    messagingSenderId: "531340097112",
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  setPersistence(auth, browserLocalPersistence);
+
+  let userAtual = null;
+
+  function formatarData(timestamp) {
+    const d = new Date(timestamp);
+    const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+    return d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    document.getElementById('loading').classList.remove('show');
+    if (!user) {
+      window.location.replace('login.html');
+      return;
+    }
+    document.body.classList.add('logado');
+    userAtual = user;
+
+    document.getElementById('userPhoto').src = user.photoURL || 'https://via.placeholder.com/120';
+    document.getElementById('userName').textContent = user.displayName || 'Usuário';
+    document.getElementById('infoUsuario').textContent = user.displayName ? '@' + user.displayName.replace(/\s/g, '').toLowerCase() : '—';
+    document.getElementById('infoEmail').textContent = user.email || '—';
+    if (user.metadata?.creationTime) {
+      document.getElementById('infoMembro').textContent = formatarData(user.metadata.creationTime);
+    }
+  });
+
+  window.fazerLogout = function() {
+    if (confirm('Deseja realmente sair?')) {
+      signOut(auth).then(() => {
+        localStorage.removeItem('yuna_user_logged');
+        localStorage.removeItem('yuna_user_name');
+        localStorage.removeItem('yuna_user_photo');
+        localStorage.removeItem('yuna_user_email');
+        window.location.replace('login.html');
+      });
+    }
+  };
+
+  window.abrirModalNome = function() {
+    if (userAtual?.displayName) document.getElementById('novoNomeInput').value = userAtual.displayName;
+    document.getElementById('modalNome').classList.add('show');
+  };
+
+  window.salvarNome = async function() {
+    const nome = document.getElementById('novoNomeInput').value.trim();
+    if (!nome) { alert('Digite um nome.'); return; }
+    try {
+      await updateProfile(userAtual, { displayName: nome });
+      document.getElementById('userName').textContent = nome;
+      document.getElementById('infoUsuario').textContent = '@' + nome.replace(/\s/g, '').toLowerCase();
+      localStorage.setItem('yuna_user_name', nome);
+      fecharModal('modalNome');
+      alert('✅ Nome atualizado!');
+    } catch (e) { alert('Erro: ' + e.message); }
+  };
+
+  window.abrirModalFoto = function() { document.getElementById('modalFoto').classList.add('show'); };
+
+  window.uploadFoto = function(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { alert('Imagem até 2MB.'); return; }
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        await updateProfile(userAtual, { photoURL: e.target.result });
+        document.getElementById('userPhoto').src = e.target.result;
+        localStorage.setItem('yuna_user_photo', e.target.result);
+        fecharModal('modalFoto');
+        alert('✅ Foto atualizada!');
+      } catch (err) { alert('Erro: ' + err.message); }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.fecharModal = function(id) { document.getElementById(id).classList.remove('show'); };
+</script>
+
+</body>
+  </html>
