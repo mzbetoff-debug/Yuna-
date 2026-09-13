@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -10,43 +10,47 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 html,body{background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
 body{background:linear-gradient(135deg,#0a0e1a 0%,#1a1f35 100%);display:flex;justify-content:center;align-items:center;padding:20px;min-height:100vh}
+
 .login-card{width:100%;max-width:420px;background:rgba(18,24,42,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);border-radius:28px;padding:36px 28px 32px;box-shadow:0 30px 60px rgba(0,0,0,.7);position:relative;overflow:hidden;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .login-card::before{content:'';position:absolute;top:-40%;right:-20%;width:280px;height:280px;background:radial-gradient(circle,rgba(236,72,153,.25),transparent 70%);filter:blur(50px);pointer-events:none}
 .login-card::after{content:'';position:absolute;bottom:-40%;left:-20%;width:280px;height:280px;background:radial-gradient(circle,rgba(139,92,246,.25),transparent 70%);filter:blur(50px);pointer-events:none}
+
 .login-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:24px;position:relative;z-index:2}
 .login-logo i{font-size:32px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .login-logo h1{font-size:28px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px}
+
 .login-title{text-align:center;font-size:20px;font-weight:700;color:#f1f5f9;margin-bottom:6px;position:relative;z-index:2}
 .login-sub{text-align:center;font-size:13px;color:#94a3b8;margin-bottom:28px;position:relative;z-index:2}
-.error-msg{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:10px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:none;position:relative;z-index:2;word-break:break-word}
-.error-msg.show{display:block;animation:shake .4s}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-/* BOTÃO GOOGLE */
-.google-btn{width:100%;padding:16px;background:#fff;border:none;border-radius:14px;color:#333;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;transition:.2s;box-shadow:0 4px 15px rgba(0,0,0,.3);position:relative;z-index:2}
-.google-btn:active{transform:scale(.98);background:#f0f0f0}
+.error-msg{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:10px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:none;position:relative;z-index:2;line-height:1.5}
+.error-msg.show{display:block}
+.success-msg{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);color:#34d399;padding:10px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:none;position:relative;z-index:2}
+.success-msg.show{display:block}
+
+.input-group{position:relative;margin-bottom:14px;z-index:2}
+.input-group i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#64748b;font-size:15px}
+.input-group input{width:100%;padding:14px 16px 14px 44px;background:rgba(0,0,0,.3);border:1px solid #334155;border-radius:14px;color:#e2e8f0;font-size:14px;outline:none;transition:.3s}
+.input-group input:focus{border-color:#a78bfa;background:rgba(0,0,0,.45)}
+.input-group input::placeholder{color:#64748b}
+
+.btn-primary{width:100%;padding:15px;background:linear-gradient(135deg,#ec4899,#8b5cf6);border:none;color:#fff;border-radius:14px;font-weight:600;font-size:15px;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(236,72,153,.3);margin-top:6px;z-index:2;position:relative;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:active{transform:scale(.97)}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed}
+
+.divider{display:flex;align-items:center;gap:12px;color:#64748b;font-size:12px;margin:22px 0 18px;position:relative;z-index:2;font-style:italic}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#293241}
+
+.google-btn{width:100%;padding:14px;background:rgba(255,255,255,.04);border:1px solid #334155;border-radius:14px;color:#e2e8f0;font-weight:500;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:.2s;position:relative;z-index:2}
+.google-btn:active{background:rgba(255,255,255,.08);transform:scale(.98)}
 .google-btn img{width:22px;height:22px}
 .google-btn:disabled{opacity:.6;cursor:not-allowed}
 
-.info-box{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);color:#c4b5fd;padding:12px 14px;border-radius:12px;font-size:12px;margin-top:20px;line-height:1.5;position:relative;z-index:2;text-align:center}
-.info-box i{margin-right:6px}
+.login-footer{text-align:center;color:#94a3b8;font-size:13px;margin-top:20px;position:relative;z-index:2}
+.login-footer a{color:#a78bfa;text-decoration:none;font-weight:600;cursor:pointer}
 
 .profile-view{display:none;text-align:center;position:relative;z-index:2}
 .profile-view.show{display:block;animation:fadeIn .4s ease}
-.profile-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#8b5cf6);padding:3px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.profile-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
-.profile-name{font-size:22px;font-weight:700;color:#f1f5f9;margin-bottom:4px}
-.profile-email{font-size:13px;color:#94a3b8;margin-bottom:24px}
-.profile-stats{display:flex;justify-content:space-around;background:rgba(0,0,0,.3);border-radius:16px;padding:16px;margin-bottom:20px}
-.stat-item{text-align:center}
-.stat-value{font-size:20px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.stat-label{font-size:11px;color:#94a3b8;margin-top:2px}
-
-.btn-primary{width:100%;padding:15px;background:linear-gradient(135deg,#ec4899,#8b5cf6);border:none;color:#fff;border-radius:14px;font-weight:600;font-size:15px;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(236,72,153,.3);position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-primary:active{transform:scale(.97)}
-.btn-logout{width:100%;padding:14px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:14px;font-weight:600;font-size:14px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;position:relative;z-index:2}
-.btn-logout:active{background:rgba(239,68,68,.25);transform:scale(.98)}
 
 .loading{display:none;text-align:center;padding:40px 0;position:relative;z-index:2}
 .loading.show{display:block}
@@ -59,54 +63,50 @@ body{background:linear-gradient(135deg,#0a0e1a 0%,#1a1f35 100%);display:flex;jus
 
 <div class="login-card">
 
-  <!-- VIEW DESLOGADO -->
   <div id="viewLoggedOut">
     <div class="login-logo">
       <i class="fas fa-compass"></i>
       <h1>YUNA</h1>
     </div>
-    <div class="login-title">Bem-vindo</div>
-    <div class="login-sub">Entre para sua jornada</div>
+    <div class="login-title" id="authTitle">Bem-vindo de volta</div>
+    <div class="login-sub" id="authSub">Entre para continuar sua jornada</div>
 
     <div class="error-msg" id="errorMsg"></div>
+    <div class="success-msg" id="successMsg"></div>
+
+    <div class="input-group" id="nameGroup" style="display:none">
+      <i class="fas fa-user"></i>
+      <input type="text" id="nameInput" placeholder="Seu nome">
+    </div>
+    <div class="input-group">
+      <i class="fas fa-envelope"></i>
+      <input type="email" id="emailInput" placeholder="Email">
+    </div>
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" id="passwordInput" placeholder="Senha">
+    </div>
+
+    <button class="btn-primary" id="emailLoginBtn">
+      <i class="fas fa-sign-in-alt"></i> Entrar
+    </button>
+
+    <div class="divider">ou continue com</div>
 
     <button class="google-btn" id="googleLoginBtn">
       <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-      Entrar com Google
+      Continuar com Google
     </button>
 
-    <div class="info-box">
-      <i class="fas fa-shield-alt"></i>
-      Seus dados ficam seguros com o Google
+    <div class="login-footer">
+      <span id="footerText">Não tem conta?</span>
+      <a onclick="toggleModo()" id="toggleModoBtn">Criar conta</a>
     </div>
   </div>
 
-  <!-- VIEW CARREGANDO -->
   <div class="loading" id="loadingView">
     <div class="spinner"></div>
-    <p>Entrando...</p>
-  </div>
-
-  <!-- VIEW LOGADO -->
-  <div class="profile-view" id="viewLoggedIn">
-    <div class="profile-avatar">
-      <img id="userPhoto" src="https://via.placeholder.com/100" alt="Avatar">
-    </div>
-    <div class="profile-name" id="userName">Usuário</div>
-    <div class="profile-email" id="userEmail">email@exemplo.com</div>
-
-    <div class="profile-stats">
-      <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Favoritos</div></div>
-      <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Assistidos</div></div>
-      <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Listas</div></div>
-    </div>
-
-    <button class="btn-primary" onclick="window.location.href='index.html'">
-      <i class="fas fa-home"></i> Ir para o YUNA
-    </button>
-    <button class="btn-logout" id="logoutBtn">
-      <i class="fas fa-sign-out-alt"></i> Sair da conta
-    </button>
+    <p>Entrando no YUNA...</p>
   </div>
 
 </div>
@@ -118,107 +118,155 @@ body{background:linear-gradient(135deg,#0a0e1a 0%,#1a1f35 100%);display:flex;jus
     signInWithPopup, 
     GoogleAuthProvider, 
     onAuthStateChanged,
-    signOut
+    setPersistence,
+    browserLocalPersistence,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    updateProfile
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  // ============================================
-  // ✅ CHAVE FIREBASE ATUALIZADA
-  // ============================================
   const firebaseConfig = {
     apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
     authDomain: "yuna-8fe24.firebaseapp.com",
     projectId: "yuna-8fe24",
     storageBucket: "yuna-8fe24.firebasestorage.app",
     messagingSenderId: "531340097112",
-    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d",
-    measurementId: "G-C5F1CXB0SC"
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
   };
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
+  setPersistence(auth, browserLocalPersistence).catch((err) => console.error(err));
+
+  let modoCadastro = false;
+
   const viewLoggedOut = document.getElementById('viewLoggedOut');
-  const viewLoggedIn = document.getElementById('viewLoggedIn');
   const loadingView = document.getElementById('loadingView');
   const errorMsg = document.getElementById('errorMsg');
-  const googleLoginBtn = document.getElementById('googleLoginBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
+  const successMsg = document.getElementById('successMsg');
 
   function showError(msg) {
     errorMsg.textContent = msg;
     errorMsg.classList.add('show');
+    successMsg.classList.remove('show');
     setTimeout(() => errorMsg.classList.remove('show'), 6000);
   }
 
-  function hideLoading() {
-    loadingView.classList.remove('show');
+  function showSuccess(msg) {
+    successMsg.textContent = msg;
+    successMsg.classList.add('show');
+    errorMsg.classList.remove('show');
+    setTimeout(() => successMsg.classList.remove('show'), 4000);
   }
 
+  // ============ TOGGLE LOGIN/CADASTRO ============
+  window.toggleModo = function() {
+    modoCadastro = !modoCadastro;
+    if (modoCadastro) {
+      document.getElementById('authTitle').textContent = 'Criar conta';
+      document.getElementById('authSub').textContent = 'Preencha seus dados para começar';
+      document.getElementById('nameGroup').style.display = 'block';
+      document.getElementById('emailLoginBtn').innerHTML = '<i class="fas fa-user-plus"></i> Criar conta';
+      document.getElementById('footerText').textContent = 'Já tem conta?';
+      document.getElementById('toggleModoBtn').textContent = 'Entrar';
+    } else {
+      document.getElementById('authTitle').textContent = 'Bem-vindo de volta';
+      document.getElementById('authSub').textContent = 'Entre para continuar sua jornada';
+      document.getElementById('nameGroup').style.display = 'none';
+      document.getElementById('emailLoginBtn').innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+      document.getElementById('footerText').textContent = 'Não tem conta?';
+      document.getElementById('toggleModoBtn').textContent = 'Criar conta';
+    }
+  };
+
+  // ✅ REDIRECIONA PARA HOME
+  function irParaHome() {
+    window.location.href = 'home.html';
+  }
+
+  // ============ LOGIN COM EMAIL ============
+  document.getElementById('emailLoginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('emailInput').value.trim();
+    const senha = document.getElementById('passwordInput').value.trim();
+    const btn = document.getElementById('emailLoginBtn');
+
+    if (!email || !senha) { showError('Preencha email e senha.'); return; }
+
+    if (modoCadastro) {
+      const nome = document.getElementById('nameInput').value.trim();
+      if (!nome) { showError('Preencha seu nome.'); return; }
+      if (senha.length < 6) { showError('Senha mínimo 6 caracteres.'); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando...';
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, senha);
+        await updateProfile(cred.user, { displayName: nome });
+        showSuccess('✅ Conta criada! Entrando no YUNA...');
+        // ✅ REDIRECIONA DIRETO PARA A HOME
+        setTimeout(() => irParaHome(), 800);
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use') showError('Email já cadastrado.');
+        else if (error.code === 'auth/weak-password') showError('Senha muito fraca.');
+        else showError('Erro: ' + error.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Criar conta';
+      }
+    } else {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+
+      try {
+        await signInWithEmailAndPassword(auth, email, senha);
+        showSuccess('✅ Bem-vindo! Entrando no YUNA...');
+        // ✅ REDIRECIONA DIRETO PARA A HOME
+        setTimeout(() => irParaHome(), 800);
+      } catch (error) {
+        if (error.code === 'auth/user-not-found') showError('Usuário não encontrado.');
+        else if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') showError('Email ou senha incorretos.');
+        else showError('Erro: ' + error.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+      }
+    }
+  });
+
   // ============ LOGIN COM GOOGLE ============
-  googleLoginBtn.addEventListener('click', () => {
-    googleLoginBtn.disabled = true;
-    googleLoginBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="color:#333"></i> Conectando...';
+  document.getElementById('googleLoginBtn').addEventListener('click', () => {
+    const btn = document.getElementById('googleLoginBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Conectando...';
 
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log('✅ Login Google:', result.user.displayName);
-        googleLoginBtn.disabled = false;
-        googleLoginBtn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Entrar com Google';
+        showSuccess('✅ Bem-vindo, ' + result.user.displayName + '! Entrando...');
+        // ✅ REDIRECIONA DIRETO PARA A HOME
+        setTimeout(() => irParaHome(), 800);
       })
       .catch((error) => {
-        console.error('❌ Erro Google:', error.code, error.message);
-        googleLoginBtn.disabled = false;
-        googleLoginBtn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Entrar com Google';
-
-        if (error.code === 'auth/unauthorized-domain') {
-          showError('⚠️ Domínio não autorizado. Adicione mzbetoff-debug.github.io no Firebase.');
-        } else if (error.code === 'auth/popup-closed-by-user') {
-          showError('Login cancelado.');
-        } else if (error.code === 'auth/popup-blocked') {
-          showError('⚠️ Popup bloqueado. Permita popups nas configurações do Chrome.');
-        } else if (error.code === 'auth/api-key-not-valid' || error.code === 'auth/invalid-api-key') {
-          showError('⚠️ Chave do Firebase inválida. Verifique o apiKey.');
-        } else if (error.code === 'auth/operation-not-allowed') {
-          showError('⚠️ Login com Google não está ativado. Ative no Firebase Console.');
-        } else if (error.code === 'auth/cancelled-popup-request') {
-          showError('Já existe um popup aberto.');
-        } else {
-          showError('Erro: ' + error.message);
-        }
+        if (error.code === 'auth/unauthorized-domain') showError('⚠️ Domínio não autorizado.');
+        else if (error.code === 'auth/popup-closed-by-user') showError('Login cancelado.');
+        else if (error.code === 'auth/popup-blocked') showError('Popup bloqueado.');
+        else if (error.code === 'auth/api-key-not-valid') showError('⚠️ Chave do Firebase inválida.');
+        else showError('Erro: ' + error.message);
+        btn.disabled = false;
+        btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Continuar com Google';
       });
-  });
-
-  // ============ LOGOUT ============
-  logoutBtn.addEventListener('click', () => {
-    if (confirm('Deseja realmente sair?')) {
-      signOut(auth)
-        .then(() => console.log('👋 Logout feito'))
-        .catch((err) => console.error('Erro logout:', err));
-    }
   });
 
   // ============ OBSERVADOR DE ESTADO ============
   onAuthStateChanged(auth, (user) => {
-    hideLoading();
-    
+    // ✅ Se JÁ está logado quando abre o login.html → vai DIRETO pra home
     if (user) {
-      viewLoggedOut.style.display = 'none';
-      viewLoggedIn.classList.add('show');
-      
-      document.getElementById('userPhoto').src = user.photoURL || 'https://via.placeholder.com/100';
-      document.getElementById('userName').textContent = user.displayName || 'Usuário';
-      document.getElementById('userEmail').textContent = user.email || '';
-      
-      console.log('👤 Usuário logado:', user.displayName);
-    } else {
-      viewLoggedOut.style.display = 'block';
-      viewLoggedIn.classList.remove('show');
-      console.log('🔓 Nenhum usuário logado');
+      console.log('👤 Já logado:', user.displayName);
+      irParaHome();
+      return;
     }
+    console.log('🔓 Não logado — mostrando tela de login');
   });
-
-  console.log('✅ YUNA Login carregado!');
 </script>
 
 </body>
