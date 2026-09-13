@@ -14,7 +14,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 
 .header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:12px 16px}
 .header-top{display:flex;justify-content:space-between;align-items:center}
-.back-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#cbd5e1;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none}
+.back-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#cbd5e1;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
 .logo i{font-size:22px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .logo h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -31,7 +31,63 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 .camera-btn:active{transform:scale(.9)}
 
 .perfil-nome{font-size:24px;font-weight:800;color:#f1f5f9;margin-bottom:6px;position:relative;z-index:2}
-.perfil-status{display:inline-block;background:rgba(167,139,250,.2);color:#c4b5fd;padding:6px 16px;border-radius:50px;font-size:12px;font-weight:600;border:1px solid rgba(167,139,250,.3);position:relative;z-index:2}
+
+/* ✅ STATUS "NOOB" COM ANIMAÇÕES */
+.perfil-status{
+  display:inline-block;
+  padding:6px 18px;
+  border-radius:50px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  position:relative;
+  z-index:2;
+  overflow:hidden;
+  border:1px solid rgba(167,139,250,.4);
+  animation: noobGlow 2s ease-in-out infinite, noobGradient 3s ease-in-out infinite;
+  background-size: 200% auto;
+  cursor: default;
+  user-select: none;
+}
+
+@keyframes noobGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(167,139,250,.4), 0 0 16px rgba(236,72,153,.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(167,139,250,.8), 0 0 32px rgba(236,72,153,.6);
+    transform: scale(1.06);
+  }
+}
+
+@keyframes noobGradient {
+  0%, 100% {
+    background: linear-gradient(135deg, rgba(167,139,250,.3), rgba(236,72,153,.3));
+    color: #c4b5fd;
+    border-color: rgba(167,139,250,.4);
+  }
+  50% {
+    background: linear-gradient(135deg, rgba(236,72,153,.45), rgba(167,139,250,.45));
+    color: #f9a8d4;
+    border-color: rgba(236,72,153,.5);
+  }
+}
+
+@keyframes noobShine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.perfil-status::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  background-size: 200% auto;
+  animation: noobShine 3s linear infinite;
+  pointer-events: none;
+}
 
 .info-card{background:rgba(18,24,42,.7);border-radius:20px;border:1px solid rgba(255,255,255,.05);overflow:hidden;margin-bottom:20px}
 .info-item{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.05);gap:12px}
@@ -42,7 +98,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 
 .opcoes-titulo{font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin:20px 0 12px;padding-left:4px}
 
-.opcao-btn{display:flex;align-items:center;gap:14px;background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;width:100%;text-align:left;color:inherit;text-decoration:none;transition:.2s}
+.opcao-btn{display:flex;align-items:center;gap:14px;background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;width:100%;text-align:left;color:inherit;text-decoration:none}
 .opcao-btn:active{background:rgba(18,24,42,.95);transform:scale(.98)}
 .opcao-btn .icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
 .opcao-btn .texto{flex:1}
@@ -87,13 +143,13 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
   <p style="color:#94a3b8">Carregando perfil...</p>
 </div>
 
-<div class="header">
+<header class="header">
   <div class="header-top">
     <a class="back-btn" href="home.html"><i class="fas fa-arrow-left"></i></a>
     <a class="logo" href="home.html"><i class="fas fa-compass"></i><h1>YUNA</h1></a>
     <div style="width:40px"></div>
   </div>
-</div>
+</header>
 
 <div class="perfil-wrap">
   <div class="perfil-card">
@@ -151,6 +207,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
   </button>
 </div>
 
+<!-- MODAL: MUDAR NOME -->
 <div class="modal-overlay" id="modalNome">
   <div class="modal">
     <h3><i class="fas fa-user-edit"></i> Mudar nome</h3>
@@ -166,14 +223,36 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
   </div>
 </div>
 
+<!-- MODAL: MUDAR FOTO -->
 <div class="modal-overlay" id="modalFoto">
   <div class="modal">
     <h3><i class="fas fa-image"></i> Foto de perfil</h3>
-    <p>Escolha uma opção:</p>
+    
+    <div id="avisoErro" style="display:none;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);border-radius:14px;padding:14px 16px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <i class="fas fa-exclamation-triangle" style="color:#fbbf24;font-size:16px"></i>
+        <strong style="color:#fbbf24;font-size:13px">NÃO FOI POSSÍVEL SALVAR</strong>
+      </div>
+      <p id="avisoTexto" style="font-size:12px;color:#fcd34d;line-height:1.6;margin-bottom:8px">
+        A imagem que você escolheu é muito grande para o servidor.
+      </p>
+      <div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 12px;margin-top:8px">
+        <strong style="color:#fbbf24;font-size:12px;display:block;margin-bottom:6px">💡 Recomendações:</strong>
+        <ul style="list-style:none;font-size:11px;color:#fcd34d;line-height:1.7;padding-left:0">
+          <li>• Use uma foto <strong>pequena</strong> (rosto, avatar)</li>
+          <li>• Evite fotos grandes ou com muitos detalhes</li>
+          <li>• Formato ideal: <strong>quadrada</strong> até 500KB</li>
+          <li>• Recorte só o rosto e tente novamente</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:#94a3b8;margin-bottom:16px">Escolha uma opção:</p>
+    
     <div class="foto-opcoes">
       <label class="foto-opt">
         <div class="ic" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><i class="fas fa-upload"></i></div>
-        <div class="tx"><strong>Enviar do celular</strong><span>PNG, JPG ou WebP</span></div>
+        <div class="tx"><strong>Enviar do celular</strong><span>Redimensionada automaticamente</span></div>
         <input type="file" id="fotoUpload" accept="image/*" style="display:none" onchange="uploadFoto(this)">
       </label>
     </div>
@@ -256,24 +335,82 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     } catch (e) { alert('Erro: ' + e.message); }
   };
 
-  window.abrirModalFoto = function() { document.getElementById('modalFoto').classList.add('show'); };
+  window.abrirModalFoto = function() {
+    const aviso = document.getElementById('avisoErro');
+    if (aviso) aviso.style.display = 'none';
+    document.getElementById('modalFoto').classList.add('show');
+  };
 
   window.uploadFoto = function(input) {
     const file = input.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { alert('Imagem até 2MB.'); return; }
+
+    const aviso = document.getElementById('avisoErro');
+    if (aviso) aviso.style.display = 'none';
+
     const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        await updateProfile(userAtual, { photoURL: e.target.result });
-        document.getElementById('userPhoto').src = e.target.result;
-        localStorage.setItem('yuna_user_photo', e.target.result);
-        fecharModal('modalFoto');
-        alert('✅ Foto atualizada!');
-      } catch (err) { alert('Erro: ' + err.message); }
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX) {
+            height = Math.round(height * MAX / width);
+            width = MAX;
+          }
+        } else {
+          if (height > MAX) {
+            width = Math.round(width * MAX / height);
+            height = MAX;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const base64 = canvas.toDataURL('image/jpeg', 0.7);
+
+        if (base64.length > 2048) {
+          const base64Menor = canvas.toDataURL('image/jpeg', 0.5);
+          salvarFoto(base64Menor);
+        } else {
+          salvarFoto(base64);
+        }
+      };
+      img.src = e.target.result;
     };
     reader.readAsDataURL(file);
   };
+
+  async function salvarFoto(base64) {
+    try {
+      await updateProfile(userAtual, { photoURL: base64 });
+      document.getElementById('userPhoto').src = base64;
+      localStorage.setItem('yuna_user_photo', base64);
+      fecharModal('modalFoto');
+      alert('✅ Foto atualizada com sucesso!');
+    } catch (err) {
+      const avisoErro = document.getElementById('avisoErro');
+      const avisoTexto = document.getElementById('avisoTexto');
+      
+      if (avisoErro) {
+        if (err.message.includes('too long') || err.code === 'auth/invalid-profile-attribute') {
+          avisoTexto.innerHTML = 'A imagem que você escolheu é <strong>muito grande</strong> para o servidor. Tente uma foto menor.';
+        } else {
+          avisoTexto.innerHTML = 'Erro: ' + err.message;
+        }
+        avisoErro.style.display = 'block';
+      } else {
+        alert('❌ Não foi possível salvar. Tente uma imagem menor.');
+      }
+    }
+  }
 
   window.fecharModal = function(id) { document.getElementById(id).classList.remove('show'); };
 </script>
