@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YUNA · Educação</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,sans-serif}
+body{background:#0a0e1a;color:#e2e8f0;padding-bottom:90px;min-height:100vh}
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.back{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#cbd5e1;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.logo i{font-size:22px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero{padding:24px 20px;margin:16px;border-radius:24px;background:linear-gradient(135deg,rgba(67,233,123,.2),rgba(56,249,215,.15));border:1px solid rgba(52,211,153,.25);position:relative;overflow:hidden}
+.hero h2{font-size:22px;font-weight:800;color:#f1f5f9;margin-bottom:8px}
+.hero p{font-size:13px;color:#cbd5e1}
+.hero i.sh{position:absolute;right:-10px;bottom:-10px;font-size:100px;opacity:.1;color:#34d399}
+.section{padding:0 16px;margin-top:20px}
+.section-title{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title i{color:#34d399}
+.card{display:flex;gap:14px;background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:16px;text-decoration:none;color:inherit;margin-bottom:12px}
+.card:active{transform:scale(.98)}
+.card .icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0}
+.card .info{flex:1;display:flex;flex-direction:column;justify-content:center}
+.card .info h4{font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:4px}
+.card .info p{font-size:12px;color:#94a3b8}
+.card .arrow{color:#64748b;align-self:center}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0a0e1a;border-top:1px solid rgba(255,255,255,.06);padding:10px 0;display:flex;justify-content:space-around}
+.nav{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;color:#64748b;font-size:10px;text-decoration:none;flex:1}
+.nav i{font-size:18px}
+.nav.active{color:#34d399}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="back" href="home.html"><i class="fas fa-arrow-left"></i></a>
+  <a class="logo" href="home.html"><i class="fas fa-compass"></i><h1>YUNA</h1></a>
+  <div style="width:40px"></div>
+</header>
+
+<div class="hero">
+  <i class="fas fa-graduation-cap sh"></i>
+  <h2>📚 Educação</h2>
+  <p>Cursos grátis de programação, idiomas, matemática e muito mais.</p>
+</div>
+
+<div class="section">
+  <div class="section-title"><i class="fas fa-star"></i> Cursos em destaque</div>
+  <a class="card" href="https://www.khanacademy.org" target="_blank">
+    <div class="icon" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"><i class="fas fa-calculator"></i></div>
+    <div class="info"><h4>Khan Academy</h4><p>Matemática, ciências, humanas — grátis</p></div>
+    <i class="fas fa-chevron-right arrow"></i>
+  </a>
+  <a class="card" href="https://www.freecodecamp.org/portuguese/" target="_blank">
+    <div class="icon" style="background:linear-gradient(135deg,#667eea,#764ba2)"><i class="fas fa-code"></i></div>
+    <div class="info"><h4>freeCodeCamp</h4><p>Aprenda programação do zero</p></div>
+    <i class="fas fa-chevron-right arrow"></i>
+  </a>
+  <a class="card" href="https://www.cursoemvideo.com" target="_blank">
+    <div class="icon" style="background:linear-gradient(135deg,#f093fb,#f5576c)"><i class="fas fa-laptop-code"></i></div>
+    <div class="info"><h4>Curso em Vídeo</h4><p>Cursos em português com Gustavo Guanabara</p></div>
+    <i class="fas fa-chevron-right arrow"></i>
+  </a>
+  <a class="card" href="https://www.coursera.org" target="_blank">
+    <div class="icon" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"><i class="fas fa-university"></i></div>
+    <div class="info"><h4>Coursera</h4><p>Cursos de Harvard e Stanford</p></div>
+    <i class="fas fa-chevron-right arrow"></i>
+  </a>
+</div>
+
+<div class="section">
+  <div class="section-title"><i class="fas fa-language"></i> Idiomas</div>
+  <a class="card" href="https://www.duolingo.com" target="_blank">
+    <div class="icon" style="background:linear-gradient(135deg,#58cc02,#89e219)"><i class="fas fa-language"></i></div>
+    <div class="info"><h4>Duolingo</h4><p>Inglês, espanhol, francês e mais</p></div>
+    <i class="fas fa-chevron-right arrow"></i>
+  </a>
+</div>
+
+<div class="bottom-nav">
+  <a class="nav" href="home.html"><i class="fas fa-home"></i><span>Início</span></a>
+  <a class="nav active" href="educacao.html"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
+  <a class="nav" href="musicas.html"><i class="fas fa-music"></i><span>Música</span></a>
+  <a class="nav" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
+</div>
+
+</body>
+</html>
