@@ -90,7 +90,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 .recorte-header h3{font-size:16px;font-weight:700;color:#f1f5f9;display:flex;align-items:center;gap:8px}
 .recorte-header h3 i{color:#a78bfa}
 .recorte-header .btn-fechar{background:rgba(255,255,255,.06);border:none;color:#cbd5e1;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px}
-.recorte-area{flex:1;background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.recorte-area{flex:1;background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:200px}
 .recorte-area img{max-width:100%;max-height:100%;display:block}
 .recorte-footer{padding:16px;background:rgba(10,14,26,.95);border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px}
 .recorte-btn{flex:1;padding:14px;border-radius:14px;font-weight:600;font-size:15px;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px}
@@ -100,7 +100,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 </style>
 </head>
 <body>
-  <div class="loading show" id="loading">
+<div class="loading show" id="loading">
   <div class="spinner"></div>
   <p style="color:#94a3b8">Carregando perfil...</p>
 </div>
@@ -203,17 +203,15 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     <div id="avisoErro" style="display:none;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);border-radius:14px;padding:14px 16px;margin-bottom:16px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <i class="fas fa-exclamation-triangle" style="color:#fbbf24;font-size:16px"></i>
-        <strong style="color:#fbbf24;font-size:13px">NÃO FOI POSSÍVEL SALVAR</strong>
+        <strong style="color:#fbbf24;font-size:13px">ERRO</strong>
       </div>
-      <p id="avisoTexto" style="font-size:12px;color:#fcd34d;line-height:1.6;margin-bottom:8px">
-        A imagem que você escolheu é muito grande.
-      </p>
+      <p id="avisoTexto" style="font-size:12px;color:#fcd34d;line-height:1.6"></p>
     </div>
 
     <div class="processando" id="processando">
       <div class="spinner-process"></div>
       <p>⏳ Processando imagem...</p>
-      <p class="sub">Comprimindo com alta qualidade</p>
+      <p class="sub">Enviando com alta qualidade (800×800)</p>
     </div>
 
     <div id="opcoesFoto">
@@ -251,6 +249,8 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut, updateProfile, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const IMGBB_API_KEY = '52ddf1c2a5509391a0edcaadd1d02009';
 
   const firebaseConfig = {
     apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
@@ -306,7 +306,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       return;
     }
     
-    console.log('👤 Logado:', user.displayName);
     document.body.classList.add('logado');
     userAtual = user;
 
@@ -346,7 +345,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 
   window.abrirModalNome = function() {
     document.getElementById('novoNomeInput').value = userAtual?.displayName || '';
-    
     let usuarioAtual = localStorage.getItem('yuna_usuario_custom');
     if (!usuarioAtual && userAtual?.displayName) {
       usuarioAtual = '@' + userAtual.displayName.replace(/\s/g, '').toLowerCase();
@@ -371,14 +369,12 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       inputUsuario.disabled = false;
       grupoUsuario.style.opacity = '1';
     }
-
     document.getElementById('modalNome').classList.add('show');
   };
 
   window.salvarNome = async function() {
     const nome = document.getElementById('novoNomeInput').value.trim();
     let usuario = document.getElementById('novoUsuarioInput').value.trim();
-
     if (!nome) { alert('Digite um nome.'); return; }
 
     const usuarioAntigo = localStorage.getItem('yuna_usuario_custom') || 
@@ -391,9 +387,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
         alert('❌ Você só pode mudar o @usuário a cada 2 meses.\n\n⏳ Próxima troca em ' + verificacao.diasFaltam + ' dias.');
         return;
       }
-      
       usuario = usuario.replace(/^@+/, '');
-      
       if (usuario.length < 3) { alert('O @usuário precisa ter pelo menos 3 caracteres.'); return; }
       if (!/^[a-zA-Z0-9_]+$/.test(usuario)) { alert('O @usuário só pode ter letras, números e _.'); return; }
     }
@@ -412,7 +406,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       } else {
         alert('✅ Nome atualizado!');
       }
-
       fecharModal('modalNome');
     } catch (e) {
       alert('Erro: ' + e.message);
@@ -426,14 +419,13 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('modalFoto').classList.add('show');
   };
 
-  // ✅ INICIA O RECORTE (verifica máximo 8MB)
   window.iniciarRecorte = function(input) {
     const file = input.files[0];
     if (!file) return;
 
     const tamanhoMB = file.size / (1024 * 1024);
     if (tamanhoMB > MAX_MB) {
-      alert('❌ A imagem é muito grande!\n\nTamanho: ' + tamanhoMB.toFixed(2) + ' MB\nMáximo: ' + MAX_MB + ' MB\n\nEscolha uma foto menor.');
+      alert('❌ A imagem é muito grande!\n\nTamanho: ' + tamanhoMB.toFixed(2) + ' MB\nMáximo: ' + MAX_MB + ' MB');
       input.value = '';
       return;
     }
@@ -485,7 +477,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('modalFoto').classList.add('show');
   };
 
-  // ✅ CONFIRMA O RECORTE COM MÚLTIPLAS TENTATIVAS
   window.confirmarRecorte = function() {
     if (!cropper) return;
 
@@ -495,89 +486,87 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('processando').classList.add('show');
     document.getElementById('avisoErro').style.display = 'none';
 
-    setTimeout(() => {
-      const tentativas = [
-        { size: 400, quality: 0.85 },
-        { size: 350, quality: 0.80 },
-        { size: 300, quality: 0.75 },
-        { size: 250, quality: 0.70 },
-        { size: 200, quality: 0.65 },
-        { size: 180, quality: 0.60 },
-        { size: 150, quality: 0.55 },
-        { size: 120, quality: 0.50 },
-        { size: 100, quality: 0.45 },
-        { size: 80, quality: 0.40 }
-      ];
-
-      let base64Final = null;
-      let tamanhoUsado = 0;
-
-      for (const t of tentativas) {
+    setTimeout(async () => {
+      try {
         const canvas = cropper.getCroppedCanvas({
-          width: t.size,
-          height: t.size,
+          width: 800,
+          height: 800,
           imageSmoothingEnabled: true,
           imageSmoothingQuality: 'high'
         });
 
-        const base64 = canvas.toDataURL('image/jpeg', t.quality);
-        console.log('📐 Tentativa ' + t.size + 'px @ ' + Math.round(t.quality*100) + '%:', base64.length, 'chars');
+        cropper.destroy();
+        cropper = null;
 
-        if (base64.length <= 2048) {
-          base64Final = base64;
-          tamanhoUsado = t.size;
-          console.log('✅ Aceita com ' + t.size + 'px!');
-          break;
-        }
+        canvas.toBlob(async (blob) => {
+          if (!blob) {
+            mostrarErro('Erro ao processar imagem.');
+            return;
+          }
+          await enviarParaImgBB(blob);
+        }, 'image/jpeg', 0.90);
+
+      } catch (err) {
+        console.error('Erro:', err);
+        mostrarErro('Erro: ' + err.message);
       }
-
-      if (!base64Final) {
-        const canvasMin = cropper.getCroppedCanvas({
-          width: 60,
-          height: 60,
-          imageSmoothingEnabled: true,
-          imageSmoothingQuality: 'high'
-        });
-        base64Final = canvasMin.toDataURL('image/jpeg', 0.4);
-        tamanhoUsado = 60;
-        console.log('⚠️ Usando 60px como último recurso');
-      }
-
-      cropper.destroy();
-      cropper = null;
-
-      salvarFoto(base64Final, tamanhoUsado);
     }, 300);
   };
 
-  async function salvarFoto(base64, tamanho) {
+  async function enviarParaImgBB(blob) {
     try {
-      await updateProfile(userAtual, { photoURL: base64 });
-      document.getElementById('userPhoto').src = base64;
-      localStorage.setItem('yuna_user_photo', base64);
-      document.getElementById('processando').classList.remove('show');
-      document.getElementById('opcoesFoto').style.display = 'block';
-      fecharModal('modalFoto');
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
       
-      let msgQualidade = '';
-      if (tamanho >= 400) msgQualidade = '🎉 Excelente qualidade!';
-      else if (tamanho >= 300) msgQualidade = '✨ Ótima qualidade!';
-      else if (tamanho >= 200) msgQualidade = '👍 Boa qualidade!';
-      else if (tamanho >= 150) msgQualidade = '⚠️ Qualidade aceitável';
-      else msgQualidade = '📷 Qualidade reduzida';
-      
-      alert('✅ Foto atualizada!\n\n' + msgQualidade);
-      
+      reader.onloadend = async () => {
+        try {
+          const base64 = reader.result.split(',')[1];
+
+          const formData = new FormData();
+          formData.append('key', IMGBB_API_KEY);
+          formData.append('image', base64);
+
+          const resposta = await fetch('https://api.imgbb.com/1/upload', {
+            method: 'POST',
+            body: formData
+          });
+
+          const dados = await resposta.json();
+
+          if (dados.success && dados.data && dados.data.url) {
+            const urlFinal = dados.data.url;
+
+            await updateProfile(userAtual, { photoURL: urlFinal });
+            
+            document.getElementById('userPhoto').src = urlFinal;
+            localStorage.setItem('yuna_user_photo', urlFinal);
+            
+            document.getElementById('processando').classList.remove('show');
+            document.getElementById('opcoesFoto').style.display = 'block';
+            fecharModal('modalFoto');
+            
+            alert('✅ Foto atualizada com ALTA QUALIDADE!\n\n🎉 800x800 pixels!');
+            
+          } else {
+            mostrarErro('Erro no ImgBB: ' + (dados.error?.message || 'Tente novamente'));
+          }
+        } catch (err) {
+          mostrarErro('Erro de conexão. Verifique sua internet.');
+        }
+      };
     } catch (err) {
-      console.error('Erro:', err);
-      document.getElementById('processando').classList.remove('show');
-      const avisoErro = document.getElementById('avisoErro');
-      const avisoTexto = document.getElementById('avisoTexto');
-      if (avisoErro) {
-        avisoTexto.innerHTML = 'Erro ao salvar: <strong>' + err.message + '</strong>';
-        avisoErro.style.display = 'block';
-        document.getElementById('opcoesFoto').style.display = 'block';
-      }
+      mostrarErro('Erro: ' + err.message);
+    }
+  }
+
+  function mostrarErro(msg) {
+    document.getElementById('processando').classList.remove('show');
+    const avisoErro = document.getElementById('avisoErro');
+    const avisoTexto = document.getElementById('avisoTexto');
+    if (avisoErro) {
+      avisoTexto.innerHTML = msg;
+      avisoErro.style.display = 'block';
+      document.getElementById('opcoesFoto').style.display = 'block';
     }
   }
 
@@ -591,4 +580,3 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 
 </body>
 </html>
-  
