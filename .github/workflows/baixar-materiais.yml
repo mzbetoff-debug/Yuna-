@@ -1,0 +1,25 @@
+name: Baixar Livros e Exames
+
+on:
+  workflow_dispatch:
+
+jobs:
+  baixar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Baixar PDFs
+        run: |
+          mkdir -p livros exames
+          echo "Robô pronto para baixar materiais"
+
+      - name: Commit e Push
+        run: |
+          git config --global user.name 'Robô YUNA'
+          git config --global user.email 'robo@yuna.com'
+          git add livros/ exames/ || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Robô YUNA rodando" && git push)
