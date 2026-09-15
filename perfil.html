@@ -84,8 +84,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 .loading{display:none;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;gap:16px}
 .loading.show{display:flex}
 .spinner{width:50px;height:50px;border:4px solid rgba(167,139,250,.2);border-top-color:#a78bfa;border-radius:50%;animation:spin .8s linear infinite}
-
-/* ✅ MODAL DE RECORTE */
 #modalRecorte{position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:3000;display:none;flex-direction:column}
 #modalRecorte.show{display:flex}
 .recorte-header{padding:16px;background:rgba(10,14,26,.95);border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center}
@@ -210,13 +208,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       <p id="avisoTexto" style="font-size:12px;color:#fcd34d;line-height:1.6;margin-bottom:8px">
         A imagem que você escolheu é muito grande.
       </p>
-      <div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 12px;margin-top:8px">
-        <strong style="color:#fbbf24;font-size:12px;display:block;margin-bottom:6px">💡 Recomendações:</strong>
-        <ul style="list-style:none;font-size:11px;color:#fcd34d;line-height:1.7;padding-left:0">
-          <li>• Use uma foto <strong>pequena</strong> (rosto, avatar)</li>
-          <li>• Recorte só o rosto e tente novamente</li>
-        </ul>
-      </div>
     </div>
 
     <div class="processando" id="processando">
@@ -242,7 +233,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
   </div>
 </div>
 
-<!-- ✅ MODAL DE RECORTE -->
 <div id="modalRecorte">
   <div class="recorte-header">
     <h3><i class="fas fa-crop"></i> Recortar foto</h3>
@@ -277,8 +267,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 
   let userAtual = null;
   let cropper = null;
-  let rotacaoAtual = 0;
-
   const ADMIN_EMAIL = 'mzbetoff@gmail.com';
   const DIAS_ESPERA = 60;
   const MAX_MB = 8;
@@ -438,12 +426,11 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('modalFoto').classList.add('show');
   };
 
-  // ✅ INICIA O RECORTE (verifica tamanho máximo 8MB)
+  // ✅ INICIA O RECORTE (verifica máximo 8MB)
   window.iniciarRecorte = function(input) {
     const file = input.files[0];
     if (!file) return;
 
-    // ✅ Verifica tamanho máximo de 8MB
     const tamanhoMB = file.size / (1024 * 1024);
     if (tamanhoMB > MAX_MB) {
       alert('❌ A imagem é muito grande!\n\nTamanho: ' + tamanhoMB.toFixed(2) + ' MB\nMáximo: ' + MAX_MB + ' MB\n\nEscolha uma foto menor.');
@@ -451,26 +438,22 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       return;
     }
 
-    // Fecha o modal de foto e abre o de recorte
     fecharModal('modalFoto');
     
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = document.getElementById('imagemRecorte');
       img.src = e.target.result;
-      rotacaoAtual = 0;
 
-      // Abre o modal de recorte
       document.getElementById('modalRecorte').classList.add('show');
 
-      // Inicializa o Cropper depois que a imagem carregar
       img.onload = () => {
         if (cropper) cropper.destroy();
         cropper = new Cropper(img, {
-          aspectRatio: 1,           // Quadrado (1:1) para perfil
-          viewMode: 1,               // Não sai da área
-          dragMode: 'move',          // Move a imagem
-          autoCropArea: 0.8,         // Área de recorte 80%
+          aspectRatio: 1,
+          viewMode: 1,
+          dragMode: 'move',
+          autoCropArea: 0.8,
           restore: false,
           guides: true,
           center: true,
@@ -486,15 +469,10 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     reader.readAsDataURL(file);
   };
 
-  // ✅ GIRA A IMAGEM
   window.girarImagem = function() {
-    if (cropper) {
-      cropper.rotate(90);
-      rotacaoAtual += 90;
-    }
+    if (cropper) cropper.rotate(90);
   };
 
-  // ✅ CANCELA O RECORTE
   window.cancelarRecorte = function() {
     if (cropper) {
       cropper.destroy();
@@ -507,80 +485,96 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('modalFoto').classList.add('show');
   };
 
-  // ✅ CONFIRMA O RECORTE E SALVA
+  // ✅ CONFIRMA O RECORTE COM MÚLTIPLAS TENTATIVAS
   window.confirmarRecorte = function() {
     if (!cropper) return;
 
-    // Pega o canvas recortado
-    const canvas = cropper.getCroppedCanvas({
-      width: 400,
-      height: 400,
-      imageSmoothingEnabled: true,
-      imageSmoothingQuality: 'high'
-    });
-
-    // Fecha o modal de recorte
-    cropper.destroy();
-    cropper = null;
     document.getElementById('modalRecorte').classList.remove('show');
-
-    // Mostra o processando
     document.getElementById('modalFoto').classList.add('show');
     document.getElementById('opcoesFoto').style.display = 'none';
     document.getElementById('processando').classList.add('show');
+    document.getElementById('avisoErro').style.display = 'none';
 
-    // Tenta várias qualidades
     setTimeout(() => {
       const tentativas = [
-        { quality: 0.85 },
-        { quality: 0.75 },
-        { quality: 0.65 },
-        { quality: 0.55 },
-        { quality: 0.45 }
+        { size: 400, quality: 0.85 },
+        { size: 350, quality: 0.80 },
+        { size: 300, quality: 0.75 },
+        { size: 250, quality: 0.70 },
+        { size: 200, quality: 0.65 },
+        { size: 180, quality: 0.60 },
+        { size: 150, quality: 0.55 },
+        { size: 120, quality: 0.50 },
+        { size: 100, quality: 0.45 },
+        { size: 80, quality: 0.40 }
       ];
 
       let base64Final = null;
+      let tamanhoUsado = 0;
 
       for (const t of tentativas) {
+        const canvas = cropper.getCroppedCanvas({
+          width: t.size,
+          height: t.size,
+          imageSmoothingEnabled: true,
+          imageSmoothingQuality: 'high'
+        });
+
         const base64 = canvas.toDataURL('image/jpeg', t.quality);
-        console.log('Tentativa (' + Math.round(t.quality*100) + '%):', base64.length, 'chars');
+        console.log('📐 Tentativa ' + t.size + 'px @ ' + Math.round(t.quality*100) + '%:', base64.length, 'chars');
+
         if (base64.length <= 2048) {
           base64Final = base64;
-          console.log('✅ Aceita com qualidade:', Math.round(t.quality*100) + '%');
+          tamanhoUsado = t.size;
+          console.log('✅ Aceita com ' + t.size + 'px!');
           break;
         }
       }
 
-      // Se nenhuma coube em 400x400, tenta 250x250
       if (!base64Final) {
-        const canvasMenor = cropper?.getCroppedCanvas({ width: 250, height: 250 }) || canvas;
-        base64Final = canvas.toDataURL('image/jpeg', 0.5);
-        console.log('⚠️ Usando último recurso');
+        const canvasMin = cropper.getCroppedCanvas({
+          width: 60,
+          height: 60,
+          imageSmoothingEnabled: true,
+          imageSmoothingQuality: 'high'
+        });
+        base64Final = canvasMin.toDataURL('image/jpeg', 0.4);
+        tamanhoUsado = 60;
+        console.log('⚠️ Usando 60px como último recurso');
       }
 
-      salvarFoto(base64Final);
-    }, 500);
+      cropper.destroy();
+      cropper = null;
+
+      salvarFoto(base64Final, tamanhoUsado);
+    }, 300);
   };
 
-  async function salvarFoto(base64) {
+  async function salvarFoto(base64, tamanho) {
     try {
       await updateProfile(userAtual, { photoURL: base64 });
       document.getElementById('userPhoto').src = base64;
       localStorage.setItem('yuna_user_photo', base64);
       document.getElementById('processando').classList.remove('show');
+      document.getElementById('opcoesFoto').style.display = 'block';
       fecharModal('modalFoto');
-      alert('✅ Foto atualizada com sucesso!');
+      
+      let msgQualidade = '';
+      if (tamanho >= 400) msgQualidade = '🎉 Excelente qualidade!';
+      else if (tamanho >= 300) msgQualidade = '✨ Ótima qualidade!';
+      else if (tamanho >= 200) msgQualidade = '👍 Boa qualidade!';
+      else if (tamanho >= 150) msgQualidade = '⚠️ Qualidade aceitável';
+      else msgQualidade = '📷 Qualidade reduzida';
+      
+      alert('✅ Foto atualizada!\n\n' + msgQualidade);
+      
     } catch (err) {
       console.error('Erro:', err);
       document.getElementById('processando').classList.remove('show');
       const avisoErro = document.getElementById('avisoErro');
       const avisoTexto = document.getElementById('avisoTexto');
       if (avisoErro) {
-        if (err.message.includes('too long') || err.code === 'auth/invalid-profile-attribute') {
-          avisoTexto.innerHTML = 'A imagem é <strong>muito grande</strong>. Tente uma foto <strong>menor</strong> ou recorte só o rosto.';
-        } else {
-          avisoTexto.innerHTML = 'Erro: ' + err.message;
-        }
+        avisoTexto.innerHTML = 'Erro ao salvar: <strong>' + err.message + '</strong>';
         avisoErro.style.display = 'block';
         document.getElementById('opcoesFoto').style.display = 'block';
       }
@@ -597,3 +591,4 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 
 </body>
 </html>
+  
