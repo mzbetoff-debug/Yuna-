@@ -86,7 +86,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 </style>
 </head>
 <body>
-<div class="loading show" id="loading">
+  <div class="loading show" id="loading">
   <div class="spinner"></div>
   <p style="color:#94a3b8">Carregando perfil...</p>
 </div>
@@ -208,7 +208,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     <div class="processando" id="processando">
       <div class="spinner-process"></div>
       <p>⏳ Processando imagem...</p>
-      <p class="sub">Comprimindo e enviando para o servidor</p>
+      <p class="sub">Comprimindo com alta qualidade</p>
     </div>
 
     <div id="opcoesFoto">
@@ -217,7 +217,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       <div class="foto-opcoes">
         <label class="foto-opt">
           <div class="ic" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><i class="fas fa-upload"></i></div>
-          <div class="tx"><strong>Enviar do celular</strong><span>Redimensionada automaticamente</span></div>
+          <div class="tx"><strong>Enviar do celular</strong><span>Alta qualidade automática</span></div>
           <input type="file" id="fotoUpload" accept="image/*" style="display:none" onchange="uploadFoto(this)">
         </label>
       </div>
@@ -226,8 +226,8 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       </div>
     </div>
   </div>
-    </div>
-    <script type="module">
+  </div>
+  <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut, updateProfile, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -404,6 +404,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('modalFoto').classList.add('show');
   };
 
+  // ✅ UPLOAD COM ALTA QUALIDADE (400px até 150px)
   window.uploadFoto = function(input) {
     const file = input.files[0];
     if (!file) return;
@@ -416,34 +417,63 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        let canvas = document.createElement('canvas');
-        const MAX = 100;
-        let width = img.width;
-        let height = img.height;
+        const tentativas = [
+          { size: 400, quality: 0.85 },
+          { size: 350, quality: 0.80 },
+          { size: 300, quality: 0.75 },
+          { size: 250, quality: 0.70 },
+          { size: 200, quality: 0.65 },
+          { size: 150, quality: 0.60 }
+        ];
 
-        if (width > height) {
-          if (width > MAX) { height = Math.round(height * MAX / width); width = MAX; }
-        } else {
-          if (height > MAX) { width = Math.round(width * MAX / height); height = MAX; }
+        function gerarImagem(size, quality) {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > size) {
+              height = Math.round(height * size / width);
+              width = size;
+            }
+          } else {
+            if (height > size) {
+              width = Math.round(width * size / height);
+              height = size;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          return canvas.toDataURL('image/jpeg', quality);
         }
 
-        canvas.width = width;
-        canvas.height = height;
-        let ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-
-        let base64 = canvas.toDataURL('image/jpeg', 0.4);
-        if (base64.length > 2000) base64 = canvas.toDataURL('image/jpeg', 0.25);
-        if (base64.length > 2000) {
-          canvas = document.createElement('canvas');
-          canvas.width = 50;
-          canvas.height = 50;
-          ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, 50, 50);
-          base64 = canvas.toDataURL('image/jpeg', 0.3);
+        let base64Final = null;
+        for (let i = 0; i < tentativas.length; i++) {
+          const t = tentativas[i];
+          const base64 = gerarImagem(t.size, t.quality);
+          console.log('Tentativa ' + (i+1) + ' (' + t.size + 'px, ' + Math.round(t.quality*100) + '%):', base64.length);
+          
+          if (base64.length <= 2048) {
+            base64Final = base64;
+            console.log('✅ Aceita! Tamanho:', t.size + 'px');
+            break;
+          }
         }
 
-        setTimeout(() => salvarFoto(base64), 800);
+        if (!base64Final) {
+          base64Final = gerarImagem(150, 0.5);
+          console.log('⚠️ Usando última tentativa');
+        }
+
+        setTimeout(() => salvarFoto(base64Final), 500);
       };
       img.src = e.target.result;
     };
@@ -465,7 +495,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       const avisoTexto = document.getElementById('avisoTexto');
       if (avisoErro) {
         if (err.message.includes('too long') || err.code === 'auth/invalid-profile-attribute') {
-          avisoTexto.innerHTML = 'A imagem que você escolheu é <strong>muito grande</strong>. Tente uma foto <strong>menor</strong>.';
+          avisoTexto.innerHTML = 'A imagem que você escolheu é <strong>muito grande</strong>. Tente uma foto <strong>menor</strong> ou com <strong>menos detalhes</strong>.';
         } else {
           avisoTexto.innerHTML = 'Erro: ' + err.message;
         }
@@ -484,4 +514,4 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 </script>
 
 </body>
-  </html>
+</html>
