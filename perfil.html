@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0a0e1a">
 <title>YUNA · Perfil</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 html,body{background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
@@ -83,6 +84,21 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 .loading{display:none;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;gap:16px}
 .loading.show{display:flex}
 .spinner{width:50px;height:50px;border:4px solid rgba(167,139,250,.2);border-top-color:#a78bfa;border-radius:50%;animation:spin .8s linear infinite}
+
+/* ✅ MODAL DE RECORTE */
+#modalRecorte{position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:3000;display:none;flex-direction:column}
+#modalRecorte.show{display:flex}
+.recorte-header{padding:16px;background:rgba(10,14,26,.95);border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center}
+.recorte-header h3{font-size:16px;font-weight:700;color:#f1f5f9;display:flex;align-items:center;gap:8px}
+.recorte-header h3 i{color:#a78bfa}
+.recorte-header .btn-fechar{background:rgba(255,255,255,.06);border:none;color:#cbd5e1;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px}
+.recorte-area{flex:1;background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.recorte-area img{max-width:100%;max-height:100%;display:block}
+.recorte-footer{padding:16px;background:rgba(10,14,26,.95);border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px}
+.recorte-btn{flex:1;padding:14px;border-radius:14px;font-weight:600;font-size:15px;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px}
+.recorte-btn.cancel{background:rgba(255,255,255,.06);color:#cbd5e1;border:1px solid rgba(255,255,255,.08)}
+.recorte-btn.confirm{background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;box-shadow:0 4px 15px rgba(236,72,153,.4)}
+.recorte-btn.rotate{background:rgba(167,139,250,.15);color:#c4b5fd;border:1px solid rgba(167,139,250,.3);flex:0 0 auto;width:56px}
 </style>
 </head>
 <body>
@@ -140,7 +156,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
 
   <button class="opcao-btn" onclick="abrirModalFoto()">
     <div class="icon" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"><i class="fas fa-image"></i></div>
-    <div class="texto"><h4>Mudar foto de perfil</h4><p>Escolher ou enviar nova foto</p></div>
+    <div class="texto"><h4>Mudar foto de perfil</h4><p>Escolher, recortar e enviar</p></div>
     <i class="fas fa-chevron-right seta"></i>
   </button>
 
@@ -192,14 +208,12 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
         <strong style="color:#fbbf24;font-size:13px">NÃO FOI POSSÍVEL SALVAR</strong>
       </div>
       <p id="avisoTexto" style="font-size:12px;color:#fcd34d;line-height:1.6;margin-bottom:8px">
-        A imagem que você escolheu é muito grande para o servidor.
+        A imagem que você escolheu é muito grande.
       </p>
       <div style="background:rgba(0,0,0,.3);border-radius:10px;padding:10px 12px;margin-top:8px">
         <strong style="color:#fbbf24;font-size:12px;display:block;margin-bottom:6px">💡 Recomendações:</strong>
         <ul style="list-style:none;font-size:11px;color:#fcd34d;line-height:1.7;padding-left:0">
           <li>• Use uma foto <strong>pequena</strong> (rosto, avatar)</li>
-          <li>• Evite fotos grandes ou com muitos detalhes</li>
-          <li>• Formato ideal: <strong>quadrada</strong> até 500KB</li>
           <li>• Recorte só o rosto e tente novamente</li>
         </ul>
       </div>
@@ -217,8 +231,8 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       <div class="foto-opcoes">
         <label class="foto-opt">
           <div class="ic" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><i class="fas fa-upload"></i></div>
-          <div class="tx"><strong>Enviar do celular</strong><span>Alta qualidade automática</span></div>
-          <input type="file" id="fotoUpload" accept="image/*" style="display:none" onchange="uploadFoto(this)">
+          <div class="tx"><strong>Enviar do celular</strong><span>Máx. 8MB · Recorte incluído</span></div>
+          <input type="file" id="fotoUpload" accept="image/*" style="display:none" onchange="iniciarRecorte(this)">
         </label>
       </div>
       <div class="modal-btns">
@@ -226,8 +240,25 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       </div>
     </div>
   </div>
+</div>
+
+<!-- ✅ MODAL DE RECORTE -->
+<div id="modalRecorte">
+  <div class="recorte-header">
+    <h3><i class="fas fa-crop"></i> Recortar foto</h3>
+    <button class="btn-fechar" onclick="cancelarRecorte()"><i class="fas fa-times"></i></button>
   </div>
-  <script type="module">
+  <div class="recorte-area">
+    <img id="imagemRecorte" src="" alt="">
+  </div>
+  <div class="recorte-footer">
+    <button class="recorte-btn rotate" onclick="girarImagem()"><i class="fas fa-sync-alt"></i></button>
+    <button class="recorte-btn cancel" onclick="cancelarRecorte()">Cancelar</button>
+    <button class="recorte-btn confirm" onclick="confirmarRecorte()"><i class="fas fa-check"></i> Recortar</button>
+  </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut, updateProfile, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -245,8 +276,12 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
   setPersistence(auth, browserLocalPersistence);
 
   let userAtual = null;
+  let cropper = null;
+  let rotacaoAtual = 0;
+
   const ADMIN_EMAIL = 'mzbetoff@gmail.com';
   const DIAS_ESPERA = 60;
+  const MAX_MB = 8;
 
   function formatarData(timestamp) {
     const d = new Date(timestamp);
@@ -316,7 +351,6 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
         localStorage.removeItem('yuna_user_name');
         localStorage.removeItem('yuna_user_photo');
         localStorage.removeItem('yuna_user_email');
-        console.log('👋 Logout');
         window.location.replace('login.html');
       });
     }
@@ -404,80 +438,128 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('modalFoto').classList.add('show');
   };
 
-  // ✅ UPLOAD COM ALTA QUALIDADE (400px até 150px)
-  window.uploadFoto = function(input) {
+  // ✅ INICIA O RECORTE (verifica tamanho máximo 8MB)
+  window.iniciarRecorte = function(input) {
     const file = input.files[0];
     if (!file) return;
 
+    // ✅ Verifica tamanho máximo de 8MB
+    const tamanhoMB = file.size / (1024 * 1024);
+    if (tamanhoMB > MAX_MB) {
+      alert('❌ A imagem é muito grande!\n\nTamanho: ' + tamanhoMB.toFixed(2) + ' MB\nMáximo: ' + MAX_MB + ' MB\n\nEscolha uma foto menor.');
+      input.value = '';
+      return;
+    }
+
+    // Fecha o modal de foto e abre o de recorte
+    fecharModal('modalFoto');
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = document.getElementById('imagemRecorte');
+      img.src = e.target.result;
+      rotacaoAtual = 0;
+
+      // Abre o modal de recorte
+      document.getElementById('modalRecorte').classList.add('show');
+
+      // Inicializa o Cropper depois que a imagem carregar
+      img.onload = () => {
+        if (cropper) cropper.destroy();
+        cropper = new Cropper(img, {
+          aspectRatio: 1,           // Quadrado (1:1) para perfil
+          viewMode: 1,               // Não sai da área
+          dragMode: 'move',          // Move a imagem
+          autoCropArea: 0.8,         // Área de recorte 80%
+          restore: false,
+          guides: true,
+          center: true,
+          highlight: false,
+          cropBoxMovable: true,
+          cropBoxResizable: true,
+          toggleDragModeOnDblclick: false,
+          background: false,
+          responsive: true
+        });
+      };
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // ✅ GIRA A IMAGEM
+  window.girarImagem = function() {
+    if (cropper) {
+      cropper.rotate(90);
+      rotacaoAtual += 90;
+    }
+  };
+
+  // ✅ CANCELA O RECORTE
+  window.cancelarRecorte = function() {
+    if (cropper) {
+      cropper.destroy();
+      cropper = null;
+    }
+    document.getElementById('modalRecorte').classList.remove('show');
+    document.getElementById('fotoUpload').value = '';
     document.getElementById('avisoErro').style.display = 'none';
+    document.getElementById('opcoesFoto').style.display = 'block';
+    document.getElementById('modalFoto').classList.add('show');
+  };
+
+  // ✅ CONFIRMA O RECORTE E SALVA
+  window.confirmarRecorte = function() {
+    if (!cropper) return;
+
+    // Pega o canvas recortado
+    const canvas = cropper.getCroppedCanvas({
+      width: 400,
+      height: 400,
+      imageSmoothingEnabled: true,
+      imageSmoothingQuality: 'high'
+    });
+
+    // Fecha o modal de recorte
+    cropper.destroy();
+    cropper = null;
+    document.getElementById('modalRecorte').classList.remove('show');
+
+    // Mostra o processando
+    document.getElementById('modalFoto').classList.add('show');
     document.getElementById('opcoesFoto').style.display = 'none';
     document.getElementById('processando').classList.add('show');
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        const tentativas = [
-          { size: 400, quality: 0.85 },
-          { size: 350, quality: 0.80 },
-          { size: 300, quality: 0.75 },
-          { size: 250, quality: 0.70 },
-          { size: 200, quality: 0.65 },
-          { size: 150, quality: 0.60 }
-        ];
+    // Tenta várias qualidades
+    setTimeout(() => {
+      const tentativas = [
+        { quality: 0.85 },
+        { quality: 0.75 },
+        { quality: 0.65 },
+        { quality: 0.55 },
+        { quality: 0.45 }
+      ];
 
-        function gerarImagem(size, quality) {
-          const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
+      let base64Final = null;
 
-          if (width > height) {
-            if (width > size) {
-              height = Math.round(height * size / width);
-              width = size;
-            }
-          } else {
-            if (height > size) {
-              width = Math.round(width * size / height);
-              height = size;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          
-          ctx.imageSmoothingEnabled = true;
-          ctx.imageSmoothingQuality = 'high';
-          
-          ctx.drawImage(img, 0, 0, width, height);
-          
-          return canvas.toDataURL('image/jpeg', quality);
+      for (const t of tentativas) {
+        const base64 = canvas.toDataURL('image/jpeg', t.quality);
+        console.log('Tentativa (' + Math.round(t.quality*100) + '%):', base64.length, 'chars');
+        if (base64.length <= 2048) {
+          base64Final = base64;
+          console.log('✅ Aceita com qualidade:', Math.round(t.quality*100) + '%');
+          break;
         }
+      }
 
-        let base64Final = null;
-        for (let i = 0; i < tentativas.length; i++) {
-          const t = tentativas[i];
-          const base64 = gerarImagem(t.size, t.quality);
-          console.log('Tentativa ' + (i+1) + ' (' + t.size + 'px, ' + Math.round(t.quality*100) + '%):', base64.length);
-          
-          if (base64.length <= 2048) {
-            base64Final = base64;
-            console.log('✅ Aceita! Tamanho:', t.size + 'px');
-            break;
-          }
-        }
+      // Se nenhuma coube em 400x400, tenta 250x250
+      if (!base64Final) {
+        const canvasMenor = cropper?.getCroppedCanvas({ width: 250, height: 250 }) || canvas;
+        base64Final = canvas.toDataURL('image/jpeg', 0.5);
+        console.log('⚠️ Usando último recurso');
+      }
 
-        if (!base64Final) {
-          base64Final = gerarImagem(150, 0.5);
-          console.log('⚠️ Usando última tentativa');
-        }
-
-        setTimeout(() => salvarFoto(base64Final), 500);
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+      salvarFoto(base64Final);
+    }, 500);
   };
 
   async function salvarFoto(base64) {
@@ -495,7 +577,7 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       const avisoTexto = document.getElementById('avisoTexto');
       if (avisoErro) {
         if (err.message.includes('too long') || err.code === 'auth/invalid-profile-attribute') {
-          avisoTexto.innerHTML = 'A imagem que você escolheu é <strong>muito grande</strong>. Tente uma foto <strong>menor</strong> ou com <strong>menos detalhes</strong>.';
+          avisoTexto.innerHTML = 'A imagem é <strong>muito grande</strong>. Tente uma foto <strong>menor</strong> ou recorte só o rosto.';
         } else {
           avisoTexto.innerHTML = 'Erro: ' + err.message;
         }
