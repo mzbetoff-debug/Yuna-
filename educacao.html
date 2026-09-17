@@ -59,9 +59,7 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
 .modal-header {display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(10,14,26,.95);border-bottom:1px solid rgba(255,255,255,.06);}
 .modal-titulo {color:#f1f5f9;font-size:14px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:12px;}
 .modal-fechar {background:rgba(236,72,153,.15);border:1px solid rgba(236,72,153,.3);color:#f472b6;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;}
-.modal iframe {flex:1;border:none;width:100%;}
-.modal-aviso {padding:10px 16px;background:rgba(167,139,250,.1);color:#a78bfa;font-size:12px;text-align:center;}
-.modal-aviso a {color:#f472b6;text-decoration:underline;}
+.modal iframe {flex:1;border:none;width:100%;background:#fff;}
 .bottom-nav {position:fixed;bottom:0;left:0;right:0;background:rgba(10,14,26,.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06);padding:10px 0;display:flex;justify-content:space-around;z-index:100;}
 .nav {display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;color:#64748b;font-size:10px;text-decoration:none;}
 .nav i {font-size:18px;}
@@ -93,7 +91,7 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
   <div class="section"><div class="filtros"><div class="filtro active">🇲🇿 Moçambique</div></div></div>
   <div class="pesquisa"><i class="fas fa-search"></i><input type="text" id="pesquisaLivros" placeholder="Buscar livro..."></div>
   <div class="section">
-    <div class="section-title"><i class="fas fa-book"></i> Livros disponíveis</div>
+    <div class="section-title"><i class="fas fa-book"></i> Livros disponíveis no site</div>
     <div id="listaLivros"><div class="loading"><i class="fas fa-spinner fa-spin"></i>Carregando...</div></div>
   </div>
 </div>
@@ -148,8 +146,7 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
     <div class="modal-titulo" id="modalTitulo">PDF</div>
     <button class="modal-fechar" onclick="fecharModal()"><i class="fas fa-times"></i></button>
   </div>
-  <div class="modal-aviso">Se não carregar, <a id="modalLink" href="#" target="_blank">clique aqui</a>.</div>
-  <iframe id="modalIframe" src=""></iframe>
+  <iframe id="modalIframe" src="" allow="autoplay"></iframe>
 </div>
 
 <nav class="bottom-nav">
@@ -157,8 +154,8 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
   <a class="nav" href="musicas.html"><i class="fas fa-music"></i><span>Música</span></a>
   <a class="nav active" href="educacao.html"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
   <a class="nav" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
-  </nav>
-  <script>
+</nav>
+<script>
 const API_KEY = 'AIzaSyDIncxqItl-qz17RMOLz8vWiVW2S2AMETk';
 const PASTA_LIVROS_MZ = '1TmU17bfkBXJvMSuDhJC-PI6Lh0zKQs8E';
 const PASTA_EXAMES_MZ = '1TmU17bfkBXJvMSuDhJC-PI6Lh0zKQs8E';
@@ -185,10 +182,10 @@ function ativarPesquisa(inputId, listaId) {
   });
 }
 
+// ABRIR LEITURA NO MODAL (usa /preview do Drive)
 function abrirLeitura(id, nome) {
   document.getElementById('modalTitulo').textContent = nome;
   document.getElementById('modalIframe').src = 'https://drive.google.com/file/d/' + id + '/preview';
-  document.getElementById('modalLink').href = 'https://drive.google.com/file/d/' + id + '/view';
   document.getElementById('modalLeitura').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
@@ -224,7 +221,7 @@ async function carregarPDFs(pastaId, destinoId) {
         <div class="info"><h4>${nome}</h4><p>${tam} · PDF</p></div>
         <div class="acoes">
           <button class="btn-mini btn-ler" onclick="abrirLeitura('${f.id}', '${nomeEsc}')"><i class="fas fa-book-open"></i></button>
-          <a class="btn-mini btn-baixar" href="https://drive.google.com/uc?export=download&id=${f.id}"><i class="fas fa-download"></i></a>
+          <a class="btn-mini btn-baixar" href="https://drive.google.com/uc?export=download&id=${f.id}" download><i class="fas fa-download"></i></a>
         </div>`;
       destino.appendChild(card);
     });
@@ -236,25 +233,25 @@ carregarPDFs(PASTA_LIVROS_MZ, 'listaLivros');
 carregarPDFs(PASTA_EXAMES_MZ, 'listaExames');
 
 const AUTORES = [
-  {nome:'Mia Couto', pais:'Moçambique', nascimento:'1955', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Mia_Couto_2013.jpg/440px-Mia_Couto_2013.jpg', pastaId:'', bio:'Mia Couto é um dos escritores moçambicanos mais conhecidos internacionalmente. Nascido na Beira em 1955, começou a escrever ainda jovem e adotou o pseudônimo "Mia" em homenagem aos gatos. Formou-se em Medicina e Biologia, mas dedicou-se à literatura e ao jornalismo.', obras:['Terra Sonâmbula (1992)','O Último Voo do Flamingo (2000)','Um Rio Chamado Tempo, Uma Casa Chamada Terra (2002)','A Confissão da Leoa (2012)'], premios:['Prêmio Camões (2013)','Prêmio Neustadt de Literatura (2014)','Prêmio Internacional de Literatura de Dublin (2015)']},
-  {nome:'José Craveirinha', pais:'Moçambique', nascimento:'1922-2003', foto:'', pastaId:'', bio:'José Craveirinha é considerado o maior poeta moçambicano de todos os tempos. Nascido em Maputo em 1922, sua poesia exalta a negritude, a resistência anticolonial e a identidade africana.', obras:['Chigubo (1964)','Cantico a Um Dedo de Deus (1971)','Karingana ua Karingana (1974)','Maria (1988)'], premios:['Prêmio Camões (1991)']},
-  {nome:'Noémia de Sousa', pais:'Moçambique', nascimento:'1926-2002', foto:'', pastaId:'', bio:'Noémia de Sousa, conhecida como "Mãe dos Poetas Moçambicanos", foi uma poeta fundamental na afirmação da identidade negra em Moçambique.', obras:['Sangue Negro (2001, póstumo)'], premios:['Reconhecimento como pioneira da poesia moçambicana']},
-  {nome:'Ungulani Ba Ka Khosa', pais:'Moçambique', nascimento:'1957', foto:'', pastaId:'', bio:'Ungulani Ba Ka Khosa é um escritor moçambicano nascido em Inhambane. Seu romance mais famoso, "Ualalapi", reconta a história do imperador nguni Ngungunhane.', obras:['Ualalapi (1987)','Orvalho e Gelo (1990)','No Reino dos Abutres (2002)'], premios:['Prêmio Nacional de Ficção de Moçambique (1987)']},
-  {nome:'Machado de Assis', pais:'Brasil', nascimento:'1839-1908', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Machado_de_Assis_1904.jpg/440px-Machado_de_Assis_1904.jpg', pastaId:'', bio:'Joaquim Maria Machado de Assis é considerado o maior escritor brasileiro de todos os tempos. Nascido no Rio de Janeiro em 1839, fundou a Academia Brasileira de Letras em 1897.', obras:['Dom Casmurro (1899)','Memórias Póstumas de Brás Cubas (1881)','Quincas Borba (1891)'], premios:['Fundador da Academia Brasileira de Letras']},
-  {nome:'Clarice Lispector', pais:'Brasil', nascimento:'1920-1977', foto:'', pastaId:'', bio:'Clarice Lispector é uma das mais importantes escritoras brasileiras. Nascida na Ucrânia em 1920, veio para o Brasil ainda bebê.', obras:['A Hora da Estrela (1977)','Perto do Coração Selvagem (1943)','A Paixão Segundo G.H. (1964)'], premios:['Prêmio Jabuti (1978)']},
-  {nome:'Fernando Pessoa', pais:'Portugal', nascimento:'1888-1935', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Fernando_Pessoa_1914.jpg/440px-Fernando_Pessoa_1914.jpg', pastaId:'', bio:'Fernando Pessoa é o maior poeta português do século XX. Ficou famoso pelos seus heterônimos.', obras:['Mensagem (1934)','Livro do Desassossego (póstumo)'], premios:['Um dos maiores poetas da língua portuguesa']},
-  {nome:'José Saramago', pais:'Portugal', nascimento:'1922-2010', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Jos%C3%A9_Saramago.jpg/440px-Jos%C3%A9_Saramago.jpg', pastaId:'', bio:'José Saramago foi o único escritor de língua portuguesa a ganhar o Prêmio Nobel de Literatura (1998).', obras:['Ensaio sobre a Cegueira (1995)','O Evangelho Segundo Jesus Cristo (1991)','Memorial do Convento (1982)'], premios:['Prêmio Nobel de Literatura (1998)','Prêmio Camões (1995)']},
-  {nome:'Luís de Camões', pais:'Portugal', nascimento:'1524-1580', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Luis_de_Camoes.jpg/440px-Luis_de_Camoes.jpg', pastaId:'', bio:'Luís Vaz de Camões é o maior poeta da língua portuguesa e autor de "Os Lusíadas".', obras:['Os Lusíadas (1572)','Rimas (póstumo)'], premios:['Considerado o "Príncipe dos Poetas"']},
-  {nome:'Agostinho Neto', pais:'Angola', nascimento:'1922-1979', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Agostinho_Neto.jpg/440px-Agostinho_Neto.jpg', pastaId:'', bio:'António Agostinho Neto foi poeta, médico e o primeiro Presidente de Angola (1975-1979).', obras:['Sagrada Esperança (1974)'], premios:['Herói Nacional de Angola']},
-  {nome:'Pepetela', pais:'Angola', nascimento:'1941', foto:'', pastaId:'', bio:'Pepetela é um dos maiores escritores angolanos. Lutou na guerrilha pela independência de Angola.', obras:['Mayombe (1980)','A Geração da Utopia (1992)'], premios:['Prêmio Camões (1997)']},
-  {nome:'Chinua Achebe', pais:'Nigéria', nascimento:'1930-2013', foto:'', pastaId:'', bio:'Chinua Achebe é o escritor africano mais traduzido do mundo. Seu romance "Things Fall Apart" é considerado o livro africano mais importante do século XX.', obras:['Things Fall Apart (1958)','No Longer at Ease (1960)'], premios:['Prêmio Man Booker Internacional (2007)']},
-  {nome:'Wole Soyinka', pais:'Nigéria', nascimento:'1934', foto:'', pastaId:'', bio:'Wole Soyinka ganhou o Prêmio Nobel de Literatura em 1986 — o primeiro africano a receber o prêmio.', obras:['A Dance of the Forests (1960)','The Lion and the Jewel (1959)'], premios:['Prêmio Nobel de Literatura (1986)']},
-  {nome:'Ngũgĩ wa Thiong\'o', pais:'Quênia', nascimento:'1938', foto:'', pastaId:'', bio:'Ngũgĩ wa Thiong\'o é um dos maiores escritores africanos vivos. Decide escrever apenas em kikuyu, sua língua materna.', obras:['Um Grão de Trigo (1967)','O Rio Entre (1965)'], premios:['Prêmio Park Kyong-ni (2016)']},
-  {nome:'Nelson Mandela', pais:'África do Sul', nascimento:'1918-2013', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Nelson_Mandela_1994.jpg/440px-Nelson_Mandela_1994.jpg', pastaId:'', bio:'Nelson Mandela foi líder anti-apartheid e o primeiro presidente negro da África do Sul. Ganhou o Prêmio Nobel da Paz em 1993.', obras:['Longo Caminho para a Liberdade (1994)'], premios:['Prêmio Nobel da Paz (1993)']},
-  {nome:'Gabriel García Márquez', pais:'Colômbia', nascimento:'1927-2014', foto:'', pastaId:'', bio:'Gabriel García Márquez foi escritor colombiano, Nobel de Literatura 1982. Pai do realismo mágico.', obras:['Cem Anos de Solidão (1967)','O Amor nos Tempos do Cólera (1985)'], premios:['Prêmio Nobel de Literatura (1982)']},
-  {nome:'Jorge Luis Borges', pais:'Argentina', nascimento:'1899-1986', foto:'', pastaId:'', bio:'Jorge Luis Borges foi um dos escritores mais influentes do século XX.', obras:['Ficções (1944)','O Aleph (1949)'], premios:['Prêmio Cervantes (1980)']},
-  {nome:'Pablo Neruda', pais:'Chile', nascimento:'1904-1973', foto:'', pastaId:'', bio:'Pablo Neruda foi poeta chileno, Nobel de Literatura 1971.', obras:['Vinte Poemas de Amor (1924)','Canto Geral (1950)'], premios:['Prêmio Nobel de Literatura (1971)']},
-  {nome:'William Shakespeare', pais:'Inglaterra', nascimento:'1564-1616', foto:'', pastaId:'', bio:'William Shakespeare é o maior dramaturgo da língua inglesa. Escreveu cerca de 38 peças e 154 sonetos.', obras:['Romeu e Julieta (1597)','Hamlet (1603)','Macbeth (1606)'], premios:['Maior escritor da língua inglesa']}
+  {nome:'Mia Couto', pais:'Moçambique', nascimento:'1955', foto:'', bio:'Mia Couto é um dos escritores moçambicanos mais conhecidos internacionalmente. Nascido na Beira em 1955, começou a escrever ainda jovem e adotou o pseudônimo "Mia" em homenagem aos gatos. Formou-se em Medicina e Biologia, mas dedicou-se à literatura e ao jornalismo.', obras:['Terra Sonâmbula (1992)','O Último Voo do Flamingo (2000)','Um Rio Chamado Tempo, Uma Casa Chamada Terra (2002)','A Confissão da Leoa (2012)'], premios:['Prêmio Camões (2013)','Prêmio Neustadt de Literatura (2014)','Prêmio Internacional de Literatura de Dublin (2015)']},
+  {nome:'José Craveirinha', pais:'Moçambique', nascimento:'1922-2003', foto:'', bio:'José Craveirinha é considerado o maior poeta moçambicano de todos os tempos.', obras:['Chigubo (1964)','Cantico a Um Dedo de Deus (1971)','Karingana ua Karingana (1974)','Maria (1988)'], premios:['Prêmio Camões (1991)']},
+  {nome:'Noémia de Sousa', pais:'Moçambique', nascimento:'1926-2002', foto:'', bio:'Noémia de Sousa, conhecida como "Mãe dos Poetas Moçambicanos".', obras:['Sangue Negro (2001, póstumo)'], premios:['Pioneira da poesia moçambicana']},
+  {nome:'Ungulani Ba Ka Khosa', pais:'Moçambique', nascimento:'1957', foto:'', bio:'Ungulani Ba Ka Khosa é um escritor moçambicano nascido em Inhambane. Autor de "Ualalapi".', obras:['Ualalapi (1987)','Orvalho e Gelo (1990)','No Reino dos Abutres (2002)'], premios:['Prêmio Nacional de Ficção de Moçambique (1987)']},
+  {nome:'Machado de Assis', pais:'Brasil', nascimento:'1839-1908', foto:'', bio:'Joaquim Maria Machado de Assis é considerado o maior escritor brasileiro. Fundou a Academia Brasileira de Letras em 1897.', obras:['Dom Casmurro (1899)','Memórias Póstumas de Brás Cubas (1881)','Quincas Borba (1891)'], premios:['Fundador da Academia Brasileira de Letras']},
+  {nome:'Clarice Lispector', pais:'Brasil', nascimento:'1920-1977', foto:'', bio:'Clarice Lispector é uma das mais importantes escritoras brasileiras.', obras:['A Hora da Estrela (1977)','Perto do Coração Selvagem (1943)','A Paixão Segundo G.H. (1964)'], premios:['Prêmio Jabuti (1978)']},
+  {nome:'Fernando Pessoa', pais:'Portugal', nascimento:'1888-1935', foto:'', bio:'Fernando Pessoa é o maior poeta português do século XX. Famoso pelos heterônimos.', obras:['Mensagem (1934)','Livro do Desassossego (póstumo)'], premios:['Um dos maiores poetas da língua portuguesa']},
+  {nome:'José Saramago', pais:'Portugal', nascimento:'1922-2010', foto:'', bio:'José Saramago foi o único escritor de língua portuguesa a ganhar o Prêmio Nobel de Literatura (1998).', obras:['Ensaio sobre a Cegueira (1995)','O Evangelho Segundo Jesus Cristo (1991)','Memorial do Convento (1982)'], premios:['Prêmio Nobel de Literatura (1998)','Prêmio Camões (1995)']},
+  {nome:'Luís de Camões', pais:'Portugal', nascimento:'1524-1580', foto:'', bio:'Luís Vaz de Camões é o maior poeta da língua portuguesa e autor de "Os Lusíadas".', obras:['Os Lusíadas (1572)','Rimas (póstumo)'], premios:['Considerado o "Príncipe dos Poetas"']},
+  {nome:'Agostinho Neto', pais:'Angola', nascimento:'1922-1979', foto:'', bio:'António Agostinho Neto foi poeta, médico e o primeiro Presidente de Angola.', obras:['Sagrada Esperança (1974)'], premios:['Herói Nacional de Angola']},
+  {nome:'Pepetela', pais:'Angola', nascimento:'1941', foto:'', bio:'Pepetela é um dos maiores escritores angolanos.', obras:['Mayombe (1980)','A Geração da Utopia (1992)'], premios:['Prêmio Camões (1997)']},
+  {nome:'Chinua Achebe', pais:'Nigéria', nascimento:'1930-2013', foto:'', bio:'Chinua Achebe é o escritor africano mais traduzido do mundo.', obras:['Things Fall Apart (1958)','No Longer at Ease (1960)'], premios:['Prêmio Man Booker Internacional (2007)']},
+  {nome:'Wole Soyinka', pais:'Nigéria', nascimento:'1934', foto:'', bio:'Wole Soyinka ganhou o Prêmio Nobel de Literatura em 1986.', obras:['A Dance of the Forests (1960)','The Lion and the Jewel (1959)'], premios:['Prêmio Nobel de Literatura (1986)']},
+  {nome:'Ngũgĩ wa Thiong\'o', pais:'Quênia', nascimento:'1938', foto:'', bio:'Ngũgĩ wa Thiong\'o é um dos maiores escritores africanos vivos.', obras:['Um Grão de Trigo (1967)','O Rio Entre (1965)'], premios:['Prêmio Park Kyong-ni (2016)']},
+  {nome:'Nelson Mandela', pais:'África do Sul', nascimento:'1918-2013', foto:'', bio:'Nelson Mandela foi líder anti-apartheid e primeiro presidente negro da África do Sul.', obras:['Longo Caminho para a Liberdade (1994)'], premios:['Prêmio Nobel da Paz (1993)']},
+  {nome:'Gabriel García Márquez', pais:'Colômbia', nascimento:'1927-2014', foto:'', bio:'Gabriel García Márquez foi escritor colombiano, Nobel 1982. Pai do realismo mágico.', obras:['Cem Anos de Solidão (1967)','O Amor nos Tempos do Cólera (1985)'], premios:['Prêmio Nobel de Literatura (1982)']},
+  {nome:'Jorge Luis Borges', pais:'Argentina', nascimento:'1899-1986', foto:'', bio:'Jorge Luis Borges foi um dos escritores mais influentes do século XX.', obras:['Ficções (1944)','O Aleph (1949)'], premios:['Prêmio Cervantes (1980)']},
+  {nome:'Pablo Neruda', pais:'Chile', nascimento:'1904-1973', foto:'', bio:'Pablo Neruda foi poeta chileno, Nobel de Literatura 1971.', obras:['Vinte Poemas de Amor (1924)','Canto Geral (1950)'], premios:['Prêmio Nobel de Literatura (1971)']},
+  {nome:'William Shakespeare', pais:'Inglaterra', nascimento:'1564-1616', foto:'', bio:'William Shakespeare é o maior dramaturgo da língua inglesa.', obras:['Romeu e Julieta (1597)','Hamlet (1603)','Macbeth (1606)'], premios:['Maior escritor da língua inglesa']}
 ];
 
 const listaAutores = document.getElementById('listaAutores');
@@ -296,12 +293,8 @@ function abrirFicha(i) {
       ${a.obras.map(o => `<div class="ficha-item">📖 ${o}</div>`).join('')}
       <div class="ficha-titulo"><i class="fas fa-trophy"></i> Prêmios e reconhecimentos</div>
       ${a.premios.map(p => `<div class="ficha-item">🏆 ${p}</div>`).join('')}
-      <div class="ficha-titulo"><i class="fas fa-cloud-download-alt"></i> Livros disponíveis</div>
-      <div id="livrosAutor"><div class="loading" style="padding:20px;"><i class="fas fa-spinner fa-spin"></i>Carregando...</div></div>
     </div>
   `;
-  const pastaAutor = a.pastaId || PASTA_LIVROS_MZ;
-  carregarPDFs(pastaAutor, 'livrosAutor');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
