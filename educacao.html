@@ -154,8 +154,8 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
   <a class="nav" href="musicas.html"><i class="fas fa-music"></i><span>Música</span></a>
   <a class="nav active" href="educacao.html"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
   <a class="nav" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
-</nav>
-<script>
+  </nav>
+  <script>
 const API_KEY = 'AIzaSyDIncxqItl-qz17RMOLz8vWiVW2S2AMETk';
 const PASTA_LIVROS_MZ = '1TmU17bfkBXJvMSuDhJC-PI6Lh0zKQs8E';
 const PASTA_EXAMES_MZ = '1TmU17bfkBXJvMSuDhJC-PI6Lh0zKQs8E';
@@ -182,13 +182,18 @@ function ativarPesquisa(inputId, listaId) {
   });
 }
 
-// ABRIR LEITURA — PDF dentro do site
+// ============================================
+// LEITOR DE PDF — abre DENTRO do site
+// ============================================
 function abrirLeitura(id, nome) {
   document.getElementById('modalTitulo').textContent = nome;
-  document.getElementById('modalIframe').src = 'https://drive.google.com/file/d/' + id + '/preview';
+  const iframe = document.getElementById('modalIframe');
+  // Link direto que força o Drive a mostrar o PDF (funciona no preview)
+  iframe.src = 'https://drive.google.com/file/d/' + id + '/preview';
   document.getElementById('modalLeitura').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
+
 function fecharModal() {
   document.getElementById('modalLeitura').style.display = 'none';
   document.getElementById('modalIframe').src = '';
@@ -196,6 +201,9 @@ function fecharModal() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
 
+// ============================================
+// CARREGAR PDFs DO DRIVE
+// ============================================
 async function carregarPDFs(pastaId, destinoId) {
   const destino = document.getElementById(destinoId);
   if (!destino) return;
@@ -232,6 +240,9 @@ async function carregarPDFs(pastaId, destinoId) {
 carregarPDFs(PASTA_LIVROS_MZ, 'listaLivros');
 carregarPDFs(PASTA_EXAMES_MZ, 'listaExames');
 
+// ============================================
+// AUTORES
+// ============================================
 const AUTORES = [
   {nome:'Mia Couto', pais:'Moçambique', nascimento:'1955', foto:'', bio:'Mia Couto é um dos escritores moçambicanos mais conhecidos internacionalmente. Nascido na Beira em 1955, começou a escrever ainda jovem e adotou o pseudônimo "Mia" em homenagem aos gatos. Formou-se em Medicina e Biologia, mas dedicou-se à literatura e ao jornalismo.', obras:['Terra Sonâmbula (1992)','O Último Voo do Flamingo (2000)','Um Rio Chamado Tempo, Uma Casa Chamada Terra (2002)','A Confissão da Leoa (2012)'], premios:['Prêmio Camões (2013)','Prêmio Neustadt de Literatura (2014)','Prêmio Internacional de Literatura de Dublin (2015)']},
   {nome:'José Craveirinha', pais:'Moçambique', nascimento:'1922-2003', foto:'', bio:'José Craveirinha é considerado o maior poeta moçambicano de todos os tempos.', obras:['Chigubo (1964)','Cantico a Um Dedo de Deus (1971)','Karingana ua Karingana (1974)','Maria (1988)'], premios:['Prêmio Camões (1991)']},
@@ -309,4 +320,4 @@ ativarPesquisa('pesquisaExames', 'listaExames');
 </script>
 
 </body>
-  </html>
+ </html>
