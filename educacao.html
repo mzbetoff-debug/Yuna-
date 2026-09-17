@@ -8,32 +8,30 @@
 <style>
 * {margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'Segoe UI',sans-serif;}
 body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
-
 .header {position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;}
 .back {background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#f1f5f9;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none;}
 .logo {display:flex;align-items:center;gap:8px;text-decoration:none;color:#f1f5f9;}
 .logo i {font-size:22px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .logo h1 {font-size:22px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-
 .hero {padding:20px;margin:16px;border-radius:24px;background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(167,139,250,.1));border:1px solid rgba(236,72,153,.2);position:relative;overflow:hidden;}
 .hero h2 {font-size:24px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
 .hero p {font-size:13px;color:#cbd5e1;line-height:1.5;}
 .hero .sh {position:absolute;right:-10px;bottom:-10px;font-size:100px;opacity:.08;color:#ec4899;}
-
 .abas {display:flex;gap:8px;padding:0 16px 16px;overflow-x:auto;scrollbar-width:none;}
 .abas::-webkit-scrollbar {display:none;}
 .aba {flex-shrink:0;padding:10px 16px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:#94a3b8;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:.2s;}
 .aba.active {background:linear-gradient(135deg,rgba(236,72,153,.25),rgba(167,139,250,.2));border-color:rgba(236,72,153,.4);color:#f472b6;}
-
 .section {padding:0 16px 16px;}
 .section-title {font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .section-title i {color:#ec4899;}
-
 .filtros {display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;}
 .filtros::-webkit-scrollbar {display:none;}
-.filtro {flex-shrink:0;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;}
+.filtro {flex-shrink:0;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
 .filtro.active {background:rgba(236,72,153,.15);border-color:rgba(236,72,153,.3);color:#f472b6;}
-
+.pesquisa {padding:0 16px 12px;position:relative;}
+.pesquisa input {width:100%;background:rgba(18,24,42,.9);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 16px 12px 44px;color:#f1f5f9;font-size:14px;outline:none;}
+.pesquisa input::placeholder {color:#64748b;}
+.pesquisa i {position:absolute;left:30px;top:50%;transform:translateY(-50%);color:#64748b;font-size:14px;}
 .card {display:flex;gap:14px;background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:14px;margin-bottom:10px;text-decoration:none;color:inherit;transition:.2s;cursor:pointer;}
 .card:active {transform:scale(.98);}
 .card .icon {width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0;overflow:hidden;font-weight:800;}
@@ -42,15 +40,13 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
 .card .info h4 {font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card .info p {font-size:12px;color:#94a3b8;}
 .card .acoes {display:flex;gap:6px;align-items:center;flex-shrink:0;}
-.btn-mini {width:38px;height:38px;border-radius:10px;border:none;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;text-decoration:none;}
+.btn-mini {width:38px;height:38px;border-radius:10px;border:none;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;text-decoration:none;background:none;}
 .btn-ler {background:rgba(167,139,250,.2);color:#a78bfa;}
 .btn-baixar {background:rgba(236,72,153,.2);color:#f472b6;}
-
 .vazio, .loading {text-align:center;padding:40px 20px;color:#64748b;font-size:13px;}
 .loading i, .vazio i {font-size:32px;display:block;margin-bottom:12px;color:#a78bfa;}
-
 .ficha {padding:16px;}
-.ficha-foto {width:120px;height:120px;border-radius:50%;margin:0 auto 16px;display:block;border:3px solid rgba(236,72,153,.4);object-fit:cover;}
+.ficha-foto {width:120px;height:120px;border-radius:50%;margin:0 auto 16px;display:block;border:3px solid rgba(236,72,153,.4);object-fit:cover;background:#1a1f2e;}
 .ficha-foto-icon {width:120px;height:120px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:800;color:#fff;background:linear-gradient(135deg,#a78bfa,#ec4899);border:3px solid rgba(236,72,153,.4);}
 .ficha-nome {font-size:24px;font-weight:800;text-align:center;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;}
 .ficha-info {text-align:center;color:#94a3b8;font-size:13px;margin-bottom:20px;}
@@ -59,7 +55,13 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
 .ficha-titulo i {color:#ec4899;}
 .ficha-item {background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13px;color:#cbd5e1;}
 .btn-voltar-ficha {background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#f472b6;padding:10px 16px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:20px;}
-
+.modal {position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:9999;display:none;flex-direction:column;}
+.modal-header {display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(10,14,26,.95);border-bottom:1px solid rgba(255,255,255,.06);}
+.modal-titulo {color:#f1f5f9;font-size:14px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:12px;}
+.modal-fechar {background:rgba(236,72,153,.15);border:1px solid rgba(236,72,153,.3);color:#f472b6;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;}
+.modal iframe {flex:1;border:none;width:100%;}
+.modal-aviso {padding:10px 16px;background:rgba(167,139,250,.1);color:#a78bfa;font-size:12px;text-align:center;}
+.modal-aviso a {color:#f472b6;text-decoration:underline;}
 .bottom-nav {position:fixed;bottom:0;left:0;right:0;background:rgba(10,14,26,.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06);padding:10px 0;display:flex;justify-content:space-around;z-index:100;}
 .nav {display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;color:#64748b;font-size:10px;text-decoration:none;}
 .nav i {font-size:18px;}
@@ -88,9 +90,8 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
 </div>
 
 <div id="aba-livros" class="conteudo-aba">
-  <div class="section">
-    <div class="filtros"><div class="filtro active">🇲🇿 Moçambique</div></div>
-  </div>
+  <div class="section"><div class="filtros"><div class="filtro active">🇲🇿 Moçambique</div></div></div>
+  <div class="pesquisa"><i class="fas fa-search"></i><input type="text" id="pesquisaLivros" placeholder="Buscar livro..."></div>
   <div class="section">
     <div class="section-title"><i class="fas fa-book"></i> Livros disponíveis</div>
     <div id="listaLivros"><div class="loading"><i class="fas fa-spinner fa-spin"></i>Carregando...</div></div>
@@ -98,12 +99,11 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
 </div>
 
 <div id="aba-exames" class="conteudo-aba" style="display:none;">
-  <div class="section">
-    <div class="filtros"><div class="filtro active">🇲🇿 Moçambique</div></div>
-  </div>
+  <div class="section"><div class="filtros"><div class="filtro active">🇲🇿 Moçambique</div></div></div>
+  <div class="pesquisa"><i class="fas fa-search"></i><input type="text" id="pesquisaExames" placeholder="Buscar exame..."></div>
   <div class="section">
     <div class="section-title"><i class="fas fa-file-alt"></i> Exames disponíveis</div>
-    <div id="listaExames"><div class="vazio"><i class="fas fa-file-alt"></i>Nenhum exame ainda.</div></div>
+    <div id="listaExames"><div class="loading"><i class="fas fa-spinner fa-spin"></i>Carregando...</div></div>
   </div>
 </div>
 
@@ -143,6 +143,15 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
   </div>
 </div>
 
+<div class="modal" id="modalLeitura">
+  <div class="modal-header">
+    <div class="modal-titulo" id="modalTitulo">PDF</div>
+    <button class="modal-fechar" onclick="fecharModal()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="modal-aviso">Se não carregar, <a id="modalLink" href="#" target="_blank">clique aqui</a>.</div>
+  <iframe id="modalIframe" src=""></iframe>
+</div>
+
 <nav class="bottom-nav">
   <a class="nav" href="home.html"><i class="fas fa-home"></i><span>Início</span></a>
   <a class="nav" href="musicas.html"><i class="fas fa-music"></i><span>Música</span></a>
@@ -152,6 +161,7 @@ body {background:#0a0e1a;color:#f1f5f9;padding-bottom:90px;min-height:100vh;}
   <script>
 const API_KEY = 'AIzaSyDIncxqItl-qz17RMOLz8vWiVW2S2AMETk';
 const PASTA_LIVROS_MZ = '1TmU17bfkBXJvMSuDhJC-PI6Lh0zKQs8E';
+const PASTA_EXAMES_MZ = '1TmU17bfkBXJvMSuDhJC-PI6Lh0zKQs8E';
 
 document.querySelectorAll('.aba').forEach(a => {
   a.onclick = () => {
@@ -162,10 +172,39 @@ document.querySelectorAll('.aba').forEach(a => {
   };
 });
 
-async function carregarLivros(pastaId, destino) {
+function ativarPesquisa(inputId, listaId) {
+  const input = document.getElementById(inputId);
+  const lista = document.getElementById(listaId);
+  if (!input || !lista) return;
+  input.addEventListener('input', e => {
+    const texto = e.target.value.toLowerCase().trim();
+    lista.querySelectorAll('.card').forEach(card => {
+      const nome = (card.querySelector('h4')?.textContent || '').toLowerCase();
+      card.style.display = nome.includes(texto) ? 'flex' : 'none';
+    });
+  });
+}
+
+function abrirLeitura(id, nome) {
+  document.getElementById('modalTitulo').textContent = nome;
+  document.getElementById('modalIframe').src = 'https://drive.google.com/file/d/' + id + '/preview';
+  document.getElementById('modalLink').href = 'https://drive.google.com/file/d/' + id + '/view';
+  document.getElementById('modalLeitura').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function fecharModal() {
+  document.getElementById('modalLeitura').style.display = 'none';
+  document.getElementById('modalIframe').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+async function carregarPDFs(pastaId, destinoId) {
+  const destino = document.getElementById(destinoId);
+  if (!destino) return;
   destino.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>Carregando...</div>';
   try {
-    const url = `https://www.googleapis.com/drive/v3/files?q='${pastaId}'+in+parents+and+mimeType='application/pdf'&key=${API_KEY}&fields=files(id,name,size)&pageSize=100`;
+    const url = `https://www.googleapis.com/drive/v3/files?q='${pastaId}'+in+parents+and+mimeType='application/pdf'&key=${API_KEY}&fields=files(id,name,size)&pageSize=200`;
     const r = await fetch(url);
     const d = await r.json();
     if (d.error) { destino.innerHTML = `<div class="vazio">Erro: ${d.error.message}</div>`; return; }
@@ -177,13 +216,14 @@ async function carregarLivros(pastaId, destino) {
     d.files.forEach(f => {
       const nome = f.name.replace('.pdf','').replace(/-/g,' ').replace(/_/g,' ');
       const tam = f.size ? (f.size/1024/1024).toFixed(1)+' MB' : '';
+      const nomeEsc = nome.replace(/'/g, "\\'");
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
         <div class="icon" style="background:linear-gradient(135deg,#f472b6,#a78bfa)"><i class="fas fa-file-pdf"></i></div>
         <div class="info"><h4>${nome}</h4><p>${tam} · PDF</p></div>
         <div class="acoes">
-          <a class="btn-mini btn-ler" href="https://drive.google.com/file/d/${f.id}/view" target="_blank"><i class="fas fa-book-open"></i></a>
+          <button class="btn-mini btn-ler" onclick="abrirLeitura('${f.id}', '${nomeEsc}')"><i class="fas fa-book-open"></i></button>
           <a class="btn-mini btn-baixar" href="https://drive.google.com/uc?export=download&id=${f.id}"><i class="fas fa-download"></i></a>
         </div>`;
       destino.appendChild(card);
@@ -192,28 +232,29 @@ async function carregarLivros(pastaId, destino) {
     destino.innerHTML = `<div class="vazio">Erro: ${e.message}</div>`;
   }
 }
-carregarLivros(PASTA_LIVROS_MZ, document.getElementById('listaLivros'));
+carregarPDFs(PASTA_LIVROS_MZ, 'listaLivros');
+carregarPDFs(PASTA_EXAMES_MZ, 'listaExames');
 
 const AUTORES = [
-  {nome:'Mia Couto', pais:'Moçambique', nascimento:'1955', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Mia_Couto_2013.jpg/440px-Mia_Couto_2013.jpg', bio:'Mia Couto (nome verdadeiro António Emílio Leite Couto) é um dos escritores moçambicanos mais conhecidos internacionalmente. Nascido na Beira em 1955, começou a escrever ainda jovem e adotou o pseudônimo "Mia" em homenagem aos gatos. Formou-se em Medicina e Biologia, mas dedicou-se à literatura e ao jornalismo. Sua obra mistura realismo mágico, tradição oral africana e crítica social.', obras:['Terra Sonâmbula (1992)','O Último Voo do Flamingo (2000)','Um Rio Chamado Tempo, Uma Casa Chamada Terra (2002)','A Confissão da Leoa (2012)'], premios:['Prêmio Camões (2013)','Prêmio Neustadt de Literatura (2014)','Prêmio Internacional de Literatura de Dublin (2015)']},
-  {nome:'José Craveirinha', pais:'Moçambique', nascimento:'1922-2003', foto:'', bio:'José Craveirinha é considerado o maior poeta moçambicano de todos os tempos. Nascido em Maputo em 1922, sua poesia exalta a negritude, a resistência anticolonial e a identidade africana. Foi preso pela PIDE por causa de sua militância pela independência de Moçambique.', obras:['Chigubo (1964)','Cantico a Um Dedo de Deus (1971)','Karingana ua Karingana (1974)','Maria (1988)'], premios:['Prêmio Camões (1991)','Prêmio Internacional de Poesia Etna-Taormina (1975)']},
-  {nome:'Noémia de Sousa', pais:'Moçambique', nascimento:'1926-2002', foto:'', bio:'Noémia de Sousa, conhecida como "Mãe dos Poetas Moçambicanos", foi uma poeta fundamental na afirmação da identidade negra em Moçambique. Nascida em Catembe em 1926, usava o pseudônimo "Vera Micaia". Sua poesia é marcada pela denúncia do racismo e pela valorização da cultura africana.', obras:['Sangue Negro (2001, póstumo)','Poemas publicados em jornais e revistas'], premios:['Reconhecimento como pioneira da poesia moçambicana']},
-  {nome:'Ungulani Ba Ka Khosa', pais:'Moçambique', nascimento:'1957', foto:'', bio:'Ungulani Ba Ka Khosa é um escritor moçambicano nascido em Inhambane. Seu romance mais famoso, "Ualalapi", reconta a história do imperador nguni Ngungunhane e a resistência africana contra a colonização portuguesa.', obras:['Ualalapi (1987)','Orvalho e Gelo (1990)','No Reino dos Abutres (2002)'], premios:['Prêmio Nacional de Ficção de Moçambique (1987)']},
-  {nome:'Machado de Assis', pais:'Brasil', nascimento:'1839-1908', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Machado_de_Assis_1904.jpg/440px-Machado_de_Assis_1904.jpg', bio:'Joaquim Maria Machado de Assis é considerado o maior escritor brasileiro de todos os tempos. Nascido no Rio de Janeiro em 1839, fundou a Academia Brasileira de Letras em 1897. Sua obra é marcada pela ironia, pelo pessimismo e pela análise psicológica profunda dos personagens.', obras:['Dom Casmurro (1899)','Memórias Póstumas de Brás Cubas (1881)','Quincas Borba (1891)','Esaú e Jacó (1904)'], premios:['Fundador da Academia Brasileira de Letras','Patrono da cadeira nº 23 da ABL']},
-  {nome:'Clarice Lispector', pais:'Brasil', nascimento:'1920-1977', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Clarice_Lispector.jpg/440px-Clarice_Lispector.jpg', bio:'Clarice Lispector é uma das mais importantes escritoras brasileiras. Nascida na Ucrânia em 1920, veio para o Brasil ainda bebê. Sua obra é conhecida pela introspecção, pelo fluxo de consciência e por questionar a própria linguagem.', obras:['A Hora da Estrela (1977)','Perto do Coração Selvagem (1943)','A Paixão Segundo G.H. (1964)','Laços de Família (1960)'], premios:['Prêmio Jabuti (1978)','Prêmio da Fundação Cultural do Distrito Federal (1961)']},
-  {nome:'Fernando Pessoa', pais:'Portugal', nascimento:'1888-1935', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Fernando_Pessoa_1914.jpg/440px-Fernando_Pessoa_1914.jpg', bio:'Fernando Pessoa é o maior poeta português do século XX. Nascido em Lisboa em 1888, ficou famoso pelos seus heterônimos — Alberto Caeiro, Ricardo Reis e Álvaro de Campos — cada um com estilo próprio. Em vida publicou pouco; sua obra completa só veio à luz após sua morte.', obras:['Mensagem (1934)','Livro do Desassossego (póstumo)','Poesias de Álvaro de Campos','Odes de Ricardo Reis'], premios:['Um dos maiores poetas da língua portuguesa']},
-  {nome:'José Saramago', pais:'Portugal', nascimento:'1922-2010', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Jos%C3%A9_Saramago.jpg/440px-Jos%C3%A9_Saramago.jpg', bio:'José Saramago foi o único escritor de língua portuguesa a ganhar o Prêmio Nobel de Literatura (1998). Nascido em Azinhaga, Portugal, era de família humilde. Sua escrita é marcada pelo estilo único, sem pontuação convencional, e por reflexões sobre a condição humana.', obras:['Ensaio sobre a Cegueira (1995)','O Evangelho Segundo Jesus Cristo (1991)','Memorial do Convento (1982)','A Caverna (2000)'], premios:['Prêmio Nobel de Literatura (1998)','Prêmio Camões (1995)']},
-  {nome:'Luís de Camões', pais:'Portugal', nascimento:'1524-1580', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Luis_de_Camoes.jpg/440px-Luis_de_Camoes.jpg', bio:'Luís Vaz de Camões é o maior poeta da língua portuguesa e autor de "Os Lusíadas", a epopeia nacional de Portugal. Sua vida é cercada de lendas: teria perdido um olho em batalha e sobrevivido a um naufrágio. Morreu pobre, mas sua obra se tornou o símbolo máximo da literatura portuguesa.', obras:['Os Lusíadas (1572)','Rimas (póstumo)','Auto de Filodemo'], premios:['Considerado o "Príncipe dos Poetas"','Dia de Portugal é 10 de junho, em sua memória']},
-  {nome:'Agostinho Neto', pais:'Angola', nascimento:'1922-1979', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Agostinho_Neto.jpg/440px-Agostinho_Neto.jpg', bio:'António Agostinho Neto foi poeta, médico e o primeiro Presidente de Angola (1975-1979). Nascido em Bengo em 1922, estudou Medicina em Portugal. Sua poesia exalta a liberdade e a identidade africana. É considerado o pai da nação angolana.', obras:['Sagrada Esperança (1974)','Quatro Poemas','Renúncia Impossível'], premios:['Herói Nacional de Angola','Prêmio Lênin da Paz (1975)']},
-  {nome:'Pepetela', pais:'Angola', nascimento:'1941', foto:'', bio:'Artur Carlos Maurício Pestana dos Santos, conhecido como Pepetela, é um dos maiores escritores angolanos. Nascido em Benguela em 1941, lutou na guerrilha pela independência de Angola. Sua obra "Mayombe" é considerada um marco da literatura africana.', obras:['Mayombe (1980)','A Geração da Utopia (1992)','O Desejo de Kianda (1995)','O Quase Fim do Mundo (2008)'], premios:['Prêmio Camões (1997)','Prêmio Nacional de Literatura de Angola']},
-  {nome:'Chinua Achebe', pais:'Nigéria', nascimento:'1930-2013', foto:'', bio:'Chinua Achebe é o escritor africano mais traduzido do mundo. Nascido na Nigéria em 1930, seu romance "Things Fall Apart" é considerado o livro africano mais importante do século XX. Sua obra retrata o choque entre a cultura tradicional africana e o colonialismo.', obras:['Things Fall Apart (1958)','No Longer at Ease (1960)','Arrow of God (1964)','Anthills of the Savannah (1987)'], premios:['Prêmio Man Booker Internacional (2007)','Prêmio da Paz dos Livreiros Alemães (2002)']},
-  {nome:'Wole Soyinka', pais:'Nigéria', nascimento:'1934', foto:'', bio:'Wole Soyinka é um escritor nigeriano que ganhou o Prêmio Nobel de Literatura em 1986 — o primeiro africano a receber o prêmio. Dramaturgo, poeta e romancista, sua obra é marcada pela crítica política e social.', obras:['A Dance of the Forests (1960)','The Lion and the Jewel (1959)','Death and the King\'s Horseman (1975)','Aké: The Years of Childhood (1981)'], premios:['Prêmio Nobel de Literatura (1986)','Prêmio Anisfield-Wolf (1983)']},
-  {nome:'Ngũgĩ wa Thiong\'o', pais:'Quênia', nascimento:'1938', foto:'', bio:'Ngũgĩ wa Thiong\'o é um dos maiores escritores africanos vivos. Nascido no Quênia em 1938, começou escrevendo em inglês, mas depois decidiu escrever apenas em kikuyu, sua língua materna, como ato político.', obras:['Um Grão de Trigo (1967)','O Rio Entre (1965)','Petals of Blood (1977)','Wizard of the Crow (2006)'], premios:['Prêmio Park Kyong-ni (2016)','Considerado para o Nobel várias vezes']},
-  {nome:'Nelson Mandela', pais:'África do Sul', nascimento:'1918-2013', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Nelson_Mandela_1994.jpg/440px-Nelson_Mandela_1994.jpg', bio:'Nelson Mandela foi líder anti-apartheid, prisioneiro político por 27 anos e o primeiro presidente negro da África do Sul (1994-1999). Ganhou o Prêmio Nobel da Paz em 1993. Sua autobiografia "Longo Caminho para a Liberdade" é um dos livros mais importantes do século XX.', obras:['Longo Caminho para a Liberdade (1994)','Conversas que Tive Comigo (2010)','Cartas da Prisão (2018)'], premios:['Prêmio Nobel da Paz (1993)','Medalha Presidencial da Liberdade']},
-  {nome:'Gabriel García Márquez', pais:'Colômbia', nascimento:'1927-2014', foto:'', bio:'Gabriel García Márquez foi um escritor colombiano, ganhador do Prêmio Nobel de Literatura em 1982. Considerado o pai do realismo mágico, sua obra-prima "Cem Anos de Solidão" é um dos livros mais lidos do mundo.', obras:['Cem Anos de Solidão (1967)','O Amor nos Tempos do Cólera (1985)','Crônica de uma Morte Anunciada (1981)','O Outono do Patriarca (1975)'], premios:['Prêmio Nobel de Literatura (1982)','Prêmio Neustadt (1972)']},
-  {nome:'Jorge Luis Borges', pais:'Argentina', nascimento:'1899-1986', foto:'', bio:'Jorge Luis Borges foi um dos escritores mais influentes do século XX. Nascido em Buenos Aires, era fascinado por labirintos, espelhos e paradoxos. Ficou cego na maturidade, mas continuou escrevendo. Nunca ganhou o Nobel, considerado um dos maiores erros da academia.', obras:['Ficções (1944)','O Aleph (1949)','História Universal da Infâmia (1935)','O Livro de Areia (1975)'], premios:['Prêmio Cervantes (1980)','Prêmio Jerusalém (1971)']},
-  {nome:'Pablo Neruda', pais:'Chile', nascimento:'1904-1973', foto:'', bio:'Pablo Neruda, nome verdadeiro Ricardo Reyes, foi um poeta chileno e ganhador do Prêmio Nobel de Literatura em 1971. Sua poesia é marcada pelo amor, pela política e pela natureza. Foi também diplomata e senador.', obras:['Vinte Poemas de Amor (1924)','Residência na Terra (1933)','Canto Geral (1950)','Odas Elementares (1954)'], premios:['Prêmio Nobel de Literatura (1971)','Prêmio Stalin da Paz (1953)']},
-  {nome:'William Shakespeare', pais:'Inglaterra', nascimento:'1564-1616', foto:'', bio:'William Shakespeare é considerado o maior dramaturgo e poeta da língua inglesa. Nascido em Stratford-upon-Avon em 1564, escreveu cerca de 38 peças e 154 sonetos. Suas obras são encenadas no mundo inteiro até hoje.', obras:['Romeu e Julieta (1597)','Hamlet (1603)','Macbeth (1606)','Otelo (1604)','Sonho de uma Noite de Verão (1595)'], premios:['Maior escritor da língua inglesa','Peças encenadas há mais de 400 anos']}
+  {nome:'Mia Couto', pais:'Moçambique', nascimento:'1955', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Mia_Couto_2013.jpg/440px-Mia_Couto_2013.jpg', pastaId:'', bio:'Mia Couto é um dos escritores moçambicanos mais conhecidos internacionalmente. Nascido na Beira em 1955, começou a escrever ainda jovem e adotou o pseudônimo "Mia" em homenagem aos gatos. Formou-se em Medicina e Biologia, mas dedicou-se à literatura e ao jornalismo.', obras:['Terra Sonâmbula (1992)','O Último Voo do Flamingo (2000)','Um Rio Chamado Tempo, Uma Casa Chamada Terra (2002)','A Confissão da Leoa (2012)'], premios:['Prêmio Camões (2013)','Prêmio Neustadt de Literatura (2014)','Prêmio Internacional de Literatura de Dublin (2015)']},
+  {nome:'José Craveirinha', pais:'Moçambique', nascimento:'1922-2003', foto:'', pastaId:'', bio:'José Craveirinha é considerado o maior poeta moçambicano de todos os tempos. Nascido em Maputo em 1922, sua poesia exalta a negritude, a resistência anticolonial e a identidade africana.', obras:['Chigubo (1964)','Cantico a Um Dedo de Deus (1971)','Karingana ua Karingana (1974)','Maria (1988)'], premios:['Prêmio Camões (1991)']},
+  {nome:'Noémia de Sousa', pais:'Moçambique', nascimento:'1926-2002', foto:'', pastaId:'', bio:'Noémia de Sousa, conhecida como "Mãe dos Poetas Moçambicanos", foi uma poeta fundamental na afirmação da identidade negra em Moçambique.', obras:['Sangue Negro (2001, póstumo)'], premios:['Reconhecimento como pioneira da poesia moçambicana']},
+  {nome:'Ungulani Ba Ka Khosa', pais:'Moçambique', nascimento:'1957', foto:'', pastaId:'', bio:'Ungulani Ba Ka Khosa é um escritor moçambicano nascido em Inhambane. Seu romance mais famoso, "Ualalapi", reconta a história do imperador nguni Ngungunhane.', obras:['Ualalapi (1987)','Orvalho e Gelo (1990)','No Reino dos Abutres (2002)'], premios:['Prêmio Nacional de Ficção de Moçambique (1987)']},
+  {nome:'Machado de Assis', pais:'Brasil', nascimento:'1839-1908', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Machado_de_Assis_1904.jpg/440px-Machado_de_Assis_1904.jpg', pastaId:'', bio:'Joaquim Maria Machado de Assis é considerado o maior escritor brasileiro de todos os tempos. Nascido no Rio de Janeiro em 1839, fundou a Academia Brasileira de Letras em 1897.', obras:['Dom Casmurro (1899)','Memórias Póstumas de Brás Cubas (1881)','Quincas Borba (1891)'], premios:['Fundador da Academia Brasileira de Letras']},
+  {nome:'Clarice Lispector', pais:'Brasil', nascimento:'1920-1977', foto:'', pastaId:'', bio:'Clarice Lispector é uma das mais importantes escritoras brasileiras. Nascida na Ucrânia em 1920, veio para o Brasil ainda bebê.', obras:['A Hora da Estrela (1977)','Perto do Coração Selvagem (1943)','A Paixão Segundo G.H. (1964)'], premios:['Prêmio Jabuti (1978)']},
+  {nome:'Fernando Pessoa', pais:'Portugal', nascimento:'1888-1935', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Fernando_Pessoa_1914.jpg/440px-Fernando_Pessoa_1914.jpg', pastaId:'', bio:'Fernando Pessoa é o maior poeta português do século XX. Ficou famoso pelos seus heterônimos.', obras:['Mensagem (1934)','Livro do Desassossego (póstumo)'], premios:['Um dos maiores poetas da língua portuguesa']},
+  {nome:'José Saramago', pais:'Portugal', nascimento:'1922-2010', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Jos%C3%A9_Saramago.jpg/440px-Jos%C3%A9_Saramago.jpg', pastaId:'', bio:'José Saramago foi o único escritor de língua portuguesa a ganhar o Prêmio Nobel de Literatura (1998).', obras:['Ensaio sobre a Cegueira (1995)','O Evangelho Segundo Jesus Cristo (1991)','Memorial do Convento (1982)'], premios:['Prêmio Nobel de Literatura (1998)','Prêmio Camões (1995)']},
+  {nome:'Luís de Camões', pais:'Portugal', nascimento:'1524-1580', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Luis_de_Camoes.jpg/440px-Luis_de_Camoes.jpg', pastaId:'', bio:'Luís Vaz de Camões é o maior poeta da língua portuguesa e autor de "Os Lusíadas".', obras:['Os Lusíadas (1572)','Rimas (póstumo)'], premios:['Considerado o "Príncipe dos Poetas"']},
+  {nome:'Agostinho Neto', pais:'Angola', nascimento:'1922-1979', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Agostinho_Neto.jpg/440px-Agostinho_Neto.jpg', pastaId:'', bio:'António Agostinho Neto foi poeta, médico e o primeiro Presidente de Angola (1975-1979).', obras:['Sagrada Esperança (1974)'], premios:['Herói Nacional de Angola']},
+  {nome:'Pepetela', pais:'Angola', nascimento:'1941', foto:'', pastaId:'', bio:'Pepetela é um dos maiores escritores angolanos. Lutou na guerrilha pela independência de Angola.', obras:['Mayombe (1980)','A Geração da Utopia (1992)'], premios:['Prêmio Camões (1997)']},
+  {nome:'Chinua Achebe', pais:'Nigéria', nascimento:'1930-2013', foto:'', pastaId:'', bio:'Chinua Achebe é o escritor africano mais traduzido do mundo. Seu romance "Things Fall Apart" é considerado o livro africano mais importante do século XX.', obras:['Things Fall Apart (1958)','No Longer at Ease (1960)'], premios:['Prêmio Man Booker Internacional (2007)']},
+  {nome:'Wole Soyinka', pais:'Nigéria', nascimento:'1934', foto:'', pastaId:'', bio:'Wole Soyinka ganhou o Prêmio Nobel de Literatura em 1986 — o primeiro africano a receber o prêmio.', obras:['A Dance of the Forests (1960)','The Lion and the Jewel (1959)'], premios:['Prêmio Nobel de Literatura (1986)']},
+  {nome:'Ngũgĩ wa Thiong\'o', pais:'Quênia', nascimento:'1938', foto:'', pastaId:'', bio:'Ngũgĩ wa Thiong\'o é um dos maiores escritores africanos vivos. Decide escrever apenas em kikuyu, sua língua materna.', obras:['Um Grão de Trigo (1967)','O Rio Entre (1965)'], premios:['Prêmio Park Kyong-ni (2016)']},
+  {nome:'Nelson Mandela', pais:'África do Sul', nascimento:'1918-2013', foto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Nelson_Mandela_1994.jpg/440px-Nelson_Mandela_1994.jpg', pastaId:'', bio:'Nelson Mandela foi líder anti-apartheid e o primeiro presidente negro da África do Sul. Ganhou o Prêmio Nobel da Paz em 1993.', obras:['Longo Caminho para a Liberdade (1994)'], premios:['Prêmio Nobel da Paz (1993)']},
+  {nome:'Gabriel García Márquez', pais:'Colômbia', nascimento:'1927-2014', foto:'', pastaId:'', bio:'Gabriel García Márquez foi escritor colombiano, Nobel de Literatura 1982. Pai do realismo mágico.', obras:['Cem Anos de Solidão (1967)','O Amor nos Tempos do Cólera (1985)'], premios:['Prêmio Nobel de Literatura (1982)']},
+  {nome:'Jorge Luis Borges', pais:'Argentina', nascimento:'1899-1986', foto:'', pastaId:'', bio:'Jorge Luis Borges foi um dos escritores mais influentes do século XX.', obras:['Ficções (1944)','O Aleph (1949)'], premios:['Prêmio Cervantes (1980)']},
+  {nome:'Pablo Neruda', pais:'Chile', nascimento:'1904-1973', foto:'', pastaId:'', bio:'Pablo Neruda foi poeta chileno, Nobel de Literatura 1971.', obras:['Vinte Poemas de Amor (1924)','Canto Geral (1950)'], premios:['Prêmio Nobel de Literatura (1971)']},
+  {nome:'William Shakespeare', pais:'Inglaterra', nascimento:'1564-1616', foto:'', pastaId:'', bio:'William Shakespeare é o maior dramaturgo da língua inglesa. Escreveu cerca de 38 peças e 154 sonetos.', obras:['Romeu e Julieta (1597)','Hamlet (1603)','Macbeth (1606)'], premios:['Maior escritor da língua inglesa']}
 ];
 
 const listaAutores = document.getElementById('listaAutores');
@@ -224,7 +265,7 @@ AUTORES.forEach((a, i) => {
   card.onclick = () => abrirFicha(i);
   const inicial = a.nome.charAt(0);
   const fotoHTML = a.foto
-    ? `<img src="${a.foto}" alt="${a.nome}" onerror="this.parentElement.innerHTML='${inicial}';">`
+    ? `<img src="${a.foto}" alt="${a.nome}" onerror="this.style.display='none';this.parentElement.innerHTML='${inicial}';">`
     : inicial;
   card.innerHTML = `
     <div class="icon" style="background:linear-gradient(135deg,#a78bfa,#ec4899)">${fotoHTML}</div>
@@ -255,8 +296,12 @@ function abrirFicha(i) {
       ${a.obras.map(o => `<div class="ficha-item">📖 ${o}</div>`).join('')}
       <div class="ficha-titulo"><i class="fas fa-trophy"></i> Prêmios e reconhecimentos</div>
       ${a.premios.map(p => `<div class="ficha-item">🏆 ${p}</div>`).join('')}
+      <div class="ficha-titulo"><i class="fas fa-cloud-download-alt"></i> Livros disponíveis</div>
+      <div id="livrosAutor"><div class="loading" style="padding:20px;"><i class="fas fa-spinner fa-spin"></i>Carregando...</div></div>
     </div>
   `;
+  const pastaAutor = a.pastaId || PASTA_LIVROS_MZ;
+  carregarPDFs(pastaAutor, 'livrosAutor');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -265,6 +310,9 @@ function voltarAutores() {
   document.getElementById('listaAutoresView').style.display = 'block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+ativarPesquisa('pesquisaLivros', 'listaLivros');
+ativarPesquisa('pesquisaExames', 'listaExames');
 </script>
 
 </body>
