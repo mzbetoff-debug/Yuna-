@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e1a">
+<title>YUNA · Música</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+html,body{background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
+body{padding-bottom:90px}
+body:not(.logado) .header,body:not(.logado) .conteudo,body:not(.logado) .bottom-nav{display:none !important}
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:12px 16px}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.back-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#cbd5e1;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.logo i{font-size:22px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero{padding:24px 20px;margin:16px;border-radius:24px;background:linear-gradient(135deg,rgba(240,147,251,.25),rgba(245,87,108,.2));border:1px solid rgba(240,147,251,.25);position:relative;overflow:hidden}
+.hero h2{font-size:22px;font-weight:800;color:#f1f5f9;margin-bottom:8px}
+.hero p{font-size:13px;color:#cbd5e1}
+.hero i.sh{position:absolute;right:-10px;bottom:-10px;font-size:100px;opacity:.1;color:#f093fb}
+.busca{position:relative;padding:0 16px;margin-bottom:20px}
+.busca input{width:100%;padding:14px 16px 14px 44px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:#e2e8f0;font-size:14px;outline:none}
+.busca input:focus{border-color:#f472b6}
+.busca input::placeholder{color:#64748b}
+.busca i{position:absolute;left:30px;top:50%;transform:translateY(-50%);color:#64748b}
+.section{padding:0 16px;margin-top:20px}
+.section-title{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title i{color:#f472b6}
+.lista{display:flex;flex-direction:column;gap:10px}
+.musica{display:flex;gap:12px;background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:12px;align-items:center;transition:.2s}
+.musica:active{transform:scale(.98)}
+.musica img{width:60px;height:60px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#1e293b}
+.musica .info{flex:1;min-width:0}
+.musica .info h4{font-size:14px;font-weight:700;color:#f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.musica .info p{font-size:12px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.musica .play-btn{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#8b5cf6);border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s}
+.musica .play-btn:active{transform:scale(.9)}
+.musica .botoes{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.musica .mini-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#94a3b8;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:.2s}
+.musica .mini-btn:active{transform:scale(.9)}
+.musica .mini-btn.baixar{background:linear-gradient(135deg,#34d399,#10b981);color:#fff;border:none}
+.loading{display:flex;justify-content:center;padding:40px;flex-direction:column;align-items:center;gap:12px}
+.spinner{width:44px;height:44px;border:4px solid rgba(244,114,182,.2);border-top-color:#f472b6;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:#94a3b8;font-size:13px}
+.vazio{text-align:center;padding:40px 20px;color:#64748b}
+.vazio i{font-size:44px;margin-bottom:12px;display:block;color:#334155}
+.player{position:fixed;bottom:0;left:0;right:0;background:rgba(10,14,26,.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);padding:12px 16px;z-index:200;display:none}
+.player.show{display:block}
+.player-info{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.player-info img{width:44px;height:44px;border-radius:10px;object-fit:cover;background:#1e293b}
+.player-info .text{flex:1;min-width:0}
+.player-info h4{font-size:13px;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-info p{font-size:11px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-info .fechar{background:rgba(255,255,255,.06);border:none;color:#cbd5e1;width:32px;height:32px;border-radius:50%;cursor:pointer}
+.player-controls{display:flex;justify-content:center;gap:20px;align-items:center}
+.player-btn{background:none;border:none;color:#e2e8f0;font-size:22px;cursor:pointer}
+.player-btn.play{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:18px}
+.progress{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:10px;overflow:hidden;cursor:pointer}
+.progress-bar{height:100%;background:linear-gradient(90deg,#ec4899,#8b5cf6);width:0%;transition:width .1s linear}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0a0e1a;border-top:1px solid rgba(255,255,255,.06);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-around;z-index:99}
+.nav{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 14px;color:#64748b;font-size:10px;text-decoration:none;flex:1}
+.nav i{font-size:18px}
+.nav.active{color:#f472b6}
+.nav.active i{color:#f472b6}
+</style>
+</head>
+<body>
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <p style="color:#94a3b8">Carregando...</p>
+</div>
+
+<header class="header">
+  <div class="header-top">
+    <a class="back-btn" href="home.html"><i class="fas fa-arrow-left"></i></a>
+    <a class="logo" href="home.html"><i class="fas fa-compass"></i><h1>YUNA</h1></a>
+    <div style="width:40px"></div>
+  </div>
+</header>
+
+<div class="conteudo" style="display:none" id="conteudo">
+  <div class="hero">
+    <i class="fas fa-music sh"></i>
+    <h2>🎵 Música</h2>
+    <p>Busque, ouça e baixe suas músicas favoritas.</p>
+  </div>
+  <div class="busca">
+    <i class="fas fa-search"></i>
+    <input type="text" id="buscaInput" placeholder="Buscar músicas, artistas, álbuns..." onkeypress="if(event.key==='Enter') buscar()">
+  </div>
+  <div class="section">
+    <div class="section-title"><i class="fas fa-fire"></i> Resultados</div>
+    <div class="lista" id="listaMusicas">
+      <div class="vazio">
+        <i class="fas fa-headphones"></i>
+        <p>Digite algo para buscar músicas</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="player" id="player">
+  <div class="player-info">
+    <img id="playerCover" src="" alt="">
+    <div class="text">
+      <h4 id="playerTitle">—</h4>
+      <p id="playerArtist">—</p>
+    </div>
+    <button class="fechar" onclick="fecharPlayer()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="player-controls">
+    <button class="player-btn" onclick="voltar10()"><i class="fas fa-backward"></i></button>
+    <button class="player-btn play" onclick="togglePlay()" id="playBtn"><i class="fas fa-pause"></i></button>
+    <button class="player-btn" onclick="avancar10()"><i class="fas fa-forward"></i></button>
+  </div>
+  <div class="progress" onclick="seekAudio(event)">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a class="nav" href="home.html"><i class="fas fa-home"></i><span>Início</span></a>
+  <a class="nav" href="educacao.html"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
+  <a class="nav active" href="musicas.html"><i class="fas fa-music"></i><span>Música</span></a>
+  <a class="nav" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+    authDomain: "yuna-8fe24.firebaseapp.com",
+    projectId: "yuna-8fe24",
+    storageBucket: "yuna-8fe24.firebasestorage.app",
+    messagingSenderId: "531340097112",
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  setPersistence(auth, browserLocalPersistence);
+
+  onAuthStateChanged(auth, (user) => {
+    document.getElementById('loading').style.display = 'none';
+    if (!user) {
+      window.location.replace('login.html');
+      return;
+    }
+    document.body.classList.add('logado');
+    document.getElementById('conteudo').style.display = 'block';
+  });
+</script>
+
+<script>
+  // ============ AUDIO PLAYER ============
+  const audio = new Audio();
+  const player = document.getElementById('player');
+  const playerTitle = document.getElementById('playerTitle');
+  const playerArtist = document.getElementById('playerArtist');
+  const playerCover = document.getElementById('playerCover');
+  const progressBar = document.getElementById('progressBar');
+  const playBtn = document.getElementById('playBtn');
+
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      const p = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = p + '%';
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+  });
+
+  window.tocar = function(url, titulo, artista, capa) {
+    audio.src = url;
+    audio.play().catch(e => alert('Erro ao tocar: ' + e.message));
+    playerTitle.textContent = titulo;
+    playerArtist.textContent = artista;
+    playerCover.src = capa;
+    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    player.classList.add('show');
+  };
+
+  window.togglePlay = function() {
+    if (audio.paused) {
+      audio.play();
+      playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+      audio.pause();
+      playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+  };
+
+  window.voltar10 = function() { audio.currentTime = Math.max(0, audio.currentTime - 10); };
+  window.avancar10 = function() { audio.currentTime = Math.min(audio.duration, audio.currentTime + 10); };
+
+  window.seekAudio = function(e) {
+    const bar = document.querySelector('.progress');
+    const rect = bar.getBoundingClientRect();
+    const percent = (e.clientX - rect.left) / rect.width;
+    if (audio.duration) audio.currentTime = percent * audio.duration;
+  };
+
+  window.fecharPlayer = function() {
+    audio.pause();
+    player.classList.remove('show');
+  };
+
+  // ============ BUSCA NA BHARIYAMUSIC API ============
+  // ⚠️ ATENÇÃO: API não-oficial, pode cair e violar direitos autorais
+  // Usa dois endpoints: /prepare/{nome} e /fetch/{id} [citation:1]
+
+  window.buscar = async function() {
+    const termo = document.getElementById('buscaInput').value.trim();
+    if (!termo) return;
+
+    const lista = document.getElementById('listaMusicas');
+    lista.innerHTML = `
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Buscando...</p>
+      </div>
+    `;
+
+    try {
+      // 1. Prepara a música (retorna o ID)
+      const prepareRes = await fetch(`https://bhindi1.ddns.net/music/api/prepare/${encodeURIComponent(termo)}`);
+      const prepareData = await prepareRes.json();
+
+      if (!prepareData || !prepareData.id) {
+        throw new Error('Música não encontrada');
+      }
+
+      // 2. Busca os dados completos com o ID
+      const fetchRes = await fetch(`https://bhindi1.ddns.net/music/api/fetch/${prepareData.id}`);
+      const info = await fetchRes.json();
+
+      // 3. Monta o card na lista
+      const titulo = info.title || termo;
+      const artista = info.artist || 'Desconhecido';
+      const capa = info.thumbnail || 'https://via.placeholder.com/60';
+      const audioUrl = info.audio_url; // Link direto para o áudio
+
+      let html = '';
+      if (audioUrl) {
+        html = `
+          <div class="musica">
+            <img src="${capa}" onerror="this.src='https://via.placeholder.com/60'">
+            <div class="info">
+              <h4>${titulo}</h4>
+              <p>${artista}</p>
+            </div>
+            <div class="botoes">
+              <button class="play-btn" onclick="tocar('${audioUrl}', '${titulo.replace(/'/g, "\\'")}', '${artista.replace(/'/g, "\\'")}', '${capa}')">
+                <i class="fas fa-play"></i>
+              </button>
+              <a class="mini-btn baixar" href="${audioUrl}" download="${titulo.replace(/'/g, "\\'")}.mp3" title="Baixar">
+                <i class="fas fa-download"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      } else {
+        html = `
+          <div class="vazio">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Áudio não disponível para "${titulo}"</p>
+          </div>
+        `;
+      }
+
+      lista.innerHTML = html;
+
+    } catch (err) {
+      console.error('Erro na API:', err);
+      lista.innerHTML = `
+        <div class="vazio">
+          <i class="fas fa-wifi"></i>
+          <p>Erro ao buscar. A API pode estar fora do ar.</p>
+          <p style="font-size:11px;margin-top:8px;color:#475569">Tente novamente mais tarde</p>
+        </div>
+      `;
+    }
+  };
+
+  // Busca inicial
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('buscaInput').value = 'top hits';
+      buscar();
+    }, 500);
+  });
+</script>
+
+</body>
+ </html>
