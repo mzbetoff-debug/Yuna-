@@ -37,6 +37,8 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 
 .video-slide iframe{position:absolute;top:-60px;left:0;width:100%;height:calc(100% + 60px);border:none;z-index:0}
 
+.video-placeholder{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0a0e1a,#1a1f2e);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1}
+
 .overlay{position:absolute;bottom:0;left:0;right:0;padding:80px 16px 40px;background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 60%,transparent 100%);z-index:2;pointer-events:none}
 .overlay > *{pointer-events:auto}
 .canal{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;font-weight:700;color:#fff}
@@ -108,7 +110,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 .modal-header h3{font-size:18px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .modal-close{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.05);border:none;color:#94a3b8;cursor:pointer;font-size:16px}
 .comentario{display:flex;gap:10px;padding:12px;background:rgba(255,255,255,.03);border-radius:12px;margin-bottom:8px;border:1px solid rgba(255,255,255,.05)}
-.comentario-foto{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f472b6,#a78bfa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;flex-shrink:0;font-size:14px}
+.comentario-foto{width:36px;height:36px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#f472b6,#a78bfa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;flex-shrink:0;font-size:14px}
 .comentario-info{flex:1;min-width:0}
 .comentario-info h5{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:3px}
 .comentario-info p{font-size:13px;color:#cbd5e1;line-height:1.4}
@@ -270,12 +272,15 @@ feedSwipe.addEventListener('touchend', (e) => {
   setPersistence(auth, browserLocalPersistence);
 
   let userAtual = null;
+  window.fbLikeIds = [];
+  window.fbGuardarIds = [];
 
   onAuthStateChanged(auth, async (user) => {
     if (!user) { window.location.replace('login.html'); return; }
     userAtual = user;
     const avatar = document.getElementById('userAvatar');
     if (user.photoURL) avatar.innerHTML = `<img src="${user.photoURL}" alt="">`;
+
     try {
       await setDoc(doc(db, 'ranking', user.uid), {
         nome: user.displayName || 'Amigo',
@@ -285,7 +290,52 @@ feedSwipe.addEventListener('touchend', (e) => {
         ultimoAcesso: serverTimestamp()
       }, { merge: true });
     } catch(e) {}
+
+    // 🔥 CARREGA LIKES E GUARDADOS DO USUÁRIO
+    try {
+      const qL = query(collection(db, 'likes'), where('uid', '==', user.uid));
+      const sL = await getDocs(qL);
+      sL.forEach(d => window.fbLikeIds.push(d.data().videoId));
+
+      const qG = query(collection(db, 'guardados'), where('uid', '==', user.uid));
+      const sG = await getDocs(qG);
+      sG.forEach(d => window.fbGuardarIds.push(d.data().videoId));
+
+      atualizarBotoes();
+    } catch(e) { console.log(e); }
   });
+
+  function atualizarBotoes() {
+    document.querySelectorAll('.video-slide').forEach(slide => {
+      const id = slide.dataset.id;
+      if (!id) return;
+      slide.querySelectorAll('.acao').forEach(acao => {
+        const btn = acao.querySelector('.acao-btn');
+        const span = acao.querySelector('span');
+        const icone = acao.querySelector('.acao-btn i');
+        if (!icone) return;
+        if (icone.classList.contains('fa-heart')) {
+          if (window.fbLikeIds.includes(id)) {
+            btn.classList.add('like-ativo');
+            span.textContent = 'Curtido';
+          } else {
+            btn.classList.remove('like-ativo');
+            span.textContent = 'Curtir';
+          }
+        }
+        if (icone.classList.contains('fa-bookmark')) {
+          if (window.fbGuardarIds.includes(id)) {
+            btn.classList.add('guardado-ativo');
+            span.textContent = 'Guardado';
+          } else {
+            btn.classList.remove('guardado-ativo');
+            span.textContent = 'Guardar';
+          }
+        }
+      });
+    });
+  }
+  window.atualizarBotoes = atualizarBotoes;
 
   window.carregarRanking = async function() {
     try {
@@ -325,10 +375,12 @@ feedSwipe.addEventListener('touchend', (e) => {
         await deleteDoc(ref);
         botaoEl.classList.remove('like-ativo');
         spanEl.textContent = 'Curtir';
+        window.fbLikeIds = window.fbLikeIds.filter(x => x !== id);
       } else {
         await setDoc(ref, { uid: userAtual.uid, videoId: id, criadoEm: serverTimestamp() });
         botaoEl.classList.add('like-ativo');
         spanEl.textContent = 'Curtido';
+        window.fbLikeIds.push(id);
       }
     } catch(e) {}
   };
@@ -342,47 +394,104 @@ feedSwipe.addEventListener('touchend', (e) => {
         await deleteDoc(ref);
         botaoEl.classList.remove('guardado-ativo');
         spanEl.textContent = 'Guardar';
+        window.fbGuardarIds = window.fbGuardarIds.filter(x => x !== id);
       } else {
         await setDoc(ref, { uid: userAtual.uid, videoId: id, criadoEm: serverTimestamp() });
         botaoEl.classList.add('guardado-ativo');
         spanEl.textContent = 'Guardado';
+        window.fbGuardarIds.push(id);
       }
     } catch(e) {}
   };
 
+  // 💬 COMENTÁRIOS
   let videoComentarioAtual = null;
   window.abrirComentarios = async (id) => {
     videoComentarioAtual = id;
     document.getElementById('modalComentarios').classList.add('aberto');
     await carregarComentarios(id);
   };
+
   async function carregarComentarios(id) {
     const div = document.getElementById('listaComentarios');
     div.innerHTML = '<div style="text-align:center;padding:20px;color:#64748b">Carregando...</div>';
     try {
-      const q = query(collection(db, 'comentarios'), where('videoId', '==', id));
+      const q = query(collection(db, 'comentarios'), where('videoId', '==', id), where('pai', '==', null));
       const snap = await getDocs(q);
-      if (snap.empty) { div.innerHTML = '<p style="text-align:center;color:#64748b;padding:20px">Nenhum comentário ainda.</p>'; return; }
+      if (snap.empty) { div.innerHTML = '<p style="text-align:center;color:#64748b;padding:20px">Nenhum comentário ainda. Sê o primeiro!</p>'; return; }
       const lista = [];
-      snap.forEach(d => lista.push(d.data()));
+      snap.forEach(d => lista.push({ id: d.id, ...d.data() }));
       lista.sort((a,b) => (b.criadoEm?.seconds||0) - (a.criadoEm?.seconds||0));
       div.innerHTML = '';
-      lista.forEach(c => {
-        const el = document.createElement('div');
-        el.className = 'comentario';
-        el.innerHTML = `
-          <div class="comentario-foto">${(c.nome||'?').charAt(0)}</div>
-          <div class="comentario-info">
-            <h5>${c.nome || 'Anônimo'}</h5>
-            <p>${c.texto}</p>
-          </div>
-        `;
-        div.appendChild(el);
-      });
+      for (const c of lista) {
+        div.appendChild(criarElemento(c));
+        const respostas = await carregarRespostas(c.id);
+        respostas.forEach(r => div.appendChild(criarElemento(r, true)));
+      }
     } catch(e) {
+      console.log(e);
       div.innerHTML = '<p style="text-align:center;color:#64748b;padding:20px">Erro ao carregar.</p>';
     }
   }
+
+  async function carregarRespostas(paiId) {
+    try {
+      const q = query(collection(db, 'comentarios'), where('pai', '==', paiId));
+      const snap = await getDocs(q);
+      const lista = [];
+      snap.forEach(d => lista.push({ id: d.id, ...d.data() }));
+      lista.sort((a,b) => (a.criadoEm?.seconds||0) - (b.criadoEm?.seconds||0));
+      return lista;
+    } catch(e) { return []; }
+  }
+
+  function criarElemento(c, isResposta = false) {
+    const el = document.createElement('div');
+    el.className = 'comentario';
+    if (isResposta) el.style.marginLeft = '40px';
+    const fotoHTML = c.foto 
+      ? `<img class="comentario-foto" src="${c.foto}" alt="">` 
+      : `<div class="comentario-foto">${(c.nome||'?').charAt(0)}</div>`;
+    const ehMeu = userAtual && c.uid === userAtual.uid;
+    el.innerHTML = `
+      ${fotoHTML}
+      <div class="comentario-info">
+        <h5>${c.nome || 'Anônimo'}</h5>
+        <p>${c.texto}</p>
+        <div style="display:flex;gap:14px;margin-top:6px">
+          <span onclick="responderComentario('${c.id}', '${(c.nome||'').replace(/'/g, "\\'")}')" style="font-size:11px;color:#a78bfa;cursor:pointer">↩️ Responder</span>
+          ${ehMeu ? `<span onclick="eliminarComentario('${c.id}')" style="font-size:11px;color:#f472b6;cursor:pointer">🗑️ Eliminar</span>` : ''}
+        </div>
+      </div>
+    `;
+    return el;
+  }
+
+  window.responderComentario = async (paiId, nomePai) => {
+    const texto = prompt(`Responder a ${nomePai}:`);
+    if (!texto || !texto.trim() || !userAtual) return;
+    try {
+      await addDoc(collection(db, 'comentarios'), {
+        videoId: videoComentarioAtual,
+        uid: userAtual.uid,
+        nome: userAtual.displayName || 'Anônimo',
+        foto: userAtual.photoURL || '',
+        texto: texto.trim(),
+        pai: paiId,
+        criadoEm: serverTimestamp()
+      });
+      await carregarComentarios(videoComentarioAtual);
+    } catch(e) { alert('Erro: ' + e.message); }
+  };
+
+  window.eliminarComentario = async (id) => {
+    if (!confirm('Eliminar este comentário?')) return;
+    try {
+      await deleteDoc(doc(db, 'comentarios', id));
+      await carregarComentarios(videoComentarioAtual);
+    } catch(e) { alert('Erro: ' + e.message); }
+  };
+
   window.enviarComentario = async () => {
     if (!userAtual || !videoComentarioAtual) return;
     const input = document.getElementById('inputComentario');
@@ -393,12 +502,14 @@ feedSwipe.addEventListener('touchend', (e) => {
         videoId: videoComentarioAtual,
         uid: userAtual.uid,
         nome: userAtual.displayName || 'Anônimo',
+        foto: userAtual.photoURL || '',
         texto,
+        pai: null,
         criadoEm: serverTimestamp()
       });
       input.value = '';
       await carregarComentarios(videoComentarioAtual);
-    } catch(e) {}
+    } catch(e) { alert('Erro: ' + e.message); }
   };
   </script>
   <script>
@@ -433,11 +544,15 @@ async function buscarVideosIA(query = '', page = 1, destino = 'telaHome') {
     
     const el = document.getElementById(destino);
     if (destino === 'telaHome') {
-      docs.slice(0, 8).forEach(item => {
+      docs.slice(0, 8).forEach((item, index) => {
         const slide = document.createElement('div');
         slide.className = 'video-slide';
+        slide.dataset.id = item.identifier;
         slide.innerHTML = `
-          <iframe src="https://archive.org/embed/${item.identifier}" allowfullscreen></iframe>
+          <div class="video-placeholder" id="ph-${item.identifier}">
+            <div class="spinner"></div>
+            <span style="color:#94a3b8;font-size:12px;margin-top:12px">Vídeo ${index + 1}</span>
+          </div>
           <div class="acoes-laterais">
             <div class="acao" onclick="event.stopPropagation(); window.toggleLike('${item.identifier}', this.querySelector('.acao-btn'), this.querySelector('span'))">
               <div class="acao-btn"><i class="fas fa-heart"></i></div>
@@ -459,6 +574,8 @@ async function buscarVideosIA(query = '', page = 1, destino = 'telaHome') {
         `;
         el.appendChild(slide);
       });
+      ativarLazyLoading();
+      if (window.atualizarBotoes) setTimeout(window.atualizarBotoes, 500);
     } else {
       docs.forEach(item => {
         const elItem = document.createElement('div');
@@ -483,6 +600,44 @@ async function buscarVideosIA(query = '', page = 1, destino = 'telaHome') {
   }
 }
 
+function ativarLazyLoading() {
+  const slides = document.querySelectorAll('.video-slide');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const slide = entry.target;
+      const id = slide.dataset.id;
+      const placeholder = document.getElementById(`ph-${id}`);
+      
+      if (entry.isIntersecting) {
+        if (placeholder && !slide.querySelector('iframe')) {
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://archive.org/embed/${id}`;
+          iframe.allowFullscreen = true;
+          slide.insertBefore(iframe, slide.firstChild);
+          placeholder.remove();
+        }
+      } else {
+        const iframe = slide.querySelector('iframe');
+        if (iframe) {
+          iframe.remove();
+          if (!document.getElementById(`ph-${id}`)) {
+            const ph = document.createElement('div');
+            ph.className = 'video-placeholder';
+            ph.id = `ph-${id}`;
+            ph.innerHTML = '<div class="spinner"></div>';
+            slide.insertBefore(ph, slide.firstChild);
+          }
+        }
+      }
+    });
+  }, {
+    root: document.getElementById('telaHome'),
+    rootMargin: '100% 0px',
+    threshold: 0
+  });
+  slides.forEach(slide => observer.observe(slide));
+}
+
 function fazerPesquisa() {
   const q = document.getElementById('inputPesquisa').value.trim();
   if (!q) return;
@@ -496,6 +651,7 @@ function abrirVideoPesquisa(id, titulo) {
   home.innerHTML = '';
   const slide = document.createElement('div');
   slide.className = 'video-slide';
+  slide.dataset.id = id;
   slide.innerHTML = `
     <iframe src="https://archive.org/embed/${id}" allowfullscreen></iframe>
     <div class="acoes-laterais">
@@ -518,6 +674,7 @@ function abrirVideoPesquisa(id, titulo) {
     </div>
   `;
   home.appendChild(slide);
+  if (window.atualizarBotoes) setTimeout(window.atualizarBotoes, 300);
   home.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
