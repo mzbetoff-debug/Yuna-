@@ -4,17 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0e1a">
-<title>YUNA · Início</title>
+<title>YUNA · Vídeos</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 html,body{background:#000;color:#e2e8f0;height:100vh;overflow:hidden;position:fixed;width:100%}
 
-body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 30%,rgba(236,72,153,.15),transparent 50%),radial-gradient(circle at 70% 70%,rgba(167,139,250,.15),transparent 50%);animation:girarFundo 30s linear infinite;z-index:0;pointer-events:none}
-@keyframes girarFundo{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-
-.header{position:fixed;top:0;left:0;right:0;z-index:100;padding:10px 12px;background:linear-gradient(180deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.5) 70%,transparent 100%);pointer-events:none}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;padding:10px 12px;background:linear-gradient(180deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 70%,transparent 100%);pointer-events:none}
 .header > *{pointer-events:auto}
 .header-linha{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .menu-btn{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;cursor:pointer;backdrop-filter:blur(10px)}
@@ -34,9 +31,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 .tela-home::-webkit-scrollbar{display:none}
 
 .video-slide{position:relative;height:calc(100vh - 70px);width:100%;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
-
 .video-slide iframe{position:absolute;top:-60px;left:0;width:100%;height:calc(100% + 60px);border:none;z-index:0}
-
 .video-placeholder{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0a0e1a,#1a1f2e);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1}
 
 .overlay{position:absolute;bottom:0;left:0;right:0;padding:80px 16px 40px;background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 60%,transparent 100%);z-index:2;pointer-events:none}
@@ -118,8 +113,12 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 .input-comentario input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px;color:#e2e8f0;font-size:14px;outline:none}
 .input-comentario button{background:linear-gradient(135deg,#a78bfa,#8b5cf6);border:none;border-radius:12px;padding:0 16px;color:#fff;font-weight:700;cursor:pointer;font-size:14px}
 
-.rank-item{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,.03);border-radius:14px;margin-bottom:8px;border:1px solid rgba(255,255,255,.05)}
+.rank-item{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,.03);border-radius:14px;margin-bottom:8px;border:1px solid rgba(255,255,255,.05);position:relative}
+.rank-item.top1{background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(245,158,11,.05));border-color:rgba(251,191,36,.4)}
+.rank-item.top2{background:linear-gradient(135deg,rgba(203,213,225,.1),rgba(148,163,184,.05));border-color:rgba(203,213,225,.3)}
+.rank-item.top3{background:linear-gradient(135deg,rgba(217,119,6,.1),rgba(146,64,14,.05));border-color:rgba(217,119,6,.3)}
 .rank-pos{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;flex-shrink:0;font-size:14px}
+.rank-coroa{position:absolute;top:-8px;left:24px;font-size:18px}
 .rank-foto{width:42px;height:42px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#f472b6,#a78bfa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;flex-shrink:0}
 .rank-info{flex:1;min-width:0}
 .rank-info h4{font-size:14px;font-weight:700;color:#f1f5f9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -140,7 +139,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
   </div>
   <div class="search-bar">
     <i class="fas fa-search"></i>
-    <input type="text" id="buscaInput" placeholder="Buscar vídeos..." readonly onclick="abrirPesquisa()">
+    <input type="text" id="buscaInput" placeholder="Buscar vídeos engraçados..." readonly onclick="abrirPesquisa()">
   </div>
 </header>
 
@@ -272,15 +271,16 @@ feedSwipe.addEventListener('touchend', (e) => {
   setPersistence(auth, browserLocalPersistence);
 
   let userAtual = null;
+  window.userAtual = null;
   window.fbLikeIds = [];
   window.fbGuardarIds = [];
 
   onAuthStateChanged(auth, async (user) => {
     if (!user) { window.location.replace('login.html'); return; }
     userAtual = user;
+    window.userAtual = user;
     const avatar = document.getElementById('userAvatar');
     if (user.photoURL) avatar.innerHTML = `<img src="${user.photoURL}" alt="">`;
-
     try {
       await setDoc(doc(db, 'ranking', user.uid), {
         nome: user.displayName || 'Amigo',
@@ -290,52 +290,16 @@ feedSwipe.addEventListener('touchend', (e) => {
         ultimoAcesso: serverTimestamp()
       }, { merge: true });
     } catch(e) {}
-
-    // 🔥 CARREGA LIKES E GUARDADOS DO USUÁRIO
     try {
       const qL = query(collection(db, 'likes'), where('uid', '==', user.uid));
       const sL = await getDocs(qL);
       sL.forEach(d => window.fbLikeIds.push(d.data().videoId));
-
       const qG = query(collection(db, 'guardados'), where('uid', '==', user.uid));
       const sG = await getDocs(qG);
       sG.forEach(d => window.fbGuardarIds.push(d.data().videoId));
-
-      atualizarBotoes();
-    } catch(e) { console.log(e); }
+      if (window.atualizarBotoes) window.atualizarBotoes();
+    } catch(e) {}
   });
-
-  function atualizarBotoes() {
-    document.querySelectorAll('.video-slide').forEach(slide => {
-      const id = slide.dataset.id;
-      if (!id) return;
-      slide.querySelectorAll('.acao').forEach(acao => {
-        const btn = acao.querySelector('.acao-btn');
-        const span = acao.querySelector('span');
-        const icone = acao.querySelector('.acao-btn i');
-        if (!icone) return;
-        if (icone.classList.contains('fa-heart')) {
-          if (window.fbLikeIds.includes(id)) {
-            btn.classList.add('like-ativo');
-            span.textContent = 'Curtido';
-          } else {
-            btn.classList.remove('like-ativo');
-            span.textContent = 'Curtir';
-          }
-        }
-        if (icone.classList.contains('fa-bookmark')) {
-          if (window.fbGuardarIds.includes(id)) {
-            btn.classList.add('guardado-ativo');
-            span.textContent = 'Guardado';
-          } else {
-            btn.classList.remove('guardado-ativo');
-            span.textContent = 'Guardar';
-          }
-        }
-      });
-    });
-  }
-  window.atualizarBotoes = atualizarBotoes;
 
   window.carregarRanking = async function() {
     try {
@@ -346,12 +310,18 @@ feedSwipe.addEventListener('touchend', (e) => {
       div.innerHTML = '';
       let pos = 1;
       snap.forEach(d => {
+        // 🚫 NÃO MOSTRA A TUA CONTA
+        if (userAtual && d.id === userAtual.uid) return;
+        
         const u = d.data();
+        const classes = pos === 1 ? 'top1' : pos === 2 ? 'top2' : pos === 3 ? 'top3' : '';
         const bg = pos===1?'linear-gradient(135deg,#fbbf24,#f59e0b)':pos===2?'linear-gradient(135deg,#e2e8f0,#94a3b8)':pos===3?'linear-gradient(135deg,#d97706,#92400e)':'rgba(255,255,255,.05)';
         const fotoHTML = u.foto ? `<img class="rank-foto" src="${u.foto}" alt="">` : `<div class="rank-foto">${(u.nome||'?').charAt(0)}</div>`;
+        const coroa = pos === 1 ? '<div class="rank-coroa">👑</div>' : '';
         const el = document.createElement('div');
-        el.className = 'rank-item';
+        el.className = `rank-item ${classes}`;
         el.innerHTML = `
+          ${coroa}
           <div class="rank-pos" style="background:${bg}">${pos}</div>
           ${fotoHTML}
           <div class="rank-info">
@@ -364,6 +334,27 @@ feedSwipe.addEventListener('touchend', (e) => {
         pos++;
       });
     } catch(e) {}
+  };
+
+  window.atualizarBotoes = function() {
+    document.querySelectorAll('.video-slide').forEach(slide => {
+      const id = slide.dataset.id;
+      if (!id) return;
+      slide.querySelectorAll('.acao').forEach(acao => {
+        const btn = acao.querySelector('.acao-btn');
+        const span = acao.querySelector('span');
+        const icone = acao.querySelector('.acao-btn i');
+        if (!icone) return;
+        if (icone.classList.contains('fa-heart')) {
+          if (window.fbLikeIds.includes(id)) { btn.classList.add('like-ativo'); span.textContent = 'Curtido'; }
+          else { btn.classList.remove('like-ativo'); span.textContent = 'Curtir'; }
+        }
+        if (icone.classList.contains('fa-bookmark')) {
+          if (window.fbGuardarIds.includes(id)) { btn.classList.add('guardado-ativo'); span.textContent = 'Guardado'; }
+          else { btn.classList.remove('guardado-ativo'); span.textContent = 'Guardar'; }
+        }
+      });
+    });
   };
 
   window.toggleLike = async (id, botaoEl, spanEl) => {
@@ -429,7 +420,6 @@ feedSwipe.addEventListener('touchend', (e) => {
         respostas.forEach(r => div.appendChild(criarElemento(r, true)));
       }
     } catch(e) {
-      console.log(e);
       div.innerHTML = '<p style="text-align:center;color:#64748b;padding:20px">Erro ao carregar.</p>';
     }
   }
@@ -521,7 +511,7 @@ function mostrarSkeleton(tela) {
   const el = document.getElementById(tela);
   const sk = document.createElement('div');
   sk.className = 'loading-slide';
-  sk.innerHTML = '<div class="spinner"></div><span>Carregando vídeos...</span>';
+  sk.innerHTML = '<div class="spinner"></div><span>Carregando vídeos engraçados...</span>';
   el.appendChild(sk);
 }
 function removerSkeleton() {
@@ -533,8 +523,9 @@ async function buscarVideosIA(query = '', page = 1, destino = 'telaHome') {
   carregando = true;
   mostrarSkeleton(destino);
   try {
-    const termo = query || 'classic movies';
-    const url = `${IA_BASE}/advancedsearch.php?q=${encodeURIComponent(termo + ' AND mediatype:(movies OR video)')}&fl[]=identifier&fl[]=title&fl[]=year&fl[]=downloads&rows=15&page=${page}&output=json&sort[]=downloads+desc`;
+    // 😂 SÓ VÍDEOS ENGRAÇADOS + 2014+
+    const termo = query || 'comedy';
+    const url = `${IA_BASE}/advancedsearch.php?q=${encodeURIComponent(termo + ' AND mediatype:(movies OR video) AND year:[2014 TO 2026]')}&fl[]=identifier&fl[]=title&fl[]=year&fl[]=downloads&rows=20&page=${page}&output=json&sort[]=downloads+desc`;
     const r = await fetch(url);
     const d = await r.json();
     removerSkeleton();
@@ -551,7 +542,7 @@ async function buscarVideosIA(query = '', page = 1, destino = 'telaHome') {
         slide.innerHTML = `
           <div class="video-placeholder" id="ph-${item.identifier}">
             <div class="spinner"></div>
-            <span style="color:#94a3b8;font-size:12px;margin-top:12px">Vídeo ${index + 1}</span>
+            <span style="color:#94a3b8;font-size:12px;margin-top:12px">Carregando...</span>
           </div>
           <div class="acoes-laterais">
             <div class="acao" onclick="event.stopPropagation(); window.toggleLike('${item.identifier}', this.querySelector('.acao-btn'), this.querySelector('span'))">
@@ -568,8 +559,8 @@ async function buscarVideosIA(query = '', page = 1, destino = 'telaHome') {
             </div>
           </div>
           <div class="overlay">
-            <div class="canal"><i class="fas fa-film"></i> ${item.year || 'Arquivo'}</div>
-            <div class="titulo-video">${item.title || 'Vídeo'}</div>
+            <div class="canal"><i class="fas fa-face-laugh-squint"></i> ${item.year || 'Comédia'}</div>
+            <div class="titulo-video">${item.title || 'Vídeo engraçado'}</div>
           </div>
         `;
         el.appendChild(slide);
@@ -607,7 +598,6 @@ function ativarLazyLoading() {
       const slide = entry.target;
       const id = slide.dataset.id;
       const placeholder = document.getElementById(`ph-${id}`);
-      
       if (entry.isIntersecting) {
         if (placeholder && !slide.querySelector('iframe')) {
           const iframe = document.createElement('iframe');
@@ -630,11 +620,7 @@ function ativarLazyLoading() {
         }
       }
     });
-  }, {
-    root: document.getElementById('telaHome'),
-    rootMargin: '100% 0px',
-    threshold: 0
-  });
+  }, { root: document.getElementById('telaHome'), rootMargin: '100% 0px', threshold: 0 });
   slides.forEach(slide => observer.observe(slide));
 }
 
@@ -669,7 +655,7 @@ function abrirVideoPesquisa(id, titulo) {
       </div>
     </div>
     <div class="overlay">
-      <div class="canal"><i class="fas fa-film"></i> Internet Archive</div>
+      <div class="canal"><i class="fas fa-face-laugh-squint"></i> Internet Archive</div>
       <div class="titulo-video">${titulo || 'Vídeo'}</div>
     </div>
   `;
