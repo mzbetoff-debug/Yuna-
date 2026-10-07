@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#0a0e1a">
 <title>YUNA · Perfil</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="manifest" href="/Yuna-/manifest.json">
+<meta name="theme-color" content="#0a0e1a">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
@@ -576,6 +578,13 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
     document.getElementById('opcoesFoto').style.display = 'block';
     document.getElementById('avisoErro').style.display = 'none';
   };
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/Yuna-/sw.js');
+    });
+  }
 </script>
 
 </body>
