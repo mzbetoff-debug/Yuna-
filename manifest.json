@@ -1,4 +1,4 @@
- {
+{
   "name": "YUNA - Seu Universo",
   "short_name": "YUNA",
   "description": "Vídeos engraçados, música, livros e muito mais.",
@@ -9,6 +9,7 @@
   "theme_color": "#0a0e1a",
   "scope": "/Yuna-/",
   "lang": "pt-BR",
+  "categories": ["entertainment", "education", "music"],
   "icons": [
     {
       "src": "/Yuna-/icone-192.png",
