@@ -1,0 +1,26 @@
+ {
+  "name": "YUNA - Seu Universo",
+  "short_name": "YUNA",
+  "description": "Vídeos engraçados, música, livros e muito mais.",
+  "start_url": "/Yuna-/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "scope": "/Yuna-/",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/Yuna-/icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Yuna-/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
