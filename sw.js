@@ -7,7 +7,7 @@ const URLS = [
   '/Yuna-/perfil.html',
   '/Yuna-/musica.html',
   '/Yuna-/educacao.html',
-  '/Yuna-/manhwas.html',
+  '/Yuna-/animes.html',
   '/Yuna-/favicon.png'
 ];
 
