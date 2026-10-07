@@ -1,14 +1,16 @@
 {
   "name": "YUNA - Seu Universo",
   "short_name": "YUNA",
-  "description": "Vídeos engraçados, música, livros e muito mais.",
+  "description": "Vídeos engraçados, música, livros e muito mais. O teu universo de entretenimento em um só lugar.",
   "start_url": "/Yuna-/index.html",
+  "scope": "/Yuna-/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0a0e1a",
   "theme_color": "#0a0e1a",
-  "scope": "/Yuna-/",
   "lang": "pt-BR",
+  "dir": "ltr",
+  "id": "yuna-app",
   "categories": ["entertainment", "education", "music"],
   "icons": [
     {
