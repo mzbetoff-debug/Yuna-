@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YUNA - Perfil</title>
+    <title>YUNA - Perfil (Teste)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== VARIÁVEIS DOS TEMAS ===== */
         :root { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; }
         body.tema-roxo { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; }
         body.tema-branco { --fundo: #f5f5f7; --fundo-card: #ffffff; --texto: #1a1a1a; --texto-suave: #555555; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #e0e0e0; }
         body.tema-azul { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; }
         body.tema-amarelo { --fundo: #1a1500; --fundo-card: #2a2000; --texto: #ffffff; --texto-suave: #d0c890; --primaria: #fbbf24; --primaria-hover: #f59e0b; --borda: #4a3a00; }
 
-        /* ===== ESTILOS GERAIS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: var(--fundo); color: var(--texto); transition: background 0.3s, color 0.3s; padding-bottom: 80px; }
         
@@ -24,7 +22,6 @@
         
         .seletor-temas { position: fixed; top: 70px; right: 15px; display: flex; gap: 8px; z-index: 999; background: var(--fundo-card); padding: 8px; border-radius: 30px; border: 1px solid var(--borda); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .cor-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; }
-        .cor-btn:hover { transform: scale(1.2); }
         .cor-btn[data-tema="roxo"] { background: #8b5cf6; }
         .cor-btn[data-tema="branco"] { background: #ffffff; border-color: #ccc; }
         .cor-btn[data-tema="azul"] { background: #3b82f6; }
@@ -32,26 +29,19 @@
         .cor-btn.ativo { border-color: var(--texto); transform: scale(1.1); }
 
         .container { padding: 20px; max-width: 500px; margin: 0 auto; }
-
-        /* CARTÃO DE PERFIL */
         .card-perfil { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 30px 20px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        
-        /* FOTO DE PERFIL */
         .avatar-container { position: relative; width: 110px; height: 110px; margin: 0 auto 15px; cursor: pointer; }
         .avatar { width: 100%; height: 100%; border-radius: 50%; background: #d8b4fe; display: flex; align-items: center; justify-content: center; border: 3px solid var(--primaria); font-size: 50px; color: #000; overflow: hidden; }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
         .btn-foto { position: absolute; bottom: 0; right: 0; background: var(--primaria); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--fundo-card); font-size: 14px; }
-        
         .nome-user { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
         .email-user { color: var(--texto-suave); font-size: 14px; margin-bottom: 15px; }
         .badge { background: var(--borda); color: var(--primaria); padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; }
 
-        /* CONFIGURAÇÕES */
         .card-config { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; overflow: hidden; }
         .card-config h3 { padding: 15px 20px; font-size: 14px; color: var(--primaria); border-bottom: 1px solid var(--borda); text-transform: uppercase; letter-spacing: 1px; }
-        .opcao { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--borda); cursor: pointer; transition: background 0.2s; }
+        .opcao { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--borda); cursor: pointer; }
         .opcao:last-child { border-bottom: none; }
-        .opcao:hover { background: rgba(255,255,255,0.05); }
         .icone-opcao { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 15px; color: white; }
         .icone-opcao.azul { background: #3b82f6; }
         .icone-opcao.vermelho { background: #ef4444; }
@@ -60,22 +50,17 @@
         .texto-opcao p { font-size: 12px; color: var(--texto-suave); }
         .seta { color: var(--primaria); font-size: 18px; }
 
-        /* NAVEGAÇÃO INFERIOR */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 12px; gap: 5px; transition: color 0.2s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 12px; gap: 5px; }
         .nav-item i { font-size: 20px; }
         .nav-item.active { color: var(--primaria); }
 
-        /* MODAL DE TROCA DE NOME */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
         .modal-content { background: var(--fundo-card); padding: 25px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--borda); }
-        .modal-content h3 { margin-bottom: 15px; text-align: center; }
-        .modal-content input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--borda); background: var(--fundo); color: var(--texto); margin-bottom: 20px; font-size: 16px; outline: none; }
-        .modal-botoes { display: flex; gap: 10px; }
-        .btn-modal { flex: 1; padding: 12px; border-radius: 10px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .modal-botoes { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-modal { flex: 1; padding: 12px; border-radius: 10px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; }
         .btn-cancelar { background: transparent; border: 1px solid var(--borda); color: var(--texto); }
         .btn-salvar { background: var(--primaria); color: #fff; }
-        .btn-salvar:hover { background: var(--primaria-hover); }
     </style>
 </head>
 <body class="tema-amarelo">
@@ -96,9 +81,7 @@
     <div class="container">
         <div class="card-perfil">
             <div class="avatar-container" id="avatarContainer">
-                <div class="avatar" id="avatarDisplay">
-                    <i class="fas fa-spinner fa-spin"></i> <!-- Enquanto carrega -->
-                </div>
+                <div class="avatar" id="avatarDisplay"><i class="fas fa-spinner fa-spin"></i></div>
                 <div class="btn-foto"><i class="fas fa-camera"></i></div>
             </div>
             <input type="file" id="fileInput" accept="image/*" style="display: none;">
@@ -118,7 +101,6 @@
                 </div>
                 <div class="seta"><i class="fas fa-chevron-right"></i></div>
             </div>
-
             <div class="opcao" id="btnSair">
                 <div class="icone-opcao vermelho"><i class="fas fa-sign-out-alt"></i></div>
                 <div class="texto-opcao">
@@ -140,8 +122,8 @@
 
     <div class="modal" id="modalNome">
         <div class="modal-content">
-            <h3>Mudar Nome</h3>
-            <input type="text" id="inputNovoNome" placeholder="Digita o teu novo nome...">
+            <h3 style="text-align:center; margin-bottom:15px;">Mudar Nome</h3>
+            <input type="text" id="inputNovoNome" placeholder="Digita o teu novo nome..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid var(--borda); background:var(--fundo); color:var(--texto);">
             <div class="modal-botoes">
                 <button class="btn-modal btn-cancelar" id="btnCancelarNome">Cancelar</button>
                 <button class="btn-modal btn-salvar" id="btnSalvarNome">Guardar</button>
@@ -149,13 +131,15 @@
         </div>
     </div>
 
-    <!-- ===== SCRIPTS DO FIREBASE (VERSÃO 8 - A QUE O TEU SITE USA) ===== -->
+    <!-- FIREBASE SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // ⚠️ 1. SUBSTITUI PELA TUA CONFIGURAÇÃO DO FIREBASE ⚠️
+        // ========================================================
+        // 1. ⚠️ COLA AQUI A TUA CONFIGURAÇÃO DO FIREBASE ⚠️
+        // Vai ao teu home.html ou login.html e copia esta parte
+        // ========================================================
         const firebaseConfig = {
             apiKey: "A_TUA_API_KEY",
             authDomain: "O_TEU_AUTH_DOMAIN",
@@ -165,28 +149,21 @@
             appId: "O_TEU_APP_ID"
         };
 
-        // ⚠️ 2. SUBSTITUI PELA TUA CHAVE DO IMGBB ⚠️
-        const IMGBB_API_KEY = "A_TUA_CHAVE_IMGBB_AQUI"; 
-
-        // Inicializar Firebase
+        // Inicializar
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const auth = firebase.auth();
-        const db = firebase.firestore();
 
-        // Elementos do DOM
+        // Elementos
         const elNome = document.getElementById('displayName');
         const elEmail = document.getElementById('displayEmail');
         const avatarDisplay = document.getElementById('avatarDisplay');
-        const modalNome = document.getElementById('modalNome');
-        const inputNovoNome = document.getElementById('inputNovoNome');
-        const fileInput = document.getElementById('fileInput');
 
-        // 1. OUVIR O ESTADO DE AUTENTICAÇÃO (Resolve o loop)
+        // ALERTA DE DIAGNÓSTICO - Vai aparecer um pop-up a dizer se o Firebase encontrou o utilizador ou não
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // O utilizador está logado! Atualiza os dados no ecrã.
+                alert("✅ Firebase ligou! Utilizador encontrado: " + user.email);
                 elNome.innerText = user.displayName || "Sem Nome";
                 elEmail.innerText = user.email;
 
@@ -196,126 +173,62 @@
                     avatarDisplay.innerHTML = `<i class="fas fa-user"></i>`;
                 }
             } else {
-                // Se não houver utilizador, redireciona para o login
-                window.location.href = "login.html";
+                // ⚠️ DESATIVEI O REDIRECIONAMENTO AQUI PARA PODERES VER O ECRÃ
+                alert("❌ Firebase diz que NÃO estás logado. O problema está na configuração ou na sessão.");
+                elNome.innerText = "Não logado";
+                elEmail.innerText = "Verifica a consola";
+                avatarDisplay.innerHTML = `<i class="fas fa-user-slash"></i>`;
+                
+                // window.location.href = "login.html"; // <-- Isto é o que te estava a expulsar
             }
         });
 
-        // 2. LÓGICA DE MUDAR O NOME
+        // Lógica do Modal (Nome)
         document.getElementById('btnMudarNome').addEventListener('click', () => {
             const user = auth.currentUser;
-            if(user) inputNovoNome.value = user.displayName || "";
-            modalNome.style.display = 'flex';
+            if(user) document.getElementById('inputNovoNome').value = user.displayName || "";
+            document.getElementById('modalNome').style.display = 'flex';
         });
 
         document.getElementById('btnCancelarNome').addEventListener('click', () => {
-            modalNome.style.display = 'none';
+            document.getElementById('modalNome').style.display = 'none';
         });
 
         document.getElementById('btnSalvarNome').addEventListener('click', () => {
-            const novoNome = inputNovoNome.value.trim();
+            const novoNome = document.getElementById('inputNovoNome').value.trim();
             const user = auth.currentUser;
-
             if (!novoNome) return alert("O nome não pode estar vazio!");
-
             if (user) {
                 user.updateProfile({ displayName: novoNome }).then(() => {
-                    // Atualiza o ecrã na hora
                     elNome.innerText = novoNome;
-                    modalNome.style.display = 'none';
-                    
-                    // Tenta atualizar no Firestore (se falhar, não bloqueia o processo)
-                    db.collection("users").doc(user.uid).update({ nome: novoNome })
-                      .catch(e => console.log("Aviso: Firestore não atualizado (regras?)."));
-
-                    alert("Nome atualizado com sucesso!");
-                }).catch((error) => {
-                    console.error(error);
-                    alert("Erro ao atualizar: " + error.message);
-                });
+                    document.getElementById('modalNome').style.display = 'none';
+                    alert("Nome atualizado!");
+                }).catch((error) => alert("Erro: " + error.message));
             }
         });
 
-        // 3. LÓGICA DE MUDAR A FOTO (ImgBB)
-        document.getElementById('avatarContainer').addEventListener('click', () => {
-            fileInput.click();
-        });
-
-        fileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            if (!file.type.startsWith('image/')) return alert("Por favor, escolhe uma imagem válida.");
-
-            // Mostra loading
-            avatarDisplay.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
-
-            try {
-                const formData = new FormData();
-                formData.append('image', file);
-
-                // Envia para o ImgBB
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    const imageUrl = data.data.url;
-                    const user = auth.currentUser;
-
-                    // Atualiza no Firebase Auth
-                    await user.updateProfile({ photoURL: imageUrl });
-                    
-                    // Atualiza no Firestore (Opcional)
-                    db.collection("users").doc(user.uid).update({ foto: imageUrl })
-                      .catch(e => console.log("Aviso: Firestore não atualizado."));
-
-                    // Mostra a nova foto
-                    avatarDisplay.innerHTML = `<img src="${imageUrl}" alt="Foto">`;
-                    alert("Foto de perfil atualizada!");
-                } else {
-                    throw new Error("Falha no ImgBB");
-                }
-            } catch (error) {
-                console.error(error);
-                avatarDisplay.innerHTML = `<i class="fas fa-user"></i>`;
-                alert("Erro ao carregar a imagem. Tenta novamente.");
-            }
-        });
-
-        // 4. LÓGICA DE SAIR
+        // Lógica Sair
         document.getElementById('btnSair').addEventListener('click', () => {
             if(confirm("Tens a certeza que queres sair?")) {
-                auth.signOut().then(() => {
-                    window.location.href = "login.html";
-                });
+                auth.signOut().then(() => window.location.href = "login.html");
             }
         });
     </script>
 
-    <!-- SISTEMA DE TEMAS -->
+    <!-- TEMAS -->
     <script>
         (function() {
             const TEMAS = ['roxo', 'branco', 'azul', 'amarelo'];
             const temaGuardado = localStorage.getItem('yuna-tema') || 'amarelo';
-
             function aplicarTema(tema) {
                 TEMAS.forEach(t => document.body.classList.remove('tema-' + t));
                 document.body.classList.add('tema-' + tema);
                 localStorage.setItem('yuna-tema', tema);
-
-                document.querySelectorAll('.cor-btn').forEach(btn => {
-                    btn.classList.toggle('ativo', btn.dataset.tema === tema);
-                });
+                document.querySelectorAll('.cor-btn').forEach(btn => btn.classList.toggle('ativo', btn.dataset.tema === tema));
             }
-
             aplicarTema(temaGuardado);
             document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('.cor-btn').forEach(btn => {
-                    btn.addEventListener('click', () => aplicarTema(btn.dataset.tema));
-                });
+                document.querySelectorAll('.cor-btn').forEach(btn => btn.addEventListener('click', () => aplicarTema(btn.dataset.tema)));
             });
         })();
     </script>
