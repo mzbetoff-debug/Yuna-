@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>YUNA · Reconhecer Anime</title>
+<title>YUNA · Perfil</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -16,30 +16,30 @@ body.theme-amarelo { --bg: #000000; --card-bg: rgba(20,20,20,.9); --text-main: #
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transition: background 0.3s, color 0.3s;}
 body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom:80px}
 
-/* HEADER */
 .header{position:sticky;top:0;z-index:100;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
 .back-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--text-main);width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .logo-text{font-size:20px;font-weight:900;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .menu-btn{width:40px;height:40px;border-radius:12px;background:var(--card-bg);border:1px solid var(--border);color:var(--text-main);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 
-/* CONTEÚDO ANIME */
+/* PERFIL */
 .container{padding:20px}
-.hero-anime{background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:30px 20px;text-align:center;margin-bottom:20px}
-.hero-anime i{font-size:50px;color:var(--accent);margin-bottom:16px}
-.hero-anime h2{font-size:22px;font-weight:800;color:var(--text-main);margin-bottom:8px}
-.hero-anime p{font-size:14px;color:var(--text-sub);margin-bottom:20px}
-.btn-upload{background:var(--accent-gradient);color:#fff;border:none;padding:14px 24px;border-radius:14px;font-size:15px;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.perfil-card{background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:30px 20px;text-align:center;margin-bottom:20px}
+.foto-perfil{width:100px;height:100px;border-radius:50%;margin:0 auto 16px;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid var(--border)}
+.foto-perfil img{width:100%;height:100%;object-fit:cover}
+.foto-perfil i{font-size:40px;color:#fff}
+.nome-user{font-size:22px;font-weight:800;color:var(--text-main);margin-bottom:4px}
+.email-user{font-size:14px;color:var(--text-sub);margin-bottom:16px}
+.badge-user{background:rgba(167,139,250,.2);color:var(--accent);padding:6px 16px;border-radius:20px;font-size:12px;font-weight:bold;display:inline-block}
 
-.loading-anime{text-align:center;padding:40px;color:var(--text-sub);display:none}
-.loading-anime i{font-size:40px;color:var(--accent);margin-bottom:16px}
-
-/* RESULTADO */
-.resultado{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:20px;margin-bottom:20px}
-.resultado img{width:100%;border-radius:16px;margin-bottom:16px}
-.res-titulo{font-size:20px;font-weight:800;color:var(--text-main);margin-bottom:8px}
-.res-info{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.res-badge{background:rgba(167,139,250,.2);color:var(--accent);padding:6px 12px;border-radius:8px;font-size:12px;font-weight:bold}
-.res-sinopse{font-size:14px;color:var(--text-sub);line-height:1.6;margin-bottom:16px}
+/* CONFIGURAÇÕES */
+.config-card{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.config-title{padding:16px;font-size:13px;font-weight:bold;color:var(--text-sub);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:1px}
+.config-item{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--border);cursor:pointer;text-decoration:none;color:var(--text-main)}
+.config-item:last-child{border-bottom:none}
+.config-item-left{display:flex;align-items:center;gap:14px}
+.config-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
+.config-text h4{font-size:15px;font-weight:600;color:var(--text-main)}
+.config-text p{font-size:12px;color:var(--text-sub)}
 
 /* MENUS */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);border-top:1px solid var(--border);padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-around;z-index:997}
@@ -68,48 +68,55 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
 
 <header class="header">
   <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
-  <div class="logo-text">YUNA ANIMES</div>
+  <div class="logo-text">YUNA PERFIL</div>
   <button class="menu-btn" onclick="abrirMenu()"><i class="fas fa-bars"></i></button>
 </header>
 
 <div class="container">
-  <div class="hero-anime" id="heroAnime">
-    <i class="fas fa-camera"></i>
-    <h2>Reconhecer Anime</h2>
-    <p>Envie um print ou imagem de um anime e descubra de onde é.</p>
-    <button class="btn-upload" onclick="document.getElementById('animeInput').click()">
-      <i class="fas fa-image"></i> Escolher Imagem
-    </button>
-  </div>
-
-  <div class="loading-anime" id="loadingAnime">
-    <i class="fas fa-spinner fa-spin"></i>
-    <p>A analisar a imagem com Inteligência Artificial...</p>
-  </div>
-
-  <div class="resultado" id="resultadoAnime">
-    <img id="resCapa" src="" alt="Capa">
-    <div class="res-titulo" id="resTitulo">Título do Anime</div>
-    <div class="res-info">
-      <span class="res-badge" id="resPrecisao">🎯 0% Precisão</span>
-      <span class="res-badge" id="resEpisodio">📺 Ep. 0</span>
-      <span class="res-badge" id="resNota">⭐ 0.0</span>
+  <!-- CARTÃO DE PERFIL -->
+  <div class="perfil-card">
+    <div class="foto-perfil" id="fotoPerfil">
+      <i class="fas fa-user"></i>
     </div>
-    <div class="res-sinopse" id="resSinopse">Sinopse...</div>
-    <button class="btn-upload" onclick="window.location.reload()" style="width:100%; justify-content:center; background:var(--card-bg); color:var(--text-main); border:1px solid var(--border)">
-      Tentar Outra Imagem
-    </button>
+    <div class="nome-user" id="nomePerfil">Carregando...</div>
+    <div class="email-user" id="emailPerfil">...</div>
+    <div class="badge-user">Membro YUNA</div>
+  </div>
+
+  <!-- CONFIGURAÇÕES -->
+  <div class="config-card">
+    <div class="config-title">Configurações</div>
+    
+    <a href="#" class="config-item">
+      <div class="config-item-left">
+        <div class="config-icon" style="background:#38bdf8"><i class="fas fa-pen"></i></div>
+        <div class="config-text">
+          <h4>Mudar Nome</h4>
+          <p>Editar o teu nome de exibição</p>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right" style="color:var(--text-sub)"></i>
+    </a>
+
+    <a href="#" class="config-item" onclick="sairConta(event)">
+      <div class="config-item-left">
+        <div class="config-icon" style="background:#ef4444"><i class="fas fa-sign-out-alt"></i></div>
+        <div class="config-text">
+          <h4>Sair da Conta</h4>
+          <p>Terminar sessão no dispositivo</p>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right" style="color:var(--text-sub)"></i>
+    </a>
   </div>
 </div>
-
-<input type="file" id="animeInput" accept="image/*" style="display:none" onchange="processarAnime(event)">
 
 <nav class="bottom-nav">
   <a class="nav-item" href="home.html"><i class="fas fa-home"></i><span>Início</span></a>
   <a class="nav-item" href="musica.html"><i class="fas fa-music"></i><span>Música</span></a>
-  <a class="nav-item active" href="animes.html"><i class="fas fa-dragon"></i><span>Animes</span></a>
+  <a class="nav-item" href="animes.html"><i class="fas fa-dragon"></i><span>Animes</span></a>
   <a class="nav-item" href="educacao.html"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
-  <a class="nav-item" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
+  <a class="nav-item active" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
 </nav>
 
 <div class="menu-overlay" id="menuOverlay" onclick="fecharMenu()"></div>
@@ -129,6 +136,45 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
     <a class="menu-item" href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
   </nav>
 </aside>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+    authDomain: "yuna-8fe24.firebaseapp.com",
+    projectId: "yuna-8fe24",
+    storageBucket: "yuna-8fe24.firebasestorage.app",
+    messagingSenderId: "531340097112",
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      document.getElementById('nomePerfil').textContent = user.displayName || 'Utilizador YUNA';
+      document.getElementById('emailPerfil').textContent = user.email;
+      
+      if (user.photoURL) {
+        document.getElementById('fotoPerfil').innerHTML = `<img src="${user.photoURL}">`;
+      }
+    } else {
+      window.location.replace('login.html');
+    }
+  });
+
+  window.sairConta = (e) => {
+    e.preventDefault();
+    if(confirm('Tens a certeza que queres sair?')) {
+      signOut(auth).then(() => {
+        window.location.replace('login.html');
+      });
+    }
+  };
+</script>
 
 <script>
 // ================= SISTEMA DE TEMAS GLOBAL =================
@@ -153,69 +199,6 @@ setTimeout(() => {
 
 function abrirMenu(){document.getElementById('menuLateral').classList.add('aberto');document.getElementById('menuOverlay').classList.add('aberto')}
 function fecharMenu(){document.getElementById('menuLateral').classList.remove('aberto');document.getElementById('menuOverlay').classList.remove('aberto')}
-
-// ================= RECONHECIMENTO DE ANIME (Trace.moe + AniList) =================
-window.processarAnime = async (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  document.getElementById('heroAnime').style.display = 'none';
-  document.getElementById('loadingAnime').style.display = 'block';
-
-  try {
-    const formData = new FormData();
-    formData.append('image', file);
-    
-    const resTrace = await fetch('https://api.trace.moe/search?anilistInfo', { method: 'POST', body: formData });
-    const dataTrace = await resTrace.json();
-
-    if (!dataTrace.result || dataTrace.result.length === 0) {
-      alert('❌ Não foi possível identificar este anime.');
-      window.location.reload();
-      return;
-    }
-
-    const animeBase = dataTrace.result[0];
-    const anilistId = animeBase.anilist.id;
-    const titulo = animeBase.anilist.title.romaji || animeBase.anilist.title.english;
-    const precisao = Math.round(animeBase.similarity * 100);
-    const episodio = animeBase.episode || '?';
-
-    let capa = '', sinopse = '', nota = 'N/A';
-    
-    // Buscar dados extras no AniList
-    try {
-      const query = `query ($id: Int) { Media (id: $id, type: ANIME) { coverImage { large } description averageScore } }`;
-      const resAnilist = await fetch('https://graphql.anilist.co', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query, variables: { id: anilistId } })
-      });
-      const dataAnilist = await resAnilist.json();
-      if (dataAnilist.data && dataAnilist.data.Media) {
-        capa = dataAnilist.data.Media.coverImage.large;
-        sinopse = dataAnilist.data.Media.description ? dataAnilist.data.Media.description.replace(/<[^>]*>?/gm, '') : 'Sem sinopse.';
-        nota = dataAnilist.data.Media.averageScore ? (dataAnilist.data.Media.averageScore / 10).toFixed(1) : 'N/A';
-      }
-    } catch(e) { console.log('Erro AniList:', e); }
-
-    // Mostrar Resultado
-    document.getElementById('loadingAnime').style.display = 'none';
-    document.getElementById('resultadoAnime').style.display = 'block';
-
-    if(capa) document.getElementById('resCapa').src = capa;
-    document.getElementById('resCapa').style.display = capa ? 'block' : 'none';
-    
-    document.getElementById('resTitulo').textContent = titulo;
-    document.getElementById('resPrecisao').textContent = `🎯 ${precisao}% Precisão`;
-    document.getElementById('resEpisodio').textContent = `📺 Ep. ${episodio}`;
-    document.getElementById('resNota').textContent = `⭐ ${nota}`;
-    document.getElementById('resSinopse').textContent = sinopse;
-
-  } catch (error) {
-    alert('⚠️ Erro ao analisar. Tenta novamente.');
-    window.location.reload();
-  }
-};
 </script>
 </body>
 </html>
