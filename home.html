@@ -548,6 +548,163 @@ function abrirNotificacoes() { alert("🔔 Nenhuma notificação nova no momento
     } catch(e) { btn.textContent = 'Erro. Tentar novamente'; btn.style.display = 'block'; }
   };
 </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs, serverTimestamp, where, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+    authDomain: "yuna-8fe24.firebaseapp.com",
+    projectId: "yuna-8fe24",
+    storageBucket: "yuna-8fe24.firebasestorage.app",
+    messagingSenderId: "531340097112",
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  setPersistence(auth, browserLocalPersistence);
+
+  const IMGBB_KEY = "52ddf1c2a5509391a0edcaadd1d02009";
+  let userAtual = null;
+  let postComentarioAtual = null;
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.replace('login.html'); return; }
+    userAtual = user;
+    const avatar = document.getElementById('userAvatar');
+    if (user.photoURL) avatar.innerHTML = `<img src="${user.photoURL}">`;
+    carregarPosts();
+  });
+
+  async function uploadImgBB(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
+    const data = await res.json();
+    return data.data.url;
+  }
+
+  window.criarPost = async () => {
+    if (!userAtual) return;
+    const texto = document.getElementById('textoPost').value.trim();
+    const fileInput = document.getElementById('inputFotoPost');
+    const btn = document.querySelector('.btn-publicar');
+    if (!texto && !fileInput.files[0]) return;
+    
+    btn.textContent = 'A publicar...'; btn.disabled = true;
+    try {
+      let imgUrl = '';
+      if (fileInput.files[0]) imgUrl = await uploadImgBB(fileInput.files[0]);
+      await addDoc(collection(db, 'publicacoes'), {
+        uid: userAtual.uid, nome: userAtual.displayName || 'Anônimo',
+        foto: userAtual.photoURL || '', texto: texto, imagem: imgUrl, criadoEm: serverTimestamp()
+      });
+      document.getElementById('textoPost').value = '';
+      fileInput.value = ''; document.getElementById('previewImagem').style.display = 'none';
+      carregarPosts();
+    } catch(e) { alert('Erro ao publicar: ' + e.message); }
+    btn.textContent = 'Publicar'; btn.disabled = false;
+  };
+
+  async function carregarPosts() {
+    const feed = document.getElementById('feedPosts');
+    try {
+      const q = query(collection(db, 'publicacoes'), orderBy('criadoEm', 'desc'), limit(10));
+      const snap = await getDocs(q);
+      feed.innerHTML = '';
+      if(!snap.empty) {
+          const title = document.createElement('div');
+          title.style.cssText = 'margin:16px 0 10px;font-weight:bold;font-size:14px;color:var(--text-sub);border-bottom:1px solid var(--border);padding-bottom:8px';
+          title.textContent = '📝 Publicações da Comunidade';
+          feed.appendChild(title);
+      }
+      
+      snap.forEach(d => {
+        const p = d.data();
+        const fotoHTML = p.foto ? `<img src="${p.foto}">` : (p.nome||'?').charAt(0);
+        const dataFormatada = p.criadoEm ? new Date(p.criadoEm.seconds * 1000).toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) : 'Agora';
+        
+        const btnBaixarFoto = p.imagem ? `<a href="${p.imagem}" download="yuna_foto_${d.id}.jpg" style="margin-left:auto;color:var(--accent)"><i class="fas fa-download"></i> Baixar Foto</a>` : '';
+
+        const post = document.createElement('div');
+        post.className = 'post';
+        post.innerHTML = `
+          <div class="post-header" onclick="verPerfil('${p.uid}')">
+            <div class="post-foto">${fotoHTML}</div>
+            <div class="post-info"><h4>${p.nome}</h4><p>${dataFormatada}</p></div>
+          </div>
+          <div class="post-conteudo">${p.texto}</div>
+          ${p.imagem ? `<img src="${p.imagem}" class="post-img">` : ''}
+          <div class="post-acoes">
+            <span onclick="abrirComentariosPost('${d.id}')"><i class="fas fa-comment"></i> Comentar</span>
+            ${btnBaixarFoto}
+          </div>
+        `;
+        feed.appendChild(post);
+      });
+    } catch(e) { console.log(e); }
+  }
+
+  window.verPerfil = async (uid) => {
+    const modal = document.getElementById('modalPerfil');
+    const div = document.getElementById('perfilConteudo');
+    div.innerHTML = '<div class="spinner"></div>'; modal.classList.add('aberto');
+    try {
+      const docSnap = await getDoc(doc(db, 'ranking', uid));
+      if (docSnap.exists()) {
+        const u = docSnap.data();
+        const foto = u.foto ? `<img src="${u.foto}">` : `<div style="width:80px;height:80px;border-radius:50%;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-size:30px;margin:0 auto 10px">${(u.nome||'?').charAt(0)}</div>`;
+        div.innerHTML = `${foto}<h2>${u.nome}</h2><p>🏆 ${u.pontos || 0} pontos</p>`;
+      } else { div.innerHTML = '<p style="color:var(--text-sub)">Perfil não encontrado.</p>'; }
+    } catch(e) { div.innerHTML = '<p style="color:var(--text-sub)">Erro.</p>'; }
+  };
+
+  window.abrirComentariosPost = async (postId) => {
+    postComentarioAtual = postId;
+    document.getElementById('modalComentariosPost').classList.add('aberto');
+    await carregarComentariosPost(postId);
+  };
+
+  async function carregarComentariosPost(postId) {
+    const div = document.getElementById('listaComentariosPost');
+    div.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-sub)">Carregando...</div>';
+    try {
+      const q = query(collection(db, 'comentarios_posts'), where('postId', '==', postId));
+      const snap = await getDocs(q);
+      if (snap.empty) { div.innerHTML = '<p style="text-align:center;color:var(--text-sub)">Nenhum comentário.</p>'; return; }
+      
+      const lista = [];
+      snap.forEach(d => lista.push({ id: d.id, ...d.data() }));
+      lista.sort((a,b) => (a.criadoEm?.seconds||0) - (b.criadoEm?.seconds||0));
+      div.innerHTML = '';
+      
+      lista.forEach(c => {
+        const foto = c.foto ? `<img src="${c.foto}">` : (c.nome||'?').charAt(0);
+        const el = document.createElement('div');
+        el.className = 'comentario';
+        el.innerHTML = `<div class="comentario-foto" onclick="verPerfil('${c.uid}')">${foto}</div><div class="comentario-info"><h5 onclick="verPerfil('${c.uid}')">${c.nome}</h5><p>${c.texto}</p></div>`;
+        div.appendChild(el);
+      });
+    } catch(e) { div.innerHTML = '<p style="color:var(--text-sub)">Erro.</p>'; }
+  }
+
+  window.enviarComentarioPost = async () => {
+    if (!userAtual || !postComentarioAtual) return;
+    const input = document.getElementById('inputComentarioPost');
+    const texto = input.value.trim(); if (!texto) return;
+    try {
+      await addDoc(collection(db, 'comentarios_posts'), {
+        postId: postComentarioAtual, uid: userAtual.uid,
+        nome: userAtual.displayName || 'Anônimo', foto: userAtual.photoURL || '',
+        texto, criadoEm: serverTimestamp()
+      });
+      input.value = ''; carregarComentariosPost(postComentarioAtual);
+    } catch(e) { alert('Erro: ' + e.message); }
+  };
+</script>
 
 </body>
 </html>
