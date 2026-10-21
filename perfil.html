@@ -47,6 +47,10 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
 .nome-user{font-size:22px;font-weight:800;color:var(--text-main);margin-bottom:4px}
 .handle-user{font-size:14px;color:var(--accent);font-weight:bold;margin-bottom:8px}
 .email-user{font-size:13px;color:var(--text-sub);margin-bottom:16px}
+
+/* BIOGRAFIA */
+.bio-user{font-size:14px;color:var(--text-main);line-height:1.5;margin-bottom:16px;padding:0 10px;font-style:italic;white-space:pre-wrap;}
+
 .badge-user{background:var(--card-bg);color:var(--text-main);border:1px solid var(--border);padding:6px 16px;border-radius:20px;font-size:12px;font-weight:bold;display:inline-block}
 .btn-editar-perfil{background:var(--accent-gradient);color:#fff;border:none;padding:10px 20px;border-radius:12px;font-size:14px;font-weight:bold;margin-top:16px;cursor:pointer;width:100%}
 
@@ -62,7 +66,7 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
 /* MODAL EDITAR */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.aberto{display:flex}
-.modal-content{width:100%;max-width:400px;background:var(--bg);border-radius:20px;padding:24px;border:1px solid var(--border)}
+.modal-content{width:100%;max-width:400px;background:var(--bg);border-radius:20px;padding:24px;border:1px solid var(--border);max-height: 90vh; overflow-y: auto;}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .modal-header h3{font-size:18px;color:var(--text-main)}
 .modal-close{background:var(--card-bg);border:none;color:var(--text-sub);width:32px;height:32px;border-radius:50%;cursor:pointer}
@@ -75,8 +79,8 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
 
 .input-group{margin-bottom:16px}
 .input-group label{display:block;font-size:12px;color:var(--text-sub);margin-bottom:6px;font-weight:bold}
-.input-group input{width:100%;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--text-main);font-size:15px;outline:none}
-.input-group input:focus{border-color:var(--accent)}
+.input-group input, .input-group textarea{width:100%;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--text-main);font-size:15px;outline:none;font-family:inherit;resize:none;}
+.input-group input:focus, .input-group textarea:focus{border-color:var(--accent)}
 .btn-salvar{background:var(--accent-gradient);color:#fff;border:none;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:bold;cursor:pointer;margin-top:10px}
 .btn-salvar:disabled{opacity:0.5;cursor:not-allowed}
 
@@ -111,6 +115,7 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
 </header>
 
 <div class="container">
+  <!-- CARTÃO DE PERFIL -->
   <div class="perfil-card">
     <div class="foto-perfil" id="fotoPerfil">
       <i class="fas fa-user"></i>
@@ -118,6 +123,10 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
     <div class="nome-user" id="nomePerfil">Carregando...</div>
     <div class="handle-user" id="handlePerfil">@usuario</div>
     <div class="email-user" id="emailPerfil">...</div>
+    
+    <!-- ÁREA DA DESCRIÇÃO NO PERFIL -->
+    <div class="bio-user" id="bioPerfil">Sem descrição.</div>
+
     <div class="badge-user">⭐ Membro YUNA</div>
     
     <button class="btn-editar-perfil" onclick="abrirModalPerfil()">
@@ -167,6 +176,12 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
     <div class="input-group">
       <label>Nome de Utilizador (@)</label>
       <input type="text" id="inputHandle" placeholder="@teu_usuario">
+    </div>
+
+    <!-- CAMPO DE DESCRIÇÃO NO MODAL -->
+    <div class="input-group">
+      <label>Descrição / Bio</label>
+      <textarea id="inputBio" rows="3" placeholder="Fala um pouco sobre ti..."></textarea>
     </div>
 
     <button class="btn-salvar" id="btnSalvarPerfil" onclick="salvarPerfil()">Guardar Alterações</button>
@@ -236,11 +251,23 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
 
       try {
         const docSnap = await getDoc(doc(db, 'ranking', user.uid));
-        if (docSnap.exists() && docSnap.data().handle) {
-          document.getElementById('handlePerfil').textContent = '@' + docSnap.data().handle;
-          document.getElementById('inputHandle').value = docSnap.data().handle;
-        } else {
-          document.getElementById('handlePerfil').textContent = '@sem_handle';
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          
+          if (data.handle) {
+            document.getElementById('handlePerfil').textContent = '@' + data.handle;
+            document.getElementById('inputHandle').value = data.handle;
+          } else {
+            document.getElementById('handlePerfil').textContent = '@sem_handle';
+          }
+
+          // Puxa a Descrição
+          if (data.bio) {
+            document.getElementById('bioPerfil').textContent = data.bio;
+            document.getElementById('inputBio').value = data.bio;
+          } else {
+            document.getElementById('bioPerfil').textContent = 'Sem descrição.';
+          }
         }
       } catch(e) { console.log(e); }
       
@@ -251,16 +278,14 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
     }
   });
 
-  // Abrir e Fechar Modal
   window.abrirModalPerfil = () => {
-    novaFotoFile = null; // Reseta a foto escolhida
+    novaFotoFile = null;
     document.getElementById('modalEditarPerfil').classList.add('aberto');
   };
   window.fecharModalPerfil = () => {
     document.getElementById('modalEditarPerfil').classList.remove('aberto');
   };
 
-  // Preview da Foto
   window.previewFotoPerfil = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -273,11 +298,11 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
     }
   };
 
-  // Salvar Alterações (Nome, @ e Foto)
   window.salvarPerfil = async () => {
     if (!userAtual) return;
 
     const novoNome = document.getElementById('inputNome').value.trim();
+    const novaBio = document.getElementById('inputBio').value.trim();
     let novoHandle = document.getElementById('inputHandle').value.trim();
     const btn = document.getElementById('btnSalvarPerfil');
 
@@ -294,7 +319,6 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
     try {
       let novaFotoUrl = userAtual.photoURL || '';
 
-      // 1. Se escolheu uma foto nova, faz upload para o ImgBB
       if (novaFotoFile) {
         const formData = new FormData();
         formData.append('image', novaFotoFile);
@@ -303,22 +327,22 @@ body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom
         novaFotoUrl = data.data.url;
       }
 
-      // 2. Atualiza no Firebase Auth (Nome e Foto)
       await updateProfile(userAtual, { 
         displayName: novoNome,
         photoURL: novaFotoUrl
       });
       
-      // 3. Atualiza no Firestore (Nome, Handle e Foto no Ranking)
+      // Guarda Nome, Handle, Foto e Bio no Firestore
       await setDoc(doc(db, 'ranking', userAtual.uid), {
         nome: novoNome,
         handle: novoHandle,
-        foto: novaFotoUrl
+        foto: novaFotoUrl,
+        bio: novaBio
       }, { merge: true });
 
-      // 4. Atualiza a tela na hora
       document.getElementById('nomePerfil').textContent = novoNome;
       document.getElementById('handlePerfil').textContent = '@' + novoHandle;
+      document.getElementById('bioPerfil').textContent = novaBio || 'Sem descrição.';
       
       if (novaFotoUrl) {
         document.getElementById('fotoPerfil').innerHTML = `<img src="${novaFotoUrl}">`;
