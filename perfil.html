@@ -3,622 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0e1a">
-<title>YUNA · Perfil</title>
+<title>YUNA · Reconhecer Anime</title>
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="manifest" href="/Yuna-/manifest.json">
-<meta name="theme-color" content="#0a0e1a">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
 <style>
-/* Variáveis de Tema Global */
+/* 🎨 SISTEMA DE TEMAS GLOBAL */
 :root { --bg: #0a0e1a; --card-bg: rgba(18,24,42,.7); --text-main: #f1f5f9; --text-sub: #94a3b8; --accent: #f472b6; --accent-gradient: linear-gradient(135deg,#f472b6,#a78bfa); --nav-bg: rgba(10,14,26,.98); --border: rgba(255,255,255,.06); }
 body.theme-branco { --bg: #f8fafc; --card-bg: #ffffff; --text-main: #1e293b; --text-sub: #64748b; --accent: #8b5cf6; --accent-gradient: linear-gradient(135deg,#8b5cf6,#ec4899); --nav-bg: #ffffff; --border: rgba(0,0,0,.1); }
 body.theme-azul { --bg: #0f172a; --card-bg: rgba(30,41,59,.8); --text-main: #f8fafc; --text-sub: #94a3b8; --accent: #38bdf8; --accent-gradient: linear-gradient(135deg,#38bdf8,#0ea5e9); --nav-bg: #0f172a; --border: rgba(56,189,248,.2); }
 body.theme-amarelo { --bg: #000000; --card-bg: rgba(20,20,20,.9); --text-main: #fef08a; --text-sub: #ca8a04; --accent: #facc15; --accent-gradient: linear-gradient(135deg,#facc15,#eab308); --nav-bg: #000000; --border: rgba(250,204,21,.2); }
 
-/* ⚠️ IMPORTANTE: Agora precisas alterar o teu CSS para usar as variáveis. */
-/* Exemplo: Se tinhas "background: #0a0e1a;", muda para "background: var(--bg);" */
-/* Se tinhas a cor rosa, muda para "color: var(--accent);" */
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transition: background 0.3s, color 0.3s;}
+body{background:var(--bg);color:var(--text-main);min-height:100vh;padding-bottom:80px}
 
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
-html,body{background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
-body{padding-bottom:90px}
-body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important}
-.header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:12px 16px}
-.header-top{display:flex;justify-content:space-between;align-items:center}
-.back-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#cbd5e1;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
-.logo i{font-size:22px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.logo h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.perfil-wrap{padding:16px;max-width:500px;margin:0 auto}
-.perfil-card{border:1px solid rgba(167,139,250,.3);border-radius:24px;padding:28px 20px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px;background-image:url('capa-perfil.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;background-color:#1a1f35}
-.perfil-card::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(10,14,26,.15) 0%,rgba(10,14,26,.4) 35%,rgba(10,14,26,.85) 65%,rgba(10,14,26,.98) 100%);z-index:1;pointer-events:none}
-.avatar-wrapper{position:relative;width:120px;height:120px;margin:0 auto 16px;z-index:3}
-.avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#8b5cf6);padding:3px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
-.camera-btn{position:absolute;bottom:5px;right:5px;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#8b5cf6);border:3px solid #0a0e1a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;z-index:4;box-shadow:0 4px 12px rgba(236,72,153,.5)}
-.camera-btn:active{transform:scale(.9)}
-.perfil-nome{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px;position:relative;z-index:3;text-shadow:0 2px 10px rgba(0,0,0,.9)}
-.perfil-status{display:inline-block;padding:6px 18px;border-radius:50px;font-size:12px;font-weight:700;letter-spacing:1.5px;position:relative;z-index:3;overflow:hidden;border:1px solid rgba(167,139,250,.4);animation:noobGlow 2s ease-in-out infinite,noobGradient 3s ease-in-out infinite;background-size:200% auto;cursor:default;user-select:none}
-@keyframes noobGlow{0%,100%{box-shadow:0 0 8px rgba(167,139,250,.4),0 0 16px rgba(236,72,153,.3);transform:scale(1)}50%{box-shadow:0 0 16px rgba(167,139,250,.8),0 0 32px rgba(236,72,153,.6);transform:scale(1.06)}}
-@keyframes noobGradient{0%,100%{background:linear-gradient(135deg,rgba(167,139,250,.85),rgba(236,72,153,.85));color:#fff;border-color:rgba(167,139,250,.6)}50%{background:linear-gradient(135deg,rgba(236,72,153,.9),rgba(167,139,250,.9));color:#fff;border-color:rgba(236,72,153,.7)}}
-@keyframes noobShine{0%{background-position:-200% center}100%{background-position:200% center}}
-.perfil-status::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);background-size:200% auto;animation:noobShine 3s linear infinite;pointer-events:none}
-.perfil-status.adm{border-color:rgba(251,191,36,.5);animation:admGlow 2s ease-in-out infinite,admGradient 3s ease-in-out infinite}
-@keyframes admGlow{0%,100%{box-shadow:0 0 8px rgba(251,191,36,.6),0 0 16px rgba(245,158,11,.5);transform:scale(1)}50%{box-shadow:0 0 22px rgba(251,191,36,1),0 0 44px rgba(245,158,11,.8);transform:scale(1.06)}}
-@keyframes admGradient{0%,100%{background:linear-gradient(135deg,rgba(251,191,36,.9),rgba(245,158,11,.9));color:#fff;border-color:rgba(251,191,36,.7)}50%{background:linear-gradient(135deg,rgba(245,158,11,.95),rgba(251,191,36,.95));color:#fff;border-color:rgba(251,191,36,.9)}}
-.info-card{background:rgba(18,24,42,.7);border-radius:20px;border:1px solid rgba(255,255,255,.05);overflow:hidden;margin-bottom:20px}
-.info-item{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.05);gap:12px}
-.info-item:last-child{border-bottom:none}
-.info-item .label{color:#94a3b8;font-size:14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.info-item .label i{color:#a78bfa;font-size:14px;width:20px}
-.info-item .valor{color:#f1f5f9;font-size:14px;font-weight:600;text-align:right;word-break:break-word}
-.opcoes-titulo{font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin:20px 0 12px;padding-left:4px}
-.opcao-btn{display:flex;align-items:center;gap:14px;background:rgba(18,24,42,.7);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;width:100%;text-align:left;color:inherit;text-decoration:none}
-.opcao-btn:active{background:rgba(18,24,42,.95);transform:scale(.98)}
-.opcao-btn .icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
-.opcao-btn .texto{flex:1}
-.opcao-btn .texto h4{font-size:15px;font-weight:600;color:#f1f5f9;margin-bottom:2px}
-.opcao-btn .texto p{font-size:12px;color:#94a3b8}
-.opcao-btn .seta{color:#64748b;font-size:14px}
-.btn-sair{width:100%;padding:16px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;border-radius:16px;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px}
-.btn-sair:active{background:rgba(239,68,68,.25);transform:scale(.98)}
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:2000;display:none;justify-content:center;align-items:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal{background:rgba(22,28,46,.99);border-radius:24px;padding:24px;width:100%;max-width:380px;border:1px solid rgba(255,255,255,.08)}
-.modal h3{font-size:18px;font-weight:700;color:#f1f5f9;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.modal h3 i{color:#ec4899}
-.modal p{font-size:13px;color:#94a3b8;margin-bottom:16px}
-.modal .grupo{position:relative;margin-bottom:14px}
-.modal .grupo i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#64748b}
-.modal .grupo input{width:100%;padding:14px 16px 14px 44px;background:rgba(0,0,0,.3);border:1px solid #334155;border-radius:14px;color:#e2e8f0;font-size:14px;outline:none}
-.modal .grupo input:disabled{opacity:.5;cursor:not-allowed}
-.modal-btns{display:flex;gap:10px;margin-top:16px}
-.modal-btn{flex:1;padding:12px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;border:none}
-.modal-btn.cancel{background:rgba(255,255,255,.06);color:#cbd5e1;border:1px solid rgba(255,255,255,.08)}
-.modal-btn.confirm{background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff}
-.foto-opcoes{display:flex;flex-direction:column;gap:10px}
-.foto-opt{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;cursor:pointer}
-.foto-opt .ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
-.foto-opt .tx{flex:1}
-.foto-opt .tx strong{display:block;font-size:14px;color:#f1f5f9}
-.foto-opt .tx span{font-size:11px;color:#94a3b8}
-.processando{display:none;text-align:center;padding:24px 0}
-.processando.show{display:block}
-.spinner-process{width:50px;height:50px;border:4px solid rgba(167,139,250,.2);border-top-color:#a78bfa;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.processando p{color:#c4b5fd;font-size:14px;font-weight:600;margin-bottom:4px}
-.processando .sub{color:#64748b;font-size:12px;font-weight:400}
-.aviso-espera{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:14px;padding:14px 16px;margin-bottom:16px;display:none}
-.aviso-espera.show{display:block}
-.aviso-espera h4{color:#fca5a5;font-size:13px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.aviso-espera p{font-size:12px;color:#fecaca;line-height:1.6}
-.loading{display:none;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;gap:16px}
-.loading.show{display:flex}
-.spinner{width:50px;height:50px;border:4px solid rgba(167,139,250,.2);border-top-color:#a78bfa;border-radius:50%;animation:spin .8s linear infinite}
-#modalRecorte{position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:3000;display:none;flex-direction:column}
-#modalRecorte.show{display:flex}
-.recorte-header{padding:16px;background:rgba(10,14,26,.95);border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center}
-.recorte-header h3{font-size:16px;font-weight:700;color:#f1f5f9;display:flex;align-items:center;gap:8px}
-.recorte-header h3 i{color:#a78bfa}
-.recorte-header .btn-fechar{background:rgba(255,255,255,.06);border:none;color:#cbd5e1;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px}
-.recorte-area{flex:1;background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:200px}
-.recorte-area img{max-width:100%;max-height:100%;display:block}
-.recorte-footer{padding:16px;background:rgba(10,14,26,.95);border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px}
-.recorte-btn{flex:1;padding:14px;border-radius:14px;font-weight:600;font-size:15px;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px}
-.recorte-btn.cancel{background:rgba(255,255,255,.06);color:#cbd5e1;border:1px solid rgba(255,255,255,.08)}
-.recorte-btn.confirm{background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;box-shadow:0 4px 15px rgba(236,72,153,.4)}
-.recorte-btn.rotate{background:rgba(167,139,250,.15);color:#c4b5fd;border:1px solid rgba(167,139,250,.3);flex:0 0 auto;width:56px}
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.back-btn{background:var(--card-bg);border:1px solid var(--border);color:var(--text-main);width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.logo-text{font-size:20px;font-weight:900;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.menu-btn{width:40px;height:40px;border-radius:12px;background:var(--card-bg);border:1px solid var(--border);color:var(--text-main);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* CONTEÚDO ANIME */
+.container{padding:20px}
+.hero-anime{background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:30px 20px;text-align:center;margin-bottom:20px}
+.hero-anime i{font-size:50px;color:var(--accent);margin-bottom:16px}
+.hero-anime h2{font-size:22px;font-weight:800;color:var(--text-main);margin-bottom:8px}
+.hero-anime p{font-size:14px;color:var(--text-sub);margin-bottom:20px}
+.btn-upload{background:var(--accent-gradient);color:#fff;border:none;padding:14px 24px;border-radius:14px;font-size:15px;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+
+.loading-anime{text-align:center;padding:40px;color:var(--text-sub);display:none}
+.loading-anime i{font-size:40px;color:var(--accent);margin-bottom:16px}
+
+/* RESULTADO */
+.resultado{display:none;background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:20px;margin-bottom:20px}
+.resultado img{width:100%;border-radius:16px;margin-bottom:16px}
+.res-titulo{font-size:20px;font-weight:800;color:var(--text-main);margin-bottom:8px}
+.res-info{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.res-badge{background:rgba(167,139,250,.2);color:var(--accent);padding:6px 12px;border-radius:8px;font-size:12px;font-weight:bold}
+.res-sinopse{font-size:14px;color:var(--text-sub);line-height:1.6;margin-bottom:16px}
+
+/* MENUS */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);border-top:1px solid var(--border);padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-around;z-index:997}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--text-sub);font-size:10px;text-decoration:none;flex:1}
+.nav-item i{font-size:20px}
+.nav-item.active{color:var(--accent)}
+
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:998;opacity:0;pointer-events:none;transition:.3s}
+.menu-overlay.aberto{opacity:1;pointer-events:auto}
+.menu-lateral{position:fixed;top:0;left:0;bottom:0;width:290px;background:var(--bg);z-index:999;transform:translateX(-100%);transition:.35s;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.menu-lateral.aberto{transform:translateX(0)}
+.menu-topo{padding:16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.menu-lista{flex:1;padding:16px 12px}
+.menu-item{display:flex;align-items:center;gap:14px;padding:14px 16px;color:var(--text-main);text-decoration:none;font-size:15px;font-weight:600;cursor:pointer}
+.menu-item i{width:24px;text-align:center;color:var(--text-sub)}
+.temas-grid{display:flex;gap:12px;padding:10px 16px;justify-content:space-around}
+.tema-btn{width:40px;height:40px;border-radius:50%;border:2px solid transparent;cursor:pointer}
+.tema-btn.padrao{background:linear-gradient(135deg,#f472b6,#a78bfa)}
+.tema-btn.branco{background:#fff;border-color:#cbd5e1}
+.tema-btn.azul{background:linear-gradient(135deg,#38bdf8,#0ea5e9)}
+.tema-btn.amarelo{background:linear-gradient(135deg,#facc15,#eab308)}
+.tema-btn.ativo{border-color:var(--text-main);transform:scale(1.1)}
 </style>
 </head>
-<body>
-<div class="loading show" id="loading">
-  <div class="spinner"></div>
-  <p style="color:#94a3b8">Carregando perfil...</p>
-</div>
+<body class="theme-padrao">
 
 <header class="header">
-  <div class="header-top">
-    <a class="back-btn" href="home.html"><i class="fas fa-arrow-left"></i></a>
-    <a class="logo" href="home.html"><i class="fas fa-compass"></i><h1>YUNA</h1></a>
-    <div style="width:40px"></div>
-  </div>
+  <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+  <div class="logo-text">YUNA ANIMES</div>
+  <button class="menu-btn" onclick="abrirMenu()"><i class="fas fa-bars"></i></button>
 </header>
 
-<div class="perfil-wrap">
-  <div class="perfil-card">
-    <div class="avatar-wrapper">
-      <div class="avatar">
-        <img id="userPhoto" src="https://via.placeholder.com/120" alt="Avatar">
-      </div>
-      <button class="camera-btn" onclick="abrirModalFoto()"><i class="fas fa-camera"></i></button>
-    </div>
-    <div class="perfil-nome" id="userName">Usuário</div>
-    <div class="perfil-status" id="statusBadge">🎮 NOOB</div>
+<div class="container">
+  <div class="hero-anime" id="heroAnime">
+    <i class="fas fa-camera"></i>
+    <h2>Reconhecer Anime</h2>
+    <p>Envie um print ou imagem de um anime e descubra de onde é.</p>
+    <button class="btn-upload" onclick="document.getElementById('animeInput').click()">
+      <i class="fas fa-image"></i> Escolher Imagem
+    </button>
   </div>
 
-  <div class="info-card">
-    <div class="info-item">
-      <div class="label"><i class="fas fa-at"></i> Usuário</div>
-      <div class="valor" id="infoUsuario">—</div>
-    </div>
-    <div class="info-item">
-      <div class="label"><i class="fas fa-envelope"></i> E-mail</div>
-      <div class="valor" id="infoEmail">—</div>
-    </div>
-    <div class="info-item">
-      <div class="label"><i class="fas fa-calendar-check"></i> Membro desde</div>
-      <div class="valor" id="infoMembro">—</div>
-    </div>
-    <div class="info-item">
-      <div class="label"><i class="fas fa-star"></i> Status do cargo</div>
-      <div class="valor">Conta gratuita</div>
-    </div>
+  <div class="loading-anime" id="loadingAnime">
+    <i class="fas fa-spinner fa-spin"></i>
+    <p>A analisar a imagem com Inteligência Artificial...</p>
   </div>
 
-  <div class="opcoes-titulo">⚙️ Configurações</div>
-
-  <button class="opcao-btn" onclick="abrirModalNome()">
-    <div class="icon" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"><i class="fas fa-user-edit"></i></div>
-    <div class="texto"><h4>Mudar nome</h4><p>Editar seu nome e @usuário</p></div>
-    <i class="fas fa-chevron-right seta"></i>
-  </button>
-
-  <button class="opcao-btn" onclick="abrirModalFoto()">
-    <div class="icon" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"><i class="fas fa-image"></i></div>
-    <div class="texto"><h4>Mudar foto de perfil</h4><p>Escolher, recortar e enviar</p></div>
-    <i class="fas fa-chevron-right seta"></i>
-  </button>
-
-  <a class="opcao-btn" href="home.html">
-    <div class="icon" style="background:linear-gradient(135deg,#667eea,#764ba2)"><i class="fas fa-home"></i></div>
-    <div class="texto"><h4>Voltar para Início</h4><p>Ir para a página principal</p></div>
-    <i class="fas fa-chevron-right seta"></i>
-  </a>
-
-  <button class="btn-sair" onclick="fazerLogout()">
-    <i class="fas fa-sign-out-alt"></i> Sair da conta
-  </button>
-</div>
-
-<div class="modal-overlay" id="modalNome">
-  <div class="modal">
-    <h3><i class="fas fa-user-edit"></i> Mudar nome</h3>
-    <p>Você pode mudar seu <strong>nome</strong> e seu <strong>@usuário</strong>.</p>
-
-    <div class="aviso-espera" id="avisoEspera">
-      <h4><i class="fas fa-clock"></i> AGUARDE PARA MUDAR O @USUÁRIO</h4>
-      <p id="avisoEsperaTexto">Você já mudou o @usuário recentemente.</p>
+  <div class="resultado" id="resultadoAnime">
+    <img id="resCapa" src="" alt="Capa">
+    <div class="res-titulo" id="resTitulo">Título do Anime</div>
+    <div class="res-info">
+      <span class="res-badge" id="resPrecisao">🎯 0% Precisão</span>
+      <span class="res-badge" id="resEpisodio">📺 Ep. 0</span>
+      <span class="res-badge" id="resNota">⭐ 0.0</span>
     </div>
-
-    <div class="grupo">
-      <i class="fas fa-user"></i>
-      <input type="text" id="novoNomeInput" placeholder="Nome de exibição" maxlength="30">
-    </div>
-
-    <div class="grupo" id="grupoUsuario">
-      <i class="fas fa-at"></i>
-      <input type="text" id="novoUsuarioInput" placeholder="@usuario (só letras e números)" maxlength="20">
-    </div>
-
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="fecharModal('modalNome')">Cancelar</button>
-      <button class="modal-btn confirm" onclick="salvarNome()">Salvar</button>
-    </div>
+    <div class="res-sinopse" id="resSinopse">Sinopse...</div>
+    <button class="btn-upload" onclick="window.location.reload()" style="width:100%; justify-content:center; background:var(--card-bg); color:var(--text-main); border:1px solid var(--border)">
+      Tentar Outra Imagem
+    </button>
   </div>
 </div>
 
-<div class="modal-overlay" id="modalFoto">
-  <div class="modal">
-    <h3><i class="fas fa-image"></i> Foto de perfil</h3>
-    
-    <div id="avisoErro" style="display:none;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);border-radius:14px;padding:14px 16px;margin-bottom:16px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <i class="fas fa-exclamation-triangle" style="color:#fbbf24;font-size:16px"></i>
-        <strong style="color:#fbbf24;font-size:13px">ERRO</strong>
-      </div>
-      <p id="avisoTexto" style="font-size:12px;color:#fcd34d;line-height:1.6"></p>
-    </div>
+<input type="file" id="animeInput" accept="image/*" style="display:none" onchange="processarAnime(event)">
 
-    <div class="processando" id="processando">
-      <div class="spinner-process"></div>
-      <p>⏳ Processando imagem...</p>
-      <p class="sub">Enviando com alta qualidade (800×800)</p>
-    </div>
+<nav class="bottom-nav">
+  <a class="nav-item" href="home.html"><i class="fas fa-home"></i><span>Início</span></a>
+  <a class="nav-item" href="musica.html"><i class="fas fa-music"></i><span>Música</span></a>
+  <a class="nav-item active" href="animes.html"><i class="fas fa-dragon"></i><span>Animes</span></a>
+  <a class="nav-item" href="educacao.html"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
+  <a class="nav-item" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
 
-    <div id="opcoesFoto">
-      <p style="font-size:13px;color:#94a3b8;margin-bottom:16px">Escolha uma opção:</p>
-      
-      <div class="foto-opcoes">
-        <label class="foto-opt">
-          <div class="ic" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><i class="fas fa-upload"></i></div>
-          <div class="tx"><strong>Enviar do celular</strong><span>Máx. 8MB · Recorte incluído</span></div>
-          <input type="file" id="fotoUpload" accept="image/*" style="display:none" onchange="iniciarRecorte(this)">
-        </label>
-      </div>
-      <div class="modal-btns">
-        <button class="modal-btn cancel" onclick="fecharModal('modalFoto')">Fechar</button>
-      </div>
-    </div>
+<div class="menu-overlay" id="menuOverlay" onclick="fecharMenu()"></div>
+<aside class="menu-lateral" id="menuLateral">
+  <div class="menu-topo"><div class="logo-text">YUNA</div><button class="menu-btn" onclick="fecharMenu()"><i class="fas fa-times"></i></button></div>
+  <div style="padding:10px 16px 0;font-size:12px;color:var(--text-sub);font-weight:bold">COR DO APP:</div>
+  <div class="temas-grid">
+    <div class="tema-btn padrao ativo" onclick="mudarTemaGlobal('padrao', this)"></div>
+    <div class="tema-btn branco" onclick="mudarTemaGlobal('branco', this)"></div>
+    <div class="tema-btn azul" onclick="mudarTemaGlobal('azul', this)"></div>
+    <div class="tema-btn amarelo" onclick="mudarTemaGlobal('amarelo', this)"></div>
   </div>
-</div>
+  <nav class="menu-lista">
+    <a class="menu-item" href="home.html"><i class="fas fa-home"></i> Início</a>
+    <a class="menu-item" href="musica.html"><i class="fas fa-music"></i> Música</a>
+    <a class="menu-item" href="educacao.html"><i class="fas fa-book"></i> Livros</a>
+    <a class="menu-item" href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
+  </nav>
+</aside>
 
-<div id="modalRecorte">
-  <div class="recorte-header">
-    <h3><i class="fas fa-crop"></i> Recortar foto</h3>
-    <button class="btn-fechar" onclick="cancelarRecorte()"><i class="fas fa-times"></i></button>
-  </div>
-  <div class="recorte-area">
-    <img id="imagemRecorte" src="" alt="">
-  </div>
-  <div class="recorte-footer">
-    <button class="recorte-btn rotate" onclick="girarImagem()"><i class="fas fa-sync-alt"></i></button>
-    <button class="recorte-btn cancel" onclick="cancelarRecorte()">Cancelar</button>
-    <button class="recorte-btn confirm" onclick="confirmarRecorte()"><i class="fas fa-check"></i> Recortar</button>
-  </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut, updateProfile, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<script>
+// ================= SISTEMA DE TEMAS GLOBAL =================
+(function() {
+  const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+  document.body.className = 'theme-' + temaSalvo;
+})();
 
-  const IMGBB_API_KEY = '52ddf1c2a5509391a0edcaadd1d02009';
+function mudarTemaGlobal(tema, el) { 
+  document.body.className = 'theme-' + tema; 
+  localStorage.setItem('yuna_theme', tema); 
+  document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('ativo')); 
+  el.classList.add('ativo'); 
+}
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
-    authDomain: "yuna-8fe24.firebaseapp.com",
-    projectId: "yuna-8fe24",
-    storageBucket: "yuna-8fe24.firebasestorage.app",
-    messagingSenderId: "531340097112",
-    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  setPersistence(auth, browserLocalPersistence);
-
-  let userAtual = null;
-  let cropper = null;
-  const ADMIN_EMAIL = 'mzbetoff@gmail.com';
-  const DIAS_ESPERA = 60;
-  const MAX_MB = 8;
-
-  function formatarData(timestamp) {
-    const d = new Date(timestamp);
-    const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-    return d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
-  }
-
-  function formatarDataCurta(timestamp) {
-    const d = new Date(timestamp);
-    const dia = String(d.getDate()).padStart(2, '0');
-    const mes = String(d.getMonth() + 1).padStart(2, '0');
-    return dia + '/' + mes + '/' + d.getFullYear();
-  }
-
-  function podeMudarUsuario() {
-    const ultimaTroca = localStorage.getItem('yuna_usuario_ultima_troca');
-    if (!ultimaTroca) return { pode: true };
-    const dataUltima = new Date(ultimaTroca);
-    const diffDias = (new Date() - dataUltima) / (1000 * 60 * 60 * 24);
-    if (diffDias >= DIAS_ESPERA) return { pode: true };
-    return {
-      pode: false,
-      diasFaltam: Math.ceil(DIAS_ESPERA - diffDias),
-      dataLibera: new Date(dataUltima.getTime() + DIAS_ESPERA * 24 * 60 * 60 * 1000)
-    };
-  }
-
-  onAuthStateChanged(auth, (user) => {
-    document.getElementById('loading').classList.remove('show');
-    
-    if (!user) {
-      console.log('🔓 Não logado, redirecionando');
-      window.location.replace('login.html');
-      return;
-    }
-    
-    document.body.classList.add('logado');
-    userAtual = user;
-
-    document.getElementById('userPhoto').src = user.photoURL || 'https://via.placeholder.com/120';
-    document.getElementById('userName').textContent = user.displayName || 'Usuário';
-    
-    let usuario = localStorage.getItem('yuna_usuario_custom');
-    if (!usuario && user.displayName) usuario = '@' + user.displayName.replace(/\s/g, '').toLowerCase();
-    document.getElementById('infoUsuario').textContent = usuario || '—';
-    document.getElementById('infoEmail').textContent = user.email || '—';
-    
-    if (user.metadata?.creationTime) {
-      document.getElementById('infoMembro').textContent = formatarData(user.metadata.creationTime);
-    }
-
-    const statusBadge = document.getElementById('statusBadge');
-    if (user.email === ADMIN_EMAIL) {
-      statusBadge.textContent = '👑 ADM';
-      statusBadge.classList.add('adm');
-    } else {
-      statusBadge.textContent = '🎮 NOOB';
-      statusBadge.classList.remove('adm');
-    }
+setTimeout(() => {
+  const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+  document.querySelectorAll('.tema-btn').forEach(b => {
+    if(b.classList.contains(temaSalvo)) b.classList.add('ativo');
   });
+}, 100);
 
-  window.fazerLogout = function() {
-    if (confirm('Deseja realmente sair?')) {
-      signOut(auth).then(() => {
-        localStorage.removeItem('yuna_user_logged');
-        localStorage.removeItem('yuna_user_name');
-        localStorage.removeItem('yuna_user_photo');
-        localStorage.removeItem('yuna_user_email');
-        window.location.replace('login.html');
-      });
-    }
-  };
+function abrirMenu(){document.getElementById('menuLateral').classList.add('aberto');document.getElementById('menuOverlay').classList.add('aberto')}
+function fecharMenu(){document.getElementById('menuLateral').classList.remove('aberto');document.getElementById('menuOverlay').classList.remove('aberto')}
 
-  window.abrirModalNome = function() {
-    document.getElementById('novoNomeInput').value = userAtual?.displayName || '';
-    let usuarioAtual = localStorage.getItem('yuna_usuario_custom');
-    if (!usuarioAtual && userAtual?.displayName) {
-      usuarioAtual = '@' + userAtual.displayName.replace(/\s/g, '').toLowerCase();
-    }
-    document.getElementById('novoUsuarioInput').value = usuarioAtual || '@';
+// ================= RECONHECIMENTO DE ANIME (Trace.moe + AniList) =================
+window.processarAnime = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const verificacao = podeMudarUsuario();
-    const aviso = document.getElementById('avisoEspera');
-    const grupoUsuario = document.getElementById('grupoUsuario');
-    const inputUsuario = document.getElementById('novoUsuarioInput');
+  document.getElementById('heroAnime').style.display = 'none';
+  document.getElementById('loadingAnime').style.display = 'block';
+
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
     
-    if (!verificacao.pode) {
-      aviso.classList.add('show');
-      document.getElementById('avisoEsperaTexto').innerHTML = 
-        'Você já mudou o @usuário recentemente.<br><br>' +
-        '<strong>⏳ Próxima troca:</strong> em ' + verificacao.diasFaltam + ' dias<br>' +
-        '<strong>📅 Liberada:</strong> ' + formatarDataCurta(verificacao.dataLibera);
-      inputUsuario.disabled = true;
-      grupoUsuario.style.opacity = '0.5';
-    } else {
-      aviso.classList.remove('show');
-      inputUsuario.disabled = false;
-      grupoUsuario.style.opacity = '1';
-    }
-    document.getElementById('modalNome').classList.add('show');
-  };
+    const resTrace = await fetch('https://api.trace.moe/search?anilistInfo', { method: 'POST', body: formData });
+    const dataTrace = await resTrace.json();
 
-  window.salvarNome = async function() {
-    const nome = document.getElementById('novoNomeInput').value.trim();
-    let usuario = document.getElementById('novoUsuarioInput').value.trim();
-    if (!nome) { alert('Digite um nome.'); return; }
-
-    const usuarioAntigo = localStorage.getItem('yuna_usuario_custom') || 
-                          (userAtual?.displayName ? '@' + userAtual.displayName.replace(/\s/g, '').toLowerCase() : '');
-    const usuarioMudou = usuario && usuario !== usuarioAntigo;
-
-    if (usuarioMudou) {
-      const verificacao = podeMudarUsuario();
-      if (!verificacao.pode) {
-        alert('❌ Você só pode mudar o @usuário a cada 2 meses.\n\n⏳ Próxima troca em ' + verificacao.diasFaltam + ' dias.');
-        return;
-      }
-      usuario = usuario.replace(/^@+/, '');
-      if (usuario.length < 3) { alert('O @usuário precisa ter pelo menos 3 caracteres.'); return; }
-      if (!/^[a-zA-Z0-9_]+$/.test(usuario)) { alert('O @usuário só pode ter letras, números e _.'); return; }
-    }
-
-    try {
-      await updateProfile(userAtual, { displayName: nome });
-      document.getElementById('userName').textContent = nome;
-      localStorage.setItem('yuna_user_name', nome);
-
-      if (usuarioMudou) {
-        const usuarioFormatado = '@' + usuario.toLowerCase();
-        localStorage.setItem('yuna_usuario_custom', usuarioFormatado);
-        localStorage.setItem('yuna_usuario_ultima_troca', new Date().toISOString());
-        document.getElementById('infoUsuario').textContent = usuarioFormatado;
-        alert('✅ Nome e @usuário atualizados!\n\n🔒 Você só poderá mudar o @usuário novamente em 2 meses.');
-      } else {
-        alert('✅ Nome atualizado!');
-      }
-      fecharModal('modalNome');
-    } catch (e) {
-      alert('Erro: ' + e.message);
-    }
-  };
-
-  window.abrirModalFoto = function() {
-    document.getElementById('avisoErro').style.display = 'none';
-    document.getElementById('processando').classList.remove('show');
-    document.getElementById('opcoesFoto').style.display = 'block';
-    document.getElementById('modalFoto').classList.add('show');
-  };
-
-  window.iniciarRecorte = function(input) {
-    const file = input.files[0];
-    if (!file) return;
-
-    const tamanhoMB = file.size / (1024 * 1024);
-    if (tamanhoMB > MAX_MB) {
-      alert('❌ A imagem é muito grande!\n\nTamanho: ' + tamanhoMB.toFixed(2) + ' MB\nMáximo: ' + MAX_MB + ' MB');
-      input.value = '';
+    if (!dataTrace.result || dataTrace.result.length === 0) {
+      alert('❌ Não foi possível identificar este anime.');
+      window.location.reload();
       return;
     }
 
-    fecharModal('modalFoto');
+    const animeBase = dataTrace.result[0];
+    const anilistId = animeBase.anilist.id;
+    const titulo = animeBase.anilist.title.romaji || animeBase.anilist.title.english;
+    const precisao = Math.round(animeBase.similarity * 100);
+    const episodio = animeBase.episode || '?';
+
+    let capa = '', sinopse = '', nota = 'N/A';
     
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = document.getElementById('imagemRecorte');
-      img.src = e.target.result;
-
-      document.getElementById('modalRecorte').classList.add('show');
-
-      img.onload = () => {
-        if (cropper) cropper.destroy();
-        cropper = new Cropper(img, {
-          aspectRatio: 1,
-          viewMode: 1,
-          dragMode: 'move',
-          autoCropArea: 0.8,
-          restore: false,
-          guides: true,
-          center: true,
-          highlight: false,
-          cropBoxMovable: true,
-          cropBoxResizable: true,
-          toggleDragModeOnDblclick: false,
-          background: false,
-          responsive: true
-        });
-      };
-    };
-    reader.readAsDataURL(file);
-  };
-
-  window.girarImagem = function() {
-    if (cropper) cropper.rotate(90);
-  };
-
-  window.cancelarRecorte = function() {
-    if (cropper) {
-      cropper.destroy();
-      cropper = null;
-    }
-    document.getElementById('modalRecorte').classList.remove('show');
-    document.getElementById('fotoUpload').value = '';
-    document.getElementById('avisoErro').style.display = 'none';
-    document.getElementById('opcoesFoto').style.display = 'block';
-    document.getElementById('modalFoto').classList.add('show');
-  };
-
-  window.confirmarRecorte = function() {
-    if (!cropper) return;
-
-    document.getElementById('modalRecorte').classList.remove('show');
-    document.getElementById('modalFoto').classList.add('show');
-    document.getElementById('opcoesFoto').style.display = 'none';
-    document.getElementById('processando').classList.add('show');
-    document.getElementById('avisoErro').style.display = 'none';
-
-    setTimeout(async () => {
-      try {
-        const canvas = cropper.getCroppedCanvas({
-          width: 800,
-          height: 800,
-          imageSmoothingEnabled: true,
-          imageSmoothingQuality: 'high'
-        });
-
-        cropper.destroy();
-        cropper = null;
-
-        canvas.toBlob(async (blob) => {
-          if (!blob) {
-            mostrarErro('Erro ao processar imagem.');
-            return;
-          }
-          await enviarParaImgBB(blob);
-        }, 'image/jpeg', 0.90);
-
-      } catch (err) {
-        console.error('Erro:', err);
-        mostrarErro('Erro: ' + err.message);
-      }
-    }, 300);
-  };
-
-  async function enviarParaImgBB(blob) {
+    // Buscar dados extras no AniList
     try {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      
-      reader.onloadend = async () => {
-        try {
-          const base64 = reader.result.split(',')[1];
+      const query = `query ($id: Int) { Media (id: $id, type: ANIME) { coverImage { large } description averageScore } }`;
+      const resAnilist = await fetch('https://graphql.anilist.co', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, variables: { id: anilistId } })
+      });
+      const dataAnilist = await resAnilist.json();
+      if (dataAnilist.data && dataAnilist.data.Media) {
+        capa = dataAnilist.data.Media.coverImage.large;
+        sinopse = dataAnilist.data.Media.description ? dataAnilist.data.Media.description.replace(/<[^>]*>?/gm, '') : 'Sem sinopse.';
+        nota = dataAnilist.data.Media.averageScore ? (dataAnilist.data.Media.averageScore / 10).toFixed(1) : 'N/A';
+      }
+    } catch(e) { console.log('Erro AniList:', e); }
 
-          const formData = new FormData();
-          formData.append('key', IMGBB_API_KEY);
-          formData.append('image', base64);
+    // Mostrar Resultado
+    document.getElementById('loadingAnime').style.display = 'none';
+    document.getElementById('resultadoAnime').style.display = 'block';
 
-          const resposta = await fetch('https://api.imgbb.com/1/upload', {
-            method: 'POST',
-            body: formData
-          });
+    if(capa) document.getElementById('resCapa').src = capa;
+    document.getElementById('resCapa').style.display = capa ? 'block' : 'none';
+    
+    document.getElementById('resTitulo').textContent = titulo;
+    document.getElementById('resPrecisao').textContent = `🎯 ${precisao}% Precisão`;
+    document.getElementById('resEpisodio').textContent = `📺 Ep. ${episodio}`;
+    document.getElementById('resNota').textContent = `⭐ ${nota}`;
+    document.getElementById('resSinopse').textContent = sinopse;
 
-          const dados = await resposta.json();
-
-          if (dados.success && dados.data && dados.data.url) {
-            const urlFinal = dados.data.url;
-
-            await updateProfile(userAtual, { photoURL: urlFinal });
-            
-            document.getElementById('userPhoto').src = urlFinal;
-            localStorage.setItem('yuna_user_photo', urlFinal);
-            
-            document.getElementById('processando').classList.remove('show');
-            document.getElementById('opcoesFoto').style.display = 'block';
-            fecharModal('modalFoto');
-            
-            alert('✅ Foto atualizada com ALTA QUALIDADE!\n\n🎉 800x800 pixels!');
-            
-          } else {
-            mostrarErro('Erro no ImgBB: ' + (dados.error?.message || 'Tente novamente'));
-          }
-        } catch (err) {
-          mostrarErro('Erro de conexão. Verifique sua internet.');
-        }
-      };
-    } catch (err) {
-      mostrarErro('Erro: ' + err.message);
-    }
+  } catch (error) {
+    alert('⚠️ Erro ao analisar. Tenta novamente.');
+    window.location.reload();
   }
-
-  function mostrarErro(msg) {
-    document.getElementById('processando').classList.remove('show');
-    const avisoErro = document.getElementById('avisoErro');
-    const avisoTexto = document.getElementById('avisoTexto');
-    if (avisoErro) {
-      avisoTexto.innerHTML = msg;
-      avisoErro.style.display = 'block';
-      document.getElementById('opcoesFoto').style.display = 'block';
-    }
-  }
-
-  window.fecharModal = function(id) {
-    document.getElementById(id).classList.remove('show');
-    document.getElementById('processando').classList.remove('show');
-    document.getElementById('opcoesFoto').style.display = 'block';
-    document.getElementById('avisoErro').style.display = 'none';
-  };
+};
 </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/Yuna-/sw.js');
-    });
-  }
-</script>
-<script>
-  // 1. Aplica o tema guardado assim que a página abre
-  (function() {
-    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
-    document.body.className = 'theme-' + temaSalvo;
-  })();
-
-  // 2. Função para quando o usuário clicar numa cor
-  function mudarTemaGlobal(tema, el) { 
-    document.body.className = 'theme-' + tema; 
-    localStorage.setItem('yuna_theme', tema); // Guarda no navegador
-    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('ativo')); 
-    el.classList.add('ativo'); 
-  }
-
-  // 3. Marca o botão correto como ativo ao carregar
-  setTimeout(() => {
-    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
-    document.querySelectorAll('.tema-btn').forEach(b => {
-      if(b.classList.contains(temaSalvo)) b.classList.add('ativo');
-    });
-  }, 100);
-</script>
-
 </body>
 </html>
