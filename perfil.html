@@ -4,30 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YUNA - Perfil</title>
-    <!-- FontAwesome para os ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== VARIÁVEIS DOS TEMAS (Global) ===== */
-        :root {
-            --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0;
-            --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; --sombra: rgba(139, 92, 246, 0.3);
-        }
-        body.tema-roxo { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; --sombra: rgba(139, 92, 246, 0.3); }
-        body.tema-branco { --fundo: #f5f5f7; --fundo-card: #ffffff; --texto: #1a1a1a; --texto-suave: #555555; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #e0e0e0; --sombra: rgba(0, 0, 0, 0.1); }
-        body.tema-azul { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; --sombra: rgba(59, 130, 246, 0.3); }
-        body.tema-amarelo { --fundo: #1a1500; --fundo-card: #2a2000; --texto: #ffffff; --texto-suave: #d0c890; --primaria: #fbbf24; --primaria-hover: #f59e0b; --borda: #4a3a00; --sombra: rgba(251, 191, 36, 0.3); }
+        /* ===== VARIÁVEIS DOS TEMAS ===== */
+        :root { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; }
+        body.tema-roxo { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; }
+        body.tema-branco { --fundo: #f5f5f7; --fundo-card: #ffffff; --texto: #1a1a1a; --texto-suave: #555555; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #e0e0e0; }
+        body.tema-azul { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; }
+        body.tema-amarelo { --fundo: #1a1500; --fundo-card: #2a2000; --texto: #ffffff; --texto-suave: #d0c890; --primaria: #fbbf24; --primaria-hover: #f59e0b; --borda: #4a3a00; }
 
         /* ===== ESTILOS GERAIS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: var(--fundo); color: var(--texto); transition: background 0.3s, color 0.3s; padding-bottom: 80px; }
         
-        /* HEADER */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--borda); background: var(--fundo); }
         .btn-header { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 40px; height: 40px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; }
         .logo-header { color: var(--primaria); font-weight: bold; font-size: 20px; letter-spacing: 1px; }
         
-        /* SELETOR DE TEMAS */
         .seletor-temas { position: fixed; top: 70px; right: 15px; display: flex; gap: 8px; z-index: 999; background: var(--fundo-card); padding: 8px; border-radius: 30px; border: 1px solid var(--borda); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .cor-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; }
         .cor-btn:hover { transform: scale(1.2); }
@@ -37,13 +31,17 @@
         .cor-btn[data-tema="amarelo"] { background: #fbbf24; }
         .cor-btn.ativo { border-color: var(--texto); transform: scale(1.1); }
 
-        /* CONTEÚDO */
         .container { padding: 20px; max-width: 500px; margin: 0 auto; }
 
         /* CARTÃO DE PERFIL */
-        .card-perfil { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 30px 20px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 15px var(--sombra); }
-        .avatar { width: 100px; height: 100px; border-radius: 50%; background: #d8b4fe; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; border: 3px solid var(--primaria); font-size: 50px; color: #000; overflow: hidden; }
+        .card-perfil { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 30px 20px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        
+        /* FOTO DE PERFIL */
+        .avatar-container { position: relative; width: 110px; height: 110px; margin: 0 auto 15px; cursor: pointer; }
+        .avatar { width: 100%; height: 100%; border-radius: 50%; background: #d8b4fe; display: flex; align-items: center; justify-content: center; border: 3px solid var(--primaria); font-size: 50px; color: #000; overflow: hidden; }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .btn-foto { position: absolute; bottom: 0; right: 0; background: var(--primaria); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--fundo-card); font-size: 14px; }
+        
         .nome-user { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
         .email-user { color: var(--texto-suave); font-size: 14px; margin-bottom: 15px; }
         .badge { background: var(--borda); color: var(--primaria); padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; }
@@ -80,40 +78,40 @@
         .btn-salvar:hover { background: var(--primaria-hover); }
     </style>
 </head>
-<body class="tema-amarelo"> <!-- Tema inicial padrão -->
+<body class="tema-amarelo">
 
-    <!-- HEADER -->
     <header>
         <button class="btn-header" onclick="window.location.href='home.html'"><i class="fas fa-arrow-left"></i></button>
         <div class="logo-header">YUNA PERFIL</div>
         <button class="btn-header"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- SELETOR DE TEMAS -->
     <div class="seletor-temas" id="seletorTemas">
-        <button class="cor-btn" data-tema="roxo" title="Roxo"></button>
-        <button class="cor-btn" data-tema="branco" title="Branco"></button>
-        <button class="cor-btn" data-tema="azul" title="Azul"></button>
-        <button class="cor-btn" data-tema="amarelo" title="Amarelo"></button>
+        <button class="cor-btn" data-tema="roxo"></button>
+        <button class="cor-btn" data-tema="branco"></button>
+        <button class="cor-btn" data-tema="azul"></button>
+        <button class="cor-btn" data-tema="amarelo"></button>
     </div>
 
-    <!-- CONTEÚDO -->
     <div class="container">
-        
-        <!-- CARTÃO DO UTILIZADOR -->
         <div class="card-perfil">
-            <div class="avatar">
-                <i class="fas fa-compass"></i> <!-- Ícone provisório, podes colocar <img> se tiveres foto -->
+            <!-- CLICA NA FOTO PARA MUDAR -->
+            <div class="avatar-container" id="avatarContainer">
+                <div class="avatar" id="avatarDisplay">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="btn-foto"><i class="fas fa-camera"></i></div>
             </div>
+            <!-- INPUT ESCONDIDO PARA A GALERIA -->
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
             <div class="nome-user" id="displayName">A carregar...</div>
             <div class="email-user" id="displayEmail">A carregar...</div>
             <div class="badge">Membro YUNA</div>
         </div>
 
-        <!-- CONFIGURAÇÕES -->
         <div class="card-config">
             <h3>Configurações</h3>
-            
             <div class="opcao" id="btnMudarNome">
                 <div class="icone-opcao azul"><i class="fas fa-pen"></i></div>
                 <div class="texto-opcao">
@@ -134,7 +132,6 @@
         </div>
     </div>
 
-    <!-- NAVEGAÇÃO INFERIOR -->
     <nav class="bottom-nav">
         <a href="home.html" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a>
         <a href="musica.html" class="nav-item"><i class="fas fa-music"></i><span>Música</span></a>
@@ -143,7 +140,6 @@
         <a href="perfil.html" class="nav-item active"><i class="fas fa-user"></i><span>Perfil</span></a>
     </nav>
 
-    <!-- MODAL PARA MUDAR DE NOME -->
     <div class="modal" id="modalNome">
         <div class="modal-content">
             <h3>Mudar Nome</h3>
@@ -156,12 +152,12 @@
     </div>
 
     <!-- ===== SCRIPTS ===== -->
-    <!-- Firebase SDK (v10 Modular) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // ⚠️ SUBSTITUI PELA TUA CONFIGURAÇÃO DO FIREBASE ⚠️
+        // ⚠️ 1. SUBSTITUI PELA TUA CONFIGURAÇÃO DO FIREBASE ⚠️
         const firebaseConfig = {
             apiKey: "A_TUA_API_KEY",
             authDomain: "O_TEU_AUTH_DOMAIN",
@@ -171,33 +167,41 @@
             appId: "O_TEU_APP_ID"
         };
 
-        // Inicializar Firebase
+        // ⚠️ 2. SUBSTITUI PELA TUA CHAVE DO IMGBB ⚠️
+        const IMGBB_API_KEY = "A_TUA_CHAVE_IMGBB_AQUI"; 
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // Elementos do DOM
         const elNome = document.getElementById('displayName');
         const elEmail = document.getElementById('displayEmail');
+        const avatarDisplay = document.getElementById('avatarDisplay');
         const modalNome = document.getElementById('modalNome');
         const inputNovoNome = document.getElementById('inputNovoNome');
+        const fileInput = document.getElementById('fileInput');
 
-        // 1. OUVIR O ESTADO DE AUTENTICAÇÃO (Resolve o problema de não carregar os dados)
-        onAuthStateChanged(auth, (user) => {
+        // 1. CARREGAR DADOS (Força o Firebase a mostrar o nome e foto guardados)
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // Utilizador logado - atualiza os dados no ecrã
-                elNome.innerText = user.displayName || "Sem Nome"; // Se não tiver nome, mostra "Sem Nome"
-                elEmail.innerText = user.email;
+                // Força o refresh dos dados
+                await user.reload(); 
+                const currentUser = auth.currentUser;
+
+                elNome.innerText = currentUser.displayName || "Sem Nome";
+                elEmail.innerText = currentUser.email;
+
+                if (currentUser.photoURL) {
+                    avatarDisplay.innerHTML = `<img src="${currentUser.photoURL}" alt="Foto">`;
+                }
             } else {
-                // Utilizador não logado - manda para o login
                 window.location.href = "login.html";
             }
         });
 
         // 2. LÓGICA DE MUDAR O NOME
         document.getElementById('btnMudarNome').addEventListener('click', () => {
-            if(auth.currentUser) {
-                inputNovoNome.value = auth.currentUser.displayName || ""; // Preenche com o nome atual
-            }
+            if(auth.currentUser) inputNovoNome.value = auth.currentUser.displayName || "";
             modalNome.style.display = 'flex';
         });
 
@@ -209,47 +213,95 @@
             const novoNome = inputNovoNome.value.trim();
             const user = auth.currentUser;
 
-            if (!novoNome) {
-                alert("O nome não pode estar vazio!");
-                return;
-            }
+            if (!novoNome) return alert("O nome não pode estar vazio!");
 
             if (user) {
                 try {
-                    // Atualiza o nome no Firebase
+                    // Atualiza no Auth
                     await updateProfile(user, { displayName: novoNome });
                     
-                    // Atualiza o ecrã imediatamente para o utilizador ver
+                    // Atualiza no Firestore (Opcional, mas garante que não perdes o nome)
+                    try {
+                        await updateDoc(doc(db, "users", user.uid), { nome: novoNome });
+                    } catch (e) { console.log("Aviso: Firestore não atualizado. Verifica as regras."); }
+
+                    // Atualiza o ecrã na hora
                     elNome.innerText = novoNome;
-                    
-                    // Fecha o modal
                     modalNome.style.display = 'none';
                     alert("Nome atualizado com sucesso!");
                 } catch (error) {
-                    console.error("Erro ao atualizar nome:", error);
-                    alert("Erro ao atualizar o nome. Tenta novamente.");
+                    console.error(error);
+                    alert("Erro ao atualizar: " + error.message);
                 }
             }
         });
 
-        // 3. LÓGICA DE SAIR DA CONTA
+        // 3. LÓGICA DE MUDAR A FOTO (ImgBB)
+        document.getElementById('avatarContainer').addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Verifica se é imagem
+            if (!file.type.startsWith('image/')) return alert("Por favor, escolhe uma imagem válida.");
+
+            // Mostra mensagem de a carregar
+            avatarDisplay.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                // Envia para o ImgBB
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const imageUrl = data.data.url;
+                    const user = auth.currentUser;
+
+                    // Atualiza no Firebase Auth
+                    await updateProfile(user, { photoURL: imageUrl });
+                    
+                    // Atualiza no Firestore (Opcional)
+                    try {
+                        await updateDoc(doc(db, "users", user.uid), { foto: imageUrl });
+                    } catch (e) { console.log("Aviso: Firestore não atualizado."); }
+
+                    // Mostra a nova foto no ecrã
+                    avatarDisplay.innerHTML = `<img src="${imageUrl}" alt="Foto">`;
+                    alert("Foto de perfil atualizada!");
+                } else {
+                    throw new Error("Falha no ImgBB");
+                }
+            } catch (error) {
+                console.error(error);
+                // Se falhar, volta a mostrar o ícone padrão
+                avatarDisplay.innerHTML = `<i class="fas fa-user"></i>`;
+                alert("Erro ao carregar a imagem. Tenta novamente.");
+            }
+        });
+
+        // 4. LÓGICA DE SAIR
         document.getElementById('btnSair').addEventListener('click', () => {
             if(confirm("Tens a certeza que queres sair?")) {
-                signOut(auth).then(() => {
-                    window.location.href = "login.html";
-                }).catch((error) => {
-                    console.error("Erro ao sair:", error);
-                    alert("Erro ao terminar sessão.");
-                });
+                signOut(auth).then(() => window.location.href = "login.html");
             }
         });
     </script>
 
-    <!-- Script do Sistema de Temas Global (JavaScript Normal) -->
+    <!-- SISTEMA DE TEMAS -->
     <script>
         (function() {
             const TEMAS = ['roxo', 'branco', 'azul', 'amarelo'];
-            const temaGuardado = localStorage.getItem('yuna-tema') || 'amarelo'; // Padrão amarelo como na imagem
+            const temaGuardado = localStorage.getItem('yuna-tema') || 'amarelo';
 
             function aplicarTema(tema) {
                 TEMAS.forEach(t => document.body.classList.remove('tema-' + t));
@@ -261,10 +313,7 @@
                 });
             }
 
-            // Aplicar imediatamente ao carregar
             aplicarTema(temaGuardado);
-
-            // Event listeners
             document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.cor-btn').forEach(btn => {
                     btn.addEventListener('click', () => aplicarTema(btn.dataset.tema));
