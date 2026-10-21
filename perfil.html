@@ -10,6 +10,16 @@
 <meta name="theme-color" content="#0a0e1a">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
 <style>
+/* Variáveis de Tema Global */
+:root { --bg: #0a0e1a; --card-bg: rgba(18,24,42,.7); --text-main: #f1f5f9; --text-sub: #94a3b8; --accent: #f472b6; --accent-gradient: linear-gradient(135deg,#f472b6,#a78bfa); --nav-bg: rgba(10,14,26,.98); --border: rgba(255,255,255,.06); }
+body.theme-branco { --bg: #f8fafc; --card-bg: #ffffff; --text-main: #1e293b; --text-sub: #64748b; --accent: #8b5cf6; --accent-gradient: linear-gradient(135deg,#8b5cf6,#ec4899); --nav-bg: #ffffff; --border: rgba(0,0,0,.1); }
+body.theme-azul { --bg: #0f172a; --card-bg: rgba(30,41,59,.8); --text-main: #f8fafc; --text-sub: #94a3b8; --accent: #38bdf8; --accent-gradient: linear-gradient(135deg,#38bdf8,#0ea5e9); --nav-bg: #0f172a; --border: rgba(56,189,248,.2); }
+body.theme-amarelo { --bg: #000000; --card-bg: rgba(20,20,20,.9); --text-main: #fef08a; --text-sub: #ca8a04; --accent: #facc15; --accent-gradient: linear-gradient(135deg,#facc15,#eab308); --nav-bg: #000000; --border: rgba(250,204,21,.2); }
+
+/* ⚠️ IMPORTANTE: Agora precisas alterar o teu CSS para usar as variáveis. */
+/* Exemplo: Se tinhas "background: #0a0e1a;", muda para "background: var(--bg);" */
+/* Se tinhas a cor rosa, muda para "color: var(--accent);" */
+
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 html,body{background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
 body{padding-bottom:90px}
@@ -585,6 +595,29 @@ body:not(.logado) .header,body:not(.logado) .perfil-wrap{display:none !important
       navigator.serviceWorker.register('/Yuna-/sw.js');
     });
   }
+</script>
+<script>
+  // 1. Aplica o tema guardado assim que a página abre
+  (function() {
+    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+    document.body.className = 'theme-' + temaSalvo;
+  })();
+
+  // 2. Função para quando o usuário clicar numa cor
+  function mudarTemaGlobal(tema, el) { 
+    document.body.className = 'theme-' + tema; 
+    localStorage.setItem('yuna_theme', tema); // Guarda no navegador
+    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('ativo')); 
+    el.classList.add('ativo'); 
+  }
+
+  // 3. Marca o botão correto como ativo ao carregar
+  setTimeout(() => {
+    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+    document.querySelectorAll('.tema-btn').forEach(b => {
+      if(b.classList.contains(temaSalvo)) b.classList.add('ativo');
+    });
+  }, 100);
 </script>
 
 </body>
