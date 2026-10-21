@@ -95,14 +95,12 @@
 
     <div class="container">
         <div class="card-perfil">
-            <!-- CLICA NA FOTO PARA MUDAR -->
             <div class="avatar-container" id="avatarContainer">
                 <div class="avatar" id="avatarDisplay">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-spinner fa-spin"></i> <!-- Enquanto carrega -->
                 </div>
                 <div class="btn-foto"><i class="fas fa-camera"></i></div>
             </div>
-            <!-- INPUT ESCONDIDO PARA A GALERIA -->
             <input type="file" id="fileInput" accept="image/*" style="display: none;">
 
             <div class="nome-user" id="displayName">A carregar...</div>
@@ -151,12 +149,12 @@
         </div>
     </div>
 
-    <!-- ===== SCRIPTS ===== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <!-- ===== SCRIPTS DO FIREBASE (VERSÃO 8 - A QUE O TEU SITE USA) ===== -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
+    <script>
         // ⚠️ 1. SUBSTITUI PELA TUA CONFIGURAÇÃO DO FIREBASE ⚠️
         const firebaseConfig = {
             apiKey: "A_TUA_API_KEY",
@@ -170,10 +168,14 @@
         // ⚠️ 2. SUBSTITUI PELA TUA CHAVE DO IMGBB ⚠️
         const IMGBB_API_KEY = "A_TUA_CHAVE_IMGBB_AQUI"; 
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        // Inicializar Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
+        // Elementos do DOM
         const elNome = document.getElementById('displayName');
         const elEmail = document.getElementById('displayEmail');
         const avatarDisplay = document.getElementById('avatarDisplay');
@@ -181,27 +183,28 @@
         const inputNovoNome = document.getElementById('inputNovoNome');
         const fileInput = document.getElementById('fileInput');
 
-        // 1. CARREGAR DADOS (Força o Firebase a mostrar o nome e foto guardados)
-        onAuthStateChanged(auth, async (user) => {
+        // 1. OUVIR O ESTADO DE AUTENTICAÇÃO (Resolve o loop)
+        auth.onAuthStateChanged((user) => {
             if (user) {
-                // Força o refresh dos dados
-                await user.reload(); 
-                const currentUser = auth.currentUser;
+                // O utilizador está logado! Atualiza os dados no ecrã.
+                elNome.innerText = user.displayName || "Sem Nome";
+                elEmail.innerText = user.email;
 
-                elNome.innerText = currentUser.displayName || "Sem Nome";
-                elEmail.innerText = currentUser.email;
-
-                if (currentUser.photoURL) {
-                    avatarDisplay.innerHTML = `<img src="${currentUser.photoURL}" alt="Foto">`;
+                if (user.photoURL) {
+                    avatarDisplay.innerHTML = `<img src="${user.photoURL}" alt="Foto">`;
+                } else {
+                    avatarDisplay.innerHTML = `<i class="fas fa-user"></i>`;
                 }
             } else {
+                // Se não houver utilizador, redireciona para o login
                 window.location.href = "login.html";
             }
         });
 
         // 2. LÓGICA DE MUDAR O NOME
         document.getElementById('btnMudarNome').addEventListener('click', () => {
-            if(auth.currentUser) inputNovoNome.value = auth.currentUser.displayName || "";
+            const user = auth.currentUser;
+            if(user) inputNovoNome.value = user.displayName || "";
             modalNome.style.display = 'flex';
         });
 
@@ -209,30 +212,27 @@
             modalNome.style.display = 'none';
         });
 
-        document.getElementById('btnSalvarNome').addEventListener('click', async () => {
+        document.getElementById('btnSalvarNome').addEventListener('click', () => {
             const novoNome = inputNovoNome.value.trim();
             const user = auth.currentUser;
 
             if (!novoNome) return alert("O nome não pode estar vazio!");
 
             if (user) {
-                try {
-                    // Atualiza no Auth
-                    await updateProfile(user, { displayName: novoNome });
-                    
-                    // Atualiza no Firestore (Opcional, mas garante que não perdes o nome)
-                    try {
-                        await updateDoc(doc(db, "users", user.uid), { nome: novoNome });
-                    } catch (e) { console.log("Aviso: Firestore não atualizado. Verifica as regras."); }
-
+                user.updateProfile({ displayName: novoNome }).then(() => {
                     // Atualiza o ecrã na hora
                     elNome.innerText = novoNome;
                     modalNome.style.display = 'none';
+                    
+                    // Tenta atualizar no Firestore (se falhar, não bloqueia o processo)
+                    db.collection("users").doc(user.uid).update({ nome: novoNome })
+                      .catch(e => console.log("Aviso: Firestore não atualizado (regras?)."));
+
                     alert("Nome atualizado com sucesso!");
-                } catch (error) {
+                }).catch((error) => {
                     console.error(error);
                     alert("Erro ao atualizar: " + error.message);
-                }
+                });
             }
         });
 
@@ -244,11 +244,9 @@
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-
-            // Verifica se é imagem
             if (!file.type.startsWith('image/')) return alert("Por favor, escolhe uma imagem válida.");
 
-            // Mostra mensagem de a carregar
+            // Mostra loading
             avatarDisplay.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
 
             try {
@@ -268,14 +266,13 @@
                     const user = auth.currentUser;
 
                     // Atualiza no Firebase Auth
-                    await updateProfile(user, { photoURL: imageUrl });
+                    await user.updateProfile({ photoURL: imageUrl });
                     
                     // Atualiza no Firestore (Opcional)
-                    try {
-                        await updateDoc(doc(db, "users", user.uid), { foto: imageUrl });
-                    } catch (e) { console.log("Aviso: Firestore não atualizado."); }
+                    db.collection("users").doc(user.uid).update({ foto: imageUrl })
+                      .catch(e => console.log("Aviso: Firestore não atualizado."));
 
-                    // Mostra a nova foto no ecrã
+                    // Mostra a nova foto
                     avatarDisplay.innerHTML = `<img src="${imageUrl}" alt="Foto">`;
                     alert("Foto de perfil atualizada!");
                 } else {
@@ -283,7 +280,6 @@
                 }
             } catch (error) {
                 console.error(error);
-                // Se falhar, volta a mostrar o ícone padrão
                 avatarDisplay.innerHTML = `<i class="fas fa-user"></i>`;
                 alert("Erro ao carregar a imagem. Tenta novamente.");
             }
@@ -292,7 +288,9 @@
         // 4. LÓGICA DE SAIR
         document.getElementById('btnSair').addEventListener('click', () => {
             if(confirm("Tens a certeza que queres sair?")) {
-                signOut(auth).then(() => window.location.href = "login.html");
+                auth.signOut().then(() => {
+                    window.location.href = "login.html";
+                });
             }
         });
     </script>
