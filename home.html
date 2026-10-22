@@ -78,10 +78,17 @@
         .btn-salvar { width: 100%; padding: 12px; background: var(--primaria); color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
         .btn-fechar { width: 100%; padding: 12px; background: #ef4444; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
         .btn-ranking { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
+        
         .lista-comentarios { max-height: 200px; overflow-y: auto; margin-bottom: 10px; }
         .comentario-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--borda); font-size: 14px; }
         .btn-eliminar { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
-        .noticia-card, .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        
+        /* ESTILO PARA NOTÍCIAS */
+        .noticia-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        .noticia-card h4 { font-size: 15px; margin-bottom: 8px; }
+        .noticia-card p { font-size: 13px; color: var(--texto-suave); margin-bottom: 10px; }
+        .noticia-card a { color: var(--primaria); font-size: 13px; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body class="tema-azul">
@@ -113,12 +120,14 @@
         </div>
 
         <div class="pesquisa-container">
-            <input type="text" id="inputPesquisa" placeholder="Pesquisar notícias...">
+            <input type="text" id="inputPesquisa" placeholder="Pesquisar notícias (Wikipedia)...">
             <button class="btn-pesquisar" onclick="pesquisarNoticias()"><i class="fas fa-search"></i></button>
         </div>
+        
+        <div id="resultadosNoticias"></div>
 
         <h3 class="titulo-seccao">📰 Publicações da Comunidade</h3>
-        <div id="feedPosts"></div>
+        <div id="feedPosts"><p style="text-align:center; color:var(--texto-suave);">A carregar feed...</p></div>
     </div>
 
     <div class="container" id="secaoVideos" style="display: none;">
@@ -143,7 +152,7 @@
         <div class="modal-content">
             <h3>Opções</h3>
             <button class="btn-ranking" onclick="verRanking()"><i class="fas fa-trophy"></i> Ver Ranking</button>
-            <button class="btn-fechar" id="btnApagarPost" onclick="apagarPost()" style="display:none;"><i class="fas fa-trash"></i> Eliminar Publicação</button>
+            <button class="btn-fechar" id="btnApagarPost" onclick="apagarPost()" style="display:none; background:#ef4444;"><i class="fas fa-trash"></i> Eliminar Publicação</button>
             <button class="btn-fechar" onclick="document.getElementById('modalMenu').style.display='none'" style="background:transparent; border:1px solid var(--borda); color:var(--texto);">Cancelar</button>
         </div>
     </div>
@@ -175,22 +184,24 @@
         <a href="educacao.html" class="nav-item"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
         <a href="perfil.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
     </nav>
-    <!-- IMPORTS DO FIREBASE (VERSÃO 8) -->
+    <!-- ===== SCRIPTS FIREBASE V8 ===== -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // ⚠️ SUBSTITUI PELA TUA CONFIGURAÇÃO REAL DO FIREBASE ⚠️
+        // ========================================================
+        // CHAVES CONFIGURADAS
+        // ========================================================
         const firebaseConfig = {
-            apiKey: "A_TUA_API_KEY", 
-            authDomain: "O_TEU_AUTH_DOMAIN", 
-            projectId: "O_TEU_PROJECT_ID", 
-            storageBucket: "O_TEU_STORAGE_BUCKET", 
-            messagingSenderId: "O_TEU_MESSAGING_SENDER_ID", 
-            appId: "O_TEU_APP_ID"
+            apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+            authDomain: "yuna-8fe24.firebaseapp.com",
+            projectId: "yuna-8fe24",
+            storageBucket: "yuna-8fe24.firebasestorage.app",
+            messagingSenderId: "531340097112",
+            appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
         };
-        const IMGBB_API_KEY = "A_TUA_CHAVE_IMGBB_AQUI"; 
+        const IMGBB_KEY = "52ddf1c2a5509391a0edcaadd1d02009";
 
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const auth = firebase.auth();
@@ -200,36 +211,35 @@
         let postAtualId = null; 
 
         // ==========================================
-        // PROTEÇÃO CONTRA O LOOP DE LOGIN
+        // 🔥 CORREÇÃO DO LOOP DE LOGIN
         // ==========================================
-        // 1. O Firebase vai demorar 1 segundo a ler a sessão. 
-        // 2. Criamos um temporizador. Se ao fim de 3 segundos ele não souber quem é o user, vai para o login.
-        // 3. Se ele souber, cancela o temporizador e carrega a página normalmente.
-        
-        let verificacaoDeLogin = setTimeout(() => {
-            if (!utilizadorAtual) {
-                console.log("Tempo esgotado. Redirecionando para login...");
-                // window.location.href = "login.html"; // Descomenta esta linha se quiseres que ele expulse
-            }
-        }, 3000);
-
-        auth.onAuthStateChanged(user => {
-            clearTimeout(verificacaoDeLogin); // Cancela o temporizador de expulsão porque ele está logado!
-
-            if (user) {
-                utilizadorAtual = user;
-                const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-                document.getElementById('headerAvatar').src = foto;
-                
-                carregarPosts();
-                carregarVideos();
-            } else {
-                // Se realmente não estiver logado, expulsa.
-                window.location.href = "login.html";
-            }
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    utilizadorAtual = user;
+                    const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+                    document.getElementById('headerAvatar').src = foto;
+                    
+                    carregarPosts();
+                    carregarVideos();
+                } else {
+                    window.location.href = "login.html";
+                }
+            });
+        }).catch(error => {
+            console.error("Erro na persistência:", error);
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    utilizadorAtual = user;
+                    carregarPosts();
+                    carregarVideos();
+                } else {
+                    window.location.href = "login.html";
+                }
+            });
         });
 
-        // 2. CRIAR POST
+        // 1. CRIAR POST
         async function criarPost() {
             const texto = document.getElementById('inputTextoPost').value;
             const fileInput = document.getElementById('inputImagemPost');
@@ -241,7 +251,7 @@
                 if (file) {
                     const formData = new FormData();
                     formData.append('image', file);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
                     const data = await res.json();
                     if(data.success) urlImagem = data.data.url;
                 }
@@ -260,11 +270,11 @@
                 document.getElementById('inputTextoPost').value = '';
                 fileInput.value = '';
                 document.getElementById('nomeFoto').innerText = 'Foto';
-                alert("Publicado!");
-            } catch (error) { alert("Erro ao publicar."); }
+                alert("Publicado com sucesso!");
+            } catch (error) { alert("Erro ao publicar. Tenta novamente."); }
         }
 
-        // 3. CARREGAR POSTS
+        // 2. CARREGAR POSTS
         function carregarPosts() {
             db.collection("posts").orderBy("data", "desc").onSnapshot(snapshot => {
                 const feed = document.getElementById('feedPosts');
@@ -303,7 +313,7 @@
             });
         }
 
-        // 4. VÍDEOS
+        // 3. VÍDEOS
         async function carregarVideos() {
             const container = document.getElementById('feedVideos');
             let todosVideos = [];
@@ -337,7 +347,7 @@
             } catch (error) { container.innerHTML = '<p style="text-align:center;">Erro ao carregar os vídeos.</p>'; }
         }
 
-        // 5. MENU E APAGAR POST
+        // 4. MENU E APAGAR POST
         function abrirMenu(id, isDono) {
             postAtualId = id;
             document.getElementById('modalMenu').style.display = 'flex';
@@ -351,7 +361,7 @@
             }
         }
 
-        // 6. COMENTÁRIOS
+        // 5. COMENTÁRIOS
         function abrirComentarios(id) {
             postAtualId = id;
             document.getElementById('modalComentarios').style.display = 'flex';
@@ -392,7 +402,7 @@
             }
         }
 
-        // 7. RANKING
+        // 6. RANKING
         function verRanking() {
             document.getElementById('modalMenu').style.display = 'none';
             document.getElementById('modalRanking').style.display = 'flex';
@@ -417,7 +427,7 @@
             });
         }
 
-        // 8. PERFIL PÚBLICO
+        // 7. PERFIL PÚBLICO (SEM E-MAIL)
         function abrirPerfilUsuario(uid, nome, foto) {
             document.getElementById('modalUserProfile').style.display = 'flex';
             document.getElementById('modalUserAvatar').src = foto || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
@@ -452,7 +462,7 @@
             });
         }
 
-        // 9. MUDAR ABAS
+        // 8. MUDAR ABAS E PESQUISAR NOTÍCIAS
         function mudarAba(aba) {
             document.getElementById('secaoInicio').style.display = aba === 'inicio' ? 'block' : 'none';
             document.getElementById('secaoVideos').style.display = aba === 'videos' ? 'block' : 'none';
@@ -460,10 +470,40 @@
             document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
         }
 
-        // 10. PESQUISAR
-        function pesquisarNoticias() {
+        // 9. PESQUISAR NOTÍCIAS REAIS (WIKIPEDIA)
+        async function pesquisarNoticias() {
             const termo = document.getElementById('inputPesquisa').value;
-            if(termo) alert("A pesquisar notícias sobre: " + termo);
+            const container = document.getElementById('resultadosNoticias');
+            
+            if(!termo) { 
+                container.innerHTML = ''; 
+                return; 
+            }
+            
+            container.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A procurar...</p>';
+
+            try {
+                const res = await fetch(`https://pt.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=search&gsrsearch=${encodeURIComponent(termo)}&gsrlimit=3`);
+                const data = await res.json();
+                
+                if(data.query && data.query.pages) {
+                    container.innerHTML = '';
+                    Object.values(data.query.pages).forEach(p => {
+                        let texto = p.extract ? p.extract.substring(0, 100) + '...' : 'Sem descrição.';
+                        container.innerHTML += `
+                            <div class="noticia-card">
+                                <h4>${p.title}</h4>
+                                <p>${texto}</p>
+                                <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank">Ler na Wikipedia <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Nenhuma notícia encontrada.</p>';
+                }
+            } catch(e) {
+                container.innerHTML = '<p style="text-align:center; color:red;">Erro ao pesquisar notícias.</p>';
+            }
         }
     </script>
 </body>
