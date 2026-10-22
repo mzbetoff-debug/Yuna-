@@ -7,172 +7,154 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== VARIÁVEIS DOS TEMAS ===== */
-        :root { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; }
+        /* ===== TEMAS ===== */
+        :root { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; }
+        body.tema-azul { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; }
         body.tema-roxo { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; }
         body.tema-branco { --fundo: #f5f5f7; --fundo-card: #ffffff; --texto: #1a1a1a; --texto-suave: #555555; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #e0e0e0; }
-        body.tema-azul { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; }
         body.tema-amarelo { --fundo: #1a1500; --fundo-card: #2a2000; --texto: #ffffff; --texto-suave: #d0c890; --primaria: #fbbf24; --primaria-hover: #f59e0b; --borda: #4a3a00; }
 
         /* ===== ESTILOS GERAIS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: var(--fundo); color: var(--texto); transition: background 0.3s, color 0.3s; padding-bottom: 70px; }
         
-        /* HEADER */
+        /* ===== HEADER (IGUAL À IMAGEM) ===== */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--borda); background: var(--fundo); position: sticky; top: 0; z-index: 100; }
-        .logo-header { color: var(--primaria); font-weight: bold; font-size: 24px; letter-spacing: 1px; }
-        .user-avatar-header { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primaria); object-fit: cover; }
+        .btn-header { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
+        .logo-header { color: var(--primaria); font-weight: 800; font-size: 24px; letter-spacing: 1px; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .btn-sino { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
+        .user-avatar-header { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--borda); object-fit: cover; }
 
-        /* SELETOR DE TEMAS */
-        .seletor-temas { position: fixed; top: 70px; right: 15px; display: flex; gap: 8px; z-index: 999; background: var(--fundo-card); padding: 8px; border-radius: 30px; border: 1px solid var(--borda); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .cor-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; }
-        .cor-btn[data-tema="roxo"] { background: #8b5cf6; }
-        .cor-btn[data-tema="branco"] { background: #ffffff; border-color: #ccc; }
-        .cor-btn[data-tema="azul"] { background: #3b82f6; }
-        .cor-btn[data-tema="amarelo"] { background: #fbbf24; }
-        .cor-btn.ativo { border-color: var(--texto); transform: scale(1.1); }
-
-        /* ABAS */
-        .abas { display: flex; padding: 10px; gap: 10px; max-width: 600px; margin: 0 auto; }
-        .aba { flex: 1; padding: 10px; text-align: center; border: 1px solid var(--borda); border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s; color: var(--texto); }
+        /* ===== ABAS (IGUAL À IMAGEM) ===== */
+        .abas { display: flex; padding: 15px 20px; gap: 15px; max-width: 600px; margin: 0 auto; }
+        .aba { flex: 1; padding: 12px; text-align: center; border: 1px solid var(--borda); border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 15px; color: var(--texto-suave); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .aba.ativa { background: var(--primaria); color: #fff; border-color: var(--primaria); }
 
-        /* CONTAINER */
-        .container { max-width: 600px; margin: 0 auto; padding: 10px; }
+        /* ===== CONTAINER ===== */
+        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
 
-        /* NOTÍCIAS */
-        .titulo-seccao { color: var(--primaria); font-size: 16px; margin: 15px 0 10px 5px; display: flex; align-items: center; gap: 8px; }
-        .noticias-container { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none; }
-        .noticias-container::-webkit-scrollbar { display: none; }
-        .noticia-card { min-width: 260px; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .noticia-card h4 { font-size: 15px; margin-bottom: 8px; color: var(--texto); }
-        .noticia-card p { font-size: 12px; color: var(--texto-suave); margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .noticia-card a { color: var(--primaria); font-size: 12px; text-decoration: none; font-weight: bold; }
-        
-        .fonte-badge { display: inline-block; padding: 3px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #fff; margin-bottom: 8px; }
-        .fonte-wiki { background: #333; }
-        .fonte-tech { background: #ff6600; }
-        .fonte-space { background: #0b3d91; }
+        /* ===== CRIAR POST (IGUAL À IMAGEM) ===== */
+        .criar-post-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+        .criar-post-card input[type="text"] { width: 100%; background: transparent; border: none; color: var(--texto); font-size: 16px; outline: none; margin-bottom: 20px; }
+        .criar-post-card input[type="text"]::placeholder { color: var(--texto-suave); }
+        .criar-post-acoes { display: flex; justify-content: space-between; align-items: center; }
+        .btn-foto { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid var(--borda); color: var(--texto-suave); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; }
+        .btn-foto i { font-size: 18px; }
+        .btn-publicar { background: var(--primaria); color: #fff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; }
 
-        /* CRIAR POST */
-        .criar-post { background: var(--fundo-card); padding: 15px; border-radius: 15px; border: 1px solid var(--borda); margin-bottom: 20px; display: flex; gap: 10px; }
-        .criar-post input[type="text"] { flex: 1; background: var(--fundo); border: 1px solid var(--borda); border-radius: 20px; padding: 10px; color: var(--texto); outline: none; }
-        .criar-post button { background: var(--primaria); color: #fff; border: none; padding: 10px 15px; border-radius: 20px; cursor: pointer; }
+        /* ===== PESQUISA DE NOTÍCIAS ===== */
+        .pesquisa-container { display: flex; gap: 10px; margin-bottom: 25px; }
+        .pesquisa-container input { flex: 1; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 12px 15px; color: var(--texto); font-size: 15px; outline: none; }
+        .pesquisa-container input::placeholder { color: var(--texto-suave); }
+        .btn-pesquisar { background: var(--primaria); color: #fff; border: none; width: 50px; border-radius: 15px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* POSTS */
-        .post { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; margin-bottom: 15px; overflow: hidden; }
-        .post-header { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--borda); }
-        .post-avatar { width: 40px; height: 40px; border-radius: 50%; background: #d8b4fe; display: flex; align-items: center; justify-content: center; margin-right: 10px; font-size: 20px; object-fit: cover; cursor: pointer; }
+        /* ===== TÍTULOS DE SECÇÃO ===== */
+        .titulo-seccao { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+
+        /* ===== POSTS ===== */
+        .post { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; margin-bottom: 15px; overflow: hidden; padding: 15px; }
+        .post-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .post-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-right: 12px; cursor: pointer; border: 1px solid var(--borda); }
         .post-info { flex: 1; cursor: pointer; }
-        .post-info h4 { font-size: 15px; }
+        .post-info h4 { font-size: 16px; font-weight: bold; }
         .post-info span { font-size: 12px; color: var(--texto-suave); }
-        .btn-menu-pontos { background: none; border: none; color: var(--texto); font-size: 18px; cursor: pointer; padding: 5px; }
+        .btn-menu-pontos { background: none; border: none; color: var(--texto); font-size: 18px; cursor: pointer; }
         
-        .post-content { padding: 15px; }
-        .post-content p { margin-bottom: 10px; }
-        .post-img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 10px; margin-top: 10px; }
+        .post-content { margin-bottom: 15px; }
+        .post-content p { margin-bottom: 10px; font-size: 15px; line-height: 1.4; }
+        .post-img { width: 100%; border-radius: 15px; object-fit: cover; max-height: 400px; }
 
-        .post-actions { display: flex; padding: 10px 15px; border-top: 1px solid var(--borda); gap: 20px; }
-        .action-btn { background: none; border: none; color: var(--texto-suave); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .post-actions { display: flex; border-top: 1px solid var(--borda); padding-top: 15px; gap: 20px; }
+        .action-btn { background: none; border: none; color: var(--texto-suave); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
         .action-btn:hover { color: var(--primaria); }
 
-        /* VÍDEOS FEED */
-        .video-feed { display: flex; flex-direction: column; gap: 15px; }
-        .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; overflow: hidden; cursor: pointer; position: relative; }
-        .video-thumb { width: 100%; height: 220px; object-fit: cover; }
-        .video-info { padding: 15px; display: flex; align-items: flex-start; gap: 10px; }
-        .video-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; flex-shrink: 0; }
-        .video-title { font-size: 15px; font-weight: bold; color: var(--texto); margin-bottom: 5px; }
-        .video-channel { font-size: 12px; color: var(--texto-suave); }
-        .video-player-container { width: 100%; height: 70vh; background: #000; border-radius: 15px; overflow: hidden; margin-bottom: 15px; }
-        .video-player-container iframe { width: 100%; height: 100%; border: none; }
-
-        /* NAVEGAÇÃO INFERIOR */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 12px; gap: 5px; transition: 0.2s; }
-        .nav-item i { font-size: 20px; }
+        /* ===== NAVEGAÇÃO INFERIOR ===== */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 11px; gap: 5px; transition: 0.2s; }
+        .nav-item i { font-size: 22px; }
         .nav-item.active { color: var(--primaria); }
 
-        /* MODAIS */
+        /* ===== MODAIS ===== */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
-        .modal-content { background: var(--fundo-card); padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; border: 1px solid var(--borda); max-height: 85vh; overflow-y: auto; }
+        .modal-content { background: var(--fundo-card); padding: 20px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--borda); max-height: 85vh; overflow-y: auto; }
         .modal-content h3 { margin-bottom: 15px; text-align: center; }
-        .btn-salvar { width: 100%; padding: 10px; background: var(--primaria); color: #fff; border: none; border-radius: 8px; cursor: pointer; margin-top: 5px; font-weight: bold; }
-        .btn-fechar { width: 100%; padding: 10px; background: #ef4444; color: #fff; border: none; border-radius: 8px; cursor: pointer; margin-top: 5px; font-weight: bold; }
-        .btn-ranking { width: 100%; padding: 10px; background: #3b82f6; color: #fff; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
+        .btn-salvar { width: 100%; padding: 12px; background: var(--primaria); color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        .btn-fechar { width: 100%; padding: 12px; background: #ef4444; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        .btn-ranking { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
 
+        /* COMENTÁRIOS */
         .lista-comentarios { max-height: 200px; overflow-y: auto; margin-bottom: 10px; }
-        .comentario-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid var(--borda); font-size: 14px; }
+        .comentario-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--borda); font-size: 14px; }
         .btn-eliminar { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
+        
+        /* VÍDEOS E NOTÍCIAS CARD */
+        .noticia-card, .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
     </style>
 </head>
-<body class="tema-amarelo">
+<body class="tema-azul">
 
+    <!-- HEADER -->
     <header>
-        <i class="fas fa-bars" style="font-size: 24px;"></i>
+        <button class="btn-header"><i class="fas fa-bars"></i></button>
         <div class="logo-header">YUNA</div>
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="headerAvatar" class="user-avatar-header" alt="Perfil">
+        <div class="header-right">
+            <button class="btn-sino"><i class="fas fa-bell"></i></button>
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="headerAvatar" class="user-avatar-header" alt="Perfil">
+        </div>
     </header>
 
-    <div class="seletor-temas" id="seletorTemas">
-        <button class="cor-btn" data-tema="roxo"></button>
-        <button class="cor-btn" data-tema="branco"></button>
-        <button class="cor-btn" data-tema="azul"></button>
-        <button class="cor-btn" data-tema="amarelo"></button>
-    </div>
-
+    <!-- ABAS -->
     <div class="abas">
         <div class="aba ativa" id="abaInicio" onclick="mudarAba('inicio')"><i class="fas fa-newspaper"></i> Início</div>
-        <div class="aba" id="abaVideos" onclick="mudarAba('videos')"><i class="fas fa-video"></i> Vídeos</div>
+        <div class="aba" id="abaVideos" onclick="mudarAba('videos')"><i class="fas fa-film"></i> Vídeos</div>
     </div>
 
     <!-- SECÇÃO INÍCIO -->
     <div class="container" id="secaoInicio">
         
-        <!-- NOTÍCIAS (MISTURA DE FONTES) -->
-        <h3 class="titulo-seccao"><i class="fas fa-newspaper"></i> Notícias e Informações</h3>
-        <div class="noticias-container" id="noticiasContainer">
-            <div class="noticia-card"><p>A procurar notícias no mundo inteiro...</p></div>
+        <!-- CRIAR POST -->
+        <div class="criar-post-card">
+            <input type="text" id="inputTextoPost" placeholder="No que estás a pensar?">
+            <input type="file" id="inputImagemPost" accept="image/*" style="display: none;" onchange="document.getElementById('nomeFoto').innerText = 'Foto Selecionada'">
+            <div class="criar-post-acoes">
+                <button class="btn-foto" onclick="document.getElementById('inputImagemPost').click()">
+                    <i class="fas fa-camera"></i> <span id="nomeFoto">Foto</span>
+                </button>
+                <button class="btn-publicar" onclick="criarPost()">Publicar</button>
+            </div>
         </div>
 
-        <!-- PUBLICAR POST -->
-        <div class="criar-post">
-            <input type="text" id="inputTextoPost" placeholder="No que estás a pensar?">
-            <input type="file" id="inputImagemPost" accept="image/*" style="display: none;" onchange="alert('Imagem selecionada! Clica na seta para publicar.')">
-            <button onclick="document.getElementById('inputImagemPost').click()"><i class="fas fa-image"></i></button>
-            <button onclick="criarPost()"><i class="fas fa-paper-plane"></i></button>
+        <!-- PESQUISA DE NOTÍCIAS -->
+        <div class="pesquisa-container">
+            <input type="text" id="inputPesquisa" placeholder="Pesquisar notícias...">
+            <button class="btn-pesquisar" onclick="pesquisarNoticias()"><i class="fas fa-search"></i></button>
         </div>
-        
-        <h3 class="titulo-seccao"><i class="fas fa-users"></i> Publicações da Comunidade</h3>
+
+        <!-- FEED -->
+        <h3 class="titulo-seccao">📰 Publicações da Comunidade</h3>
         <div id="feedPosts"></div>
     </div>
 
     <!-- SECÇÃO VÍDEOS -->
     <div class="container" id="secaoVideos" style="display: none;">
-        <!-- Player do YouTube Fixo no Topo (O &mute=0 tenta resolver o som) -->
-        <h3 class="titulo-seccao"><i class="fab fa-youtube" style="color:red;"></i> Destaque YUNA</h3>
-        <div class="video-player-container">
-            <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID_AQUI?autoplay=1&mute=0&loop=1&playlist=SEU_VIDEO_ID_AQUI" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="video-card" style="text-align:center;">
+            <p><i class="fas fa-spinner fa-spin"></i> A carregar tendências de vídeos...</p>
         </div>
-        
-        <h3 class="titulo-seccao"><i class="fas fa-fire" style="color:orange;"></i> Virais e Tendências</h3>
-        <div class="video-feed" id="feedVideos">
-            <p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar vídeos...</p>
-        </div>
+        <div id="feedVideos"></div>
     </div>
 
-    <!-- MODAL DE COMENTÁRIOS -->
+    <!-- MODAIS (COMENTÁRIOS, MENU, RANKING, PERFIL) -->
     <div class="modal" id="modalComentarios">
         <div class="modal-content">
             <h3>Comentários</h3>
             <div class="lista-comentarios" id="listaComentarios"></div>
-            <input type="text" id="inputComentario" placeholder="Escreve um comentário..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid var(--borda); background:var(--fundo); color:var(--texto); outline:none;">
+            <input type="text" id="inputComentario" placeholder="Escreve um comentário..." style="width:100%; padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid var(--borda); background:var(--fundo); color:var(--texto); outline:none;">
             <button class="btn-salvar" onclick="adicionarComentario()">Enviar</button>
             <button class="btn-fechar" onclick="document.getElementById('modalComentarios').style.display='none'">Fechar</button>
         </div>
     </div>
 
-    <!-- MODAL DO MENU (3 PONTINHOS) -->
     <div class="modal" id="modalMenu">
         <div class="modal-content">
             <h3>Opções</h3>
@@ -182,26 +164,21 @@
         </div>
     </div>
 
-    <!-- MODAL DE RANKING -->
     <div class="modal" id="modalRanking">
         <div class="modal-content">
             <h3><i class="fas fa-trophy" style="color:gold;"></i> Ranking YUNA</h3>
-            <div id="listaRanking" style="max-height: 200px; overflow-y: auto;">
-                <p style="text-align:center; color:var(--texto-suave);">A carregar...</p>
-            </div>
+            <div id="listaRanking" style="max-height: 200px; overflow-y: auto;"></div>
             <button class="btn-fechar" onclick="document.getElementById('modalRanking').style.display='none'">Fechar</button>
         </div>
     </div>
 
-    <!-- MODAL DE PERFIL PÚBLICO (Sem E-mail) -->
     <div class="modal" id="modalUserProfile">
         <div class="modal-content">
             <div style="text-align: center; margin-bottom: 15px;">
                 <img id="modalUserAvatar" src="" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primaria); margin-bottom: 10px;">
-                <h3 id="modalUserName" style="margin: 0; color: var(--texto);"></h3>
+                <h3 id="modalUserName" style="margin: 0;"></h3>
             </div>
-            <hr style="border: 0; border-top: 1px solid var(--borda); margin: 15px 0;">
-            <h4 style="margin-bottom: 15px; color: var(--primaria); font-size: 16px;"><i class="fas fa-newspaper"></i> Publicações de <span id="modalUserNamePost"></span>:</h4>
+            <h4 style="margin-bottom: 15px; color: var(--primaria); font-size: 16px;">Publicações:</h4>
             <div id="modalUserPosts" style="max-height: 300px; overflow-y: auto;"></div>
             <button class="btn-fechar" onclick="document.getElementById('modalUserProfile').style.display='none'">Fechar</button>
         </div>
@@ -215,25 +192,21 @@
         <a href="educacao.html" class="nav-item"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
         <a href="perfil.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
     </nav>
-    <!-- IMPORTS DO FIREBASE -->
+    <!-- ===== SCRIPTS ===== -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // ========================================================
-        // ⚠️ COLA A TUA CONFIGURAÇÃO DO FIREBASE AQUI ⚠️
-        // ========================================================
+        // ⚠️ SUBSTITUI PELA TUA CONFIGURAÇÃO ⚠️
         const firebaseConfig = {
-            apiKey: "A_TUA_API_KEY",
-            authDomain: "O_TEU_AUTH_DOMAIN",
-            projectId: "O_TEU_PROJECT_ID",
-            storageBucket: "O_TEU_STORAGE_BUCKET",
-            messagingSenderId: "O_TEU_MESSAGING_SENDER_ID",
+            apiKey: "A_TUA_API_KEY", 
+            authDomain: "O_TEU_AUTH_DOMAIN", 
+            projectId: "O_TEU_PROJECT_ID", 
+            storageBucket: "O_TEU_STORAGE_BUCKET", 
+            messagingSenderId: "O_TEU_MESSAGING_SENDER_ID", 
             appId: "O_TEU_APP_ID"
         };
-
-        // ⚠️ COLA A TUA CHAVE DO IMGBB AQUI ⚠️
         const IMGBB_API_KEY = "A_TUA_CHAVE_IMGBB_AQUI"; 
 
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
@@ -243,110 +216,61 @@
         let utilizadorAtual = null;
         let postAtualId = null; 
 
-        // 1. VERIFICAR LOGIN E CARREGAR TUDO
+        // 1. VERIFICAR LOGIN
         auth.onAuthStateChanged(user => {
             if (user) {
                 utilizadorAtual = user;
                 const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
                 document.getElementById('headerAvatar').src = foto;
                 
-                carregarNoticias();
-                carregarVideos();
                 carregarPosts();
+                carregarVideos();
             } else {
                 window.location.href = "login.html";
             }
         });
 
-        // 2. NOTÍCIAS (WIKIPEDIA + TECNOLOGIA + ESPAÇO)
-        async function carregarNoticias() {
-            const container = document.getElementById('noticiasContainer');
-            let todasNoticias = [];
+        // 2. CRIAR POST
+        async function criarPost() {
+            const texto = document.getElementById('inputTextoPost').value;
+            const fileInput = document.getElementById('inputImagemPost');
+            const file = fileInput.files[0];
+            if (!texto && !file) return alert("Escreve algo ou escolhe uma foto!");
+            let urlImagem = "";
+
             try {
-                const wikiRes = await fetch('https://pt.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0&grnlimit=2');
-                const wikiData = await wikiRes.json();
-                if (wikiData.query && wikiData.query.pages) {
-                    Object.values(wikiData.query.pages).forEach(p => {
-                        todasNoticias.push({ titulo: p.title, texto: p.extract ? p.extract.substring(0, 90) + '...' : 'Sem descrição.', link: `https://pt.wikipedia.org/?curid=${p.pageid}`, fonte: 'Wikipedia', classe: 'fonte-wiki' });
-                    });
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+                    const data = await res.json();
+                    if(data.success) urlImagem = data.data.url;
                 }
 
-                const hnRes = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
-                const hnIds = await hnRes.json();
-                for (let i = 0; i < 2; i++) {
-                    const itemRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${hnIds[i]}.json`);
-                    const item = await itemRes.json();
-                    if (item.title) {
-                        todasNoticias.push({ titulo: item.title, texto: 'Notícia de tecnologia e inovação.', link: item.url || `https://news.ycombinator.com/item?id=${hnIds[i]}`, fonte: 'Tech', classe: 'fonte-tech' });
-                    }
-                }
-
-                const spaceRes = await fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=2');
-                const spaceData = await spaceRes.json();
-                spaceData.results.forEach(artigo => {
-                    todasNoticias.push({ titulo: artigo.title, texto: artigo.summary.substring(0, 90) + '...', link: artigo.url, fonte: 'Ciência', classe: 'fonte-space' });
+                await db.collection("posts").add({
+                    uid: utilizadorAtual.uid,
+                    nomeUser: utilizadorAtual.displayName || "Membro YUNA",
+                    fotoUser: utilizadorAtual.photoURL || "", 
+                    texto: texto,
+                    imagem: urlImagem,
+                    likes: 0,
+                    comentarios: [],
+                    data: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
-                container.innerHTML = '';
-                todasNoticias.sort(() => Math.random() - 0.5).forEach(noticia => {
-                    container.innerHTML += `
-                        <div class="noticia-card">
-                            <div>
-                                <span class="fonte-badge ${noticia.classe}">${noticia.fonte}</span>
-                                <h4>${noticia.titulo}</h4>
-                                <p>${noticia.texto}</p>
-                            </div>
-                            <a href="${noticia.link}" target="_blank">Ler mais <i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                container.innerHTML = '<div class="noticia-card"><p>Não foi possível carregar as notícias hoje.</p></div>';
-            }
+                document.getElementById('inputTextoPost').value = '';
+                fileInput.value = '';
+                document.getElementById('nomeFoto').innerText = 'Foto';
+                alert("Publicado!");
+            } catch (error) { alert("Erro ao publicar."); }
         }
 
-        // 3. VÍDEOS (DAILYMOTION + YOUTUBE)
-        async function carregarVideos() {
-            const container = document.getElementById('feedVideos');
-            let todosVideos = [];
-            try {
-                const dmRes = await fetch('https://api.dailymotion.com/videos?fields=id,title,thumbnail_480_url,url,owner.screenname&limit=4&sort=trending');
-                const dmData = await dmRes.json();
-                dmData.list.forEach(video => {
-                    todosVideos.push({ titulo: video.title, thumb: video.thumbnail_480_url, link: video.url, canal: video['owner.screenname'] || 'Dailymotion', plataforma: 'Dailymotion', cor: '#0066ff', icone: 'fa-play' });
-                });
-
-                const youtubeExemplos = [
-                    { titulo: 'Vídeo em Destaque no YouTube', thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg', link: 'https://youtube.com/watch?v=dQw4w9WgXcQ', canal: 'YouTube', plataforma: 'YouTube', cor: '#ff0000', icone: 'fa-youtube' }
-                ];
-                youtubeExemplos.forEach(yt => todosVideos.push(yt));
-
-                container.innerHTML = '';
-                todosVideos.sort(() => Math.random() - 0.5).forEach(video => {
-                    container.innerHTML += `
-                        <div class="video-card" onclick="window.open('${video.link}', '_blank')">
-                            <img src="${video.thumb}" class="video-thumb" alt="Capa do vídeo">
-                            <div class="video-info">
-                                <div class="video-icon" style="background: ${video.cor};"><i class="fab ${video.icone}"></i></div>
-                                <div>
-                                    <div class="video-title">${video.titulo}</div>
-                                    <div class="video-channel">${video.canal} • ${video.plataforma}</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                container.innerHTML = '<p style="text-align:center;">Erro ao carregar os vídeos.</p>';
-            }
-        }
-
-        // 4. CARREGAR POSTS
+        // 3. CARREGAR POSTS
         function carregarPosts() {
             db.collection("posts").orderBy("data", "desc").onSnapshot(snapshot => {
                 const feed = document.getElementById('feedPosts');
                 feed.innerHTML = '';
-                if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; padding:20px;">Ainda não há publicações.</p>'; return; }
+                if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Ainda não há publicações.</p>'; return; }
 
                 snapshot.forEach(doc => {
                     const post = doc.data();
@@ -380,41 +304,41 @@
             });
         }
 
-        // 5. CRIAR POST
-        async function criarPost() {
-            const texto = document.getElementById('inputTextoPost').value;
-            const fileInput = document.getElementById('inputImagemPost');
-            const file = fileInput.files[0];
-            if (!texto && !file) return alert("Escreve algo ou escolhe uma foto!");
-            let urlImagem = "";
-
+        // 4. VÍDEOS (MISTURA DE FONTES)
+        async function carregarVideos() {
+            const container = document.getElementById('feedVideos');
+            let todosVideos = [];
             try {
-                if (file) {
-                    const formData = new FormData();
-                    formData.append('image', file);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-                    const data = await res.json();
-                    if(data.success) urlImagem = data.data.url;
-                }
-
-                await db.collection("posts").add({
-                    uid: utilizadorAtual.uid,
-                    nomeUser: utilizadorAtual.displayName || "Membro YUNA",
-                    fotoUser: utilizadorAtual.photoURL || "", 
-                    texto: texto,
-                    imagem: urlImagem,
-                    likes: 0,
-                    comentarios: [],
-                    data: firebase.firestore.FieldValue.serverTimestamp()
+                const dmRes = await fetch('https://api.dailymotion.com/videos?fields=id,title,thumbnail_480_url,url,owner.screenname&limit=4&sort=trending');
+                const dmData = await dmRes.json();
+                dmData.list.forEach(video => {
+                    todosVideos.push({ titulo: video.title, thumb: video.thumbnail_480_url, link: video.url, canal: video['owner.screenname'] || 'Dailymotion', plataforma: 'Dailymotion', cor: '#0066ff', icone: 'fa-play' });
                 });
 
-                document.getElementById('inputTextoPost').value = '';
-                fileInput.value = '';
-                alert("Publicado!");
-            } catch (error) { alert("Erro ao publicar."); }
+                const youtubeExemplos = [
+                    { titulo: 'Vídeo em Destaque no YouTube', thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg', link: 'https://youtube.com/watch?v=dQw4w9WgXcQ', canal: 'YouTube', plataforma: 'YouTube', cor: '#ff0000', icone: 'fa-youtube' }
+                ];
+                youtubeExemplos.forEach(yt => todosVideos.push(yt));
+
+                container.innerHTML = '';
+                todosVideos.sort(() => Math.random() - 0.5).forEach(video => {
+                    container.innerHTML += `
+                        <div class="video-card" onclick="window.open('${video.link}', '_blank')" style="cursor:pointer;">
+                            <img src="${video.thumb}" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:10px;">
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <div style="width:40px; height:40px; border-radius:50%; background:${video.cor}; display:flex; align-items:center; justify-content:center; color:white;"><i class="fab ${video.icone}"></i></div>
+                                <div>
+                                    <div style="font-weight:bold; font-size:15px; margin-bottom:3px;">${video.titulo}</div>
+                                    <div style="font-size:12px; color:var(--texto-suave);">${video.canal} • ${video.plataforma}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) { container.innerHTML = '<p style="text-align:center;">Erro ao carregar os vídeos.</p>'; }
         }
 
-        // 6. MENU 3 PONTINHOS E APAGAR POST
+        // 5. MENU E APAGAR POST
         function abrirMenu(id, isDono) {
             postAtualId = id;
             document.getElementById('modalMenu').style.display = 'flex';
@@ -428,7 +352,7 @@
             }
         }
 
-        // 7. COMENTÁRIOS
+        // 6. COMENTÁRIOS
         function abrirComentarios(id) {
             postAtualId = id;
             document.getElementById('modalComentarios').style.display = 'flex';
@@ -454,9 +378,7 @@
             const texto = document.getElementById('inputComentario').value;
             if (!texto) return;
             await db.collection("posts").doc(postAtualId).update({
-                comentarios: firebase.firestore.FieldValue.arrayUnion({
-                    uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto
-                })
+                comentarios: firebase.firestore.FieldValue.arrayUnion({ uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto })
             });
             document.getElementById('inputComentario').value = '';
         }
@@ -471,12 +393,12 @@
             }
         }
 
-        // 8. RANKING
+        // 7. RANKING
         function verRanking() {
             document.getElementById('modalMenu').style.display = 'none';
             document.getElementById('modalRanking').style.display = 'flex';
             const lista = document.getElementById('listaRanking');
-            lista.innerHTML = '<p>A calcular...</p>';
+            lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A calcular...</p>';
 
             db.collection("posts").get().then(snapshot => {
                 let contagem = {};
@@ -496,12 +418,11 @@
             });
         }
 
-        // 9. PERFIL PÚBLICO (Sem E-mail)
+        // 8. PERFIL PÚBLICO (SEM E-MAIL)
         function abrirPerfilUsuario(uid, nome, foto) {
             document.getElementById('modalUserProfile').style.display = 'flex';
             document.getElementById('modalUserAvatar').src = foto || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
             document.getElementById('modalUserName').innerText = nome || 'Utilizador';
-            document.getElementById('modalUserNamePost').innerText = nome || 'Utilizador';
             
             const containerPosts = document.getElementById('modalUserPosts');
             containerPosts.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
@@ -532,7 +453,7 @@
             });
         }
 
-        // 10. MUDAR ABAS
+        // 9. MUDAR ABAS
         function mudarAba(aba) {
             document.getElementById('secaoInicio').style.display = aba === 'inicio' ? 'block' : 'none';
             document.getElementById('secaoVideos').style.display = aba === 'videos' ? 'block' : 'none';
@@ -540,23 +461,15 @@
             document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
         }
 
-        // 11. SISTEMA DE TEMAS
-        (function() {
-            const TEMAS = ['roxo', 'branco', 'azul', 'amarelo'];
-            const temaGuardado = localStorage.getItem('yuna-tema') || 'amarelo';
-            
-            function aplicarTema(tema) {
-                TEMAS.forEach(t => document.body.classList.remove('tema-' + t));
-                document.body.classList.add('tema-' + tema);
-                localStorage.setItem('yuna-tema', tema);
-                document.querySelectorAll('.cor-btn').forEach(btn => btn.classList.toggle('ativo', btn.dataset.tema === tema));
+        // 10. PESQUISAR NOTÍCIAS (Simulação)
+        function pesquisarNoticias() {
+            const termo = document.getElementById('inputPesquisa').value;
+            if(termo) {
+                alert("A pesquisar notícias sobre: " + termo);
+            } else {
+                alert("Escreve algo para pesquisar!");
             }
-
-            aplicarTema(temaGuardado);
-            document.querySelectorAll('.cor-btn').forEach(btn => {
-                btn.addEventListener('click', () => aplicarTema(btn.dataset.tema));
-            });
-        })();
+        }
     </script>
 </body>
 </html>
