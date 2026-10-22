@@ -1,244 +1,101 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0e1a">
-<title>YUNA · Entrar</title>
- <link rel="icon" type="image/png" href="favicon.png">
-<link rel="manifest" href="/Yuna-/manifest.json">
-<meta name="theme-color" content="#0a0e1a">
-<link rel="manifest" href="/Yuna-/manifest.json">
-<meta name="theme-color" content="#0a0e1a">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
-body{background:linear-gradient(135deg,#0a0e1a 0%,#1a1f35 100%);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;color:#e2e8f0}
-
-.card{width:100%;max-width:420px;background:rgba(18,24,42,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);border-radius:28px;padding:36px 28px 32px;box-shadow:0 30px 60px rgba(0,0,0,.7);position:relative;overflow:hidden;animation:fadeIn .4s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.card::before{content:'';position:absolute;top:-40%;right:-20%;width:280px;height:280px;background:radial-gradient(circle,rgba(236,72,153,.25),transparent 70%);filter:blur(50px);pointer-events:none}
-.card::after{content:'';position:absolute;bottom:-40%;left:-20%;width:280px;height:280px;background:radial-gradient(circle,rgba(139,92,246,.25),transparent 70%);filter:blur(50px);pointer-events:none}
-
-.logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:24px;position:relative;z-index:2}
-.logo i{font-size:32px;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.logo h1{font-size:28px;font-weight:800;background:linear-gradient(135deg,#f472b6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px}
-
-.titulo{text-align:center;font-size:20px;font-weight:700;color:#f1f5f9;margin-bottom:6px;position:relative;z-index:2}
-.subtitulo{text-align:center;font-size:13px;color:#94a3b8;margin-bottom:28px;position:relative;z-index:2}
-
-.err{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:10px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:none;position:relative;z-index:2;line-height:1.5}
-.err.show{display:block}
-.suc{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);color:#34d399;padding:10px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:none;position:relative;z-index:2}
-.suc.show{display:block}
-
-.grupo{position:relative;margin-bottom:14px;z-index:2}
-.grupo i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#64748b;font-size:15px}
-.grupo input{width:100%;padding:14px 16px 14px 44px;background:rgba(0,0,0,.3);border:1px solid #334155;border-radius:14px;color:#e2e8f0;font-size:14px;outline:none;transition:.3s}
-.grupo input:focus{border-color:#a78bfa;background:rgba(0,0,0,.45)}
-.grupo input::placeholder{color:#64748b}
-
-.btn-login{width:100%;padding:15px;background:linear-gradient(135deg,#ec4899,#8b5cf6);border:none;color:#fff;border-radius:14px;font-weight:600;font-size:15px;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(236,72,153,.3);margin-top:6px;position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-login:active{transform:scale(.97)}
-.btn-login:disabled{opacity:.6;cursor:not-allowed}
-
-.divisor{display:flex;align-items:center;gap:12px;color:#64748b;font-size:12px;margin:22px 0 18px;position:relative;z-index:2;font-style:italic}
-.divisor::before,.divisor::after{content:'';flex:1;height:1px;background:#293241}
-
-.btn-google{width:100%;padding:14px;background:rgba(255,255,255,.04);border:1px solid #334155;border-radius:14px;color:#e2e8f0;font-weight:500;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:.2s;position:relative;z-index:2}
-.btn-google:active{background:rgba(255,255,255,.08);transform:scale(.98)}
-.btn-google img{width:22px;height:22px}
-.btn-google:disabled{opacity:.6;cursor:not-allowed}
-
-.rodape{text-align:center;color:#94a3b8;font-size:13px;margin-top:20px;position:relative;z-index:2}
-.rodape a{color:#a78bfa;text-decoration:none;font-weight:600;cursor:pointer}
-.rodape a:hover{text-decoration:underline}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUNA - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #0a1428; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: #0f1f3d; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid #1e3a6f; text-align: center; }
+        h1 { color: #3b82f6; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #1e3a6f; background: #0a1428; color: #fff; box-sizing: border-box; outline: none; }
+        button { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 10px; }
+        button:hover { background: #2563eb; }
+        .btn-registo { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; }
+        #mensagem { margin-top: 15px; font-size: 14px; color: #ef4444; }
+    </style>
 </head>
 <body>
 
-<div class="card">
-  <div class="logo">
-    <i class="fas fa-compass"></i>
-    <h1>YUNA</h1>
-  </div>
-  <div class="titulo" id="titulo">Bem-vindo</div>
-  <div class="subtitulo" id="subtitulo">Entre para continuar sua jornada</div>
+    <div class="login-box">
+        <h1>YUNA</h1>
+        <input type="email" id="email" placeholder="O teu e-mail">
+        <input type="password" id="password" placeholder="A tua palavra-passe">
+        <button onclick="entrar()">Entrar</button>
+        <button class="btn-registo" onclick="registar()">Criar Conta</button>
+        <div id="mensagem"></div>
+    </div>
 
-  <div class="err" id="err"></div>
-  <div class="suc" id="suc"></div>
+    <!-- FIREBASE VERSÃO 8 (A MESMA DO HOME.HTML) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
-  <div class="grupo" id="grupoNome" style="display:none">
-    <i class="fas fa-user"></i>
-    <input type="text" id="nome" placeholder="Seu nome">
-  </div>
-  <div class="grupo">
-    <i class="fas fa-envelope"></i>
-    <input type="email" id="email" placeholder="Email">
-  </div>
-  <div class="grupo">
-    <i class="fas fa-lock"></i>
-    <input type="password" id="senha" placeholder="Senha">
-  </div>
+    <script>
+        // ⚠️ AS TUAS CHAVES DO FIREBASE ⚠️
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+            authDomain: "yuna-8fe24.firebaseapp.com",
+            projectId: "yuna-8fe24",
+            storageBucket: "yuna-8fe24.firebasestorage.app",
+            messagingSenderId: "531340097112",
+            appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+        };
 
-  <button class="btn-login" id="btnEmail">
-    <i class="fas fa-sign-in-alt"></i> Entrar
-  </button>
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const auth = firebase.auth();
 
-  <div class="divisor">ou continue com</div>
+        // 🔥 FORÇAR O TELEMÓVEL A LEMBRAR-SE DO LOGIN
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+            
+            // Se o utilizador já estiver logado, manda-o logo para o home
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    window.location.href = "home.html";
+                }
+            });
 
-  <button class="btn-google" id="btnGoogle">
-    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-    Continuar com Google
-  </button>
+        }).catch(error => console.error("Erro na persistência:", error));
 
-  <div class="rodape">
-    <span id="rodapeTexto">Não tem conta?</span>
-    <a onclick="toggleModo()" id="btnToggle">Criar conta</a>
-  </div>
-</div>
+        // FUNÇÃO DE ENTRAR
+        function entrar() {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('password').value;
+            const msg = document.getElementById('mensagem');
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { 
-    getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged,
-    setPersistence, browserLocalPersistence,
-    signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+            if(!email || !senha) { msg.innerText = "Preenche o e-mail e a palavra-passe."; return; }
+            msg.innerText = "A entrar...";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
-    authDomain: "yuna-8fe24.firebaseapp.com",
-    projectId: "yuna-8fe24",
-    storageBucket: "yuna-8fe24.firebasestorage.app",
-    messagingSenderId: "531340097112",
-    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
-  };
+            auth.signInWithEmailAndPassword(email, senha)
+                .then(() => {
+                    // Login com sucesso! Vai para o home.
+                    window.location.href = "home.html";
+                })
+                .catch((error) => {
+                    msg.innerText = "Erro: E-mail ou palavra-passe incorretos.";
+                    console.error(error);
+                });
+        }
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
+        // FUNÇÃO DE REGISTAR
+        function registar() {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('password').value;
+            const msg = document.getElementById('mensagem');
 
-  setPersistence(auth, browserLocalPersistence);
+            if(!email || !senha) { msg.innerText = "Preenche o e-mail e a palavra-passe."; return; }
+            msg.innerText = "A criar conta...";
 
-  let modoCadastro = false;
-
-  function showErr(msg) {
-    const e = document.getElementById('err');
-    e.textContent = msg;
-    e.classList.add('show');
-    document.getElementById('suc').classList.remove('show');
-    setTimeout(() => e.classList.remove('show'), 7000);
-  }
-
-  function showSuc(msg) {
-    const s = document.getElementById('suc');
-    s.textContent = msg;
-    s.classList.add('show');
-    document.getElementById('err').classList.remove('show');
-  }
-
-  window.toggleModo = function() {
-    modoCadastro = !modoCadastro;
-    if (modoCadastro) {
-      document.getElementById('titulo').textContent = 'Criar conta';
-      document.getElementById('subtitulo').textContent = 'Preencha seus dados para começar';
-      document.getElementById('grupoNome').style.display = 'block';
-      document.getElementById('btnEmail').innerHTML = '<i class="fas fa-user-plus"></i> Criar conta';
-      document.getElementById('rodapeTexto').textContent = 'Já tem conta?';
-      document.getElementById('btnToggle').textContent = 'Entrar';
-    } else {
-      document.getElementById('titulo').textContent = 'Bem-vindo de volta';
-      document.getElementById('subtitulo').textContent = 'Entre para continuar sua jornada';
-      document.getElementById('grupoNome').style.display = 'none';
-      document.getElementById('btnEmail').innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
-      document.getElementById('rodapeTexto').textContent = 'Não tem conta?';
-      document.getElementById('btnToggle').textContent = 'Criar conta';
-    }
-  };
-
-  // ✅ LOGIN EMAIL
-  document.getElementById('btnEmail').addEventListener('click', async () => {
-    const email = document.getElementById('email').value.trim();
-    const senha = document.getElementById('senha').value.trim();
-    const btn = document.getElementById('btnEmail');
-
-    if (!email || !senha) { showErr('Preencha email e senha.'); return; }
-
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-
-    try {
-      if (modoCadastro) {
-        const nome = document.getElementById('nome').value.trim();
-        if (!nome) { showErr('Preencha seu nome.'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-plus"></i> Criar conta'; return; }
-        if (senha.length < 6) { showErr('Senha mínimo 6 caracteres.'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-plus"></i> Criar conta'; return; }
-        
-        const cred = await createUserWithEmailAndPassword(auth, email, senha);
-        await updateProfile(cred.user, { displayName: nome });
-        showSuc('✅ Conta criada! Redirecionando...');
-      } else {
-        await signInWithEmailAndPassword(auth, email, senha);
-        showSuc('✅ Bem-vindo! Redirecionando...');
-      }
-      // ✅ Redireciona direto pro home
-      setTimeout(() => window.location.href = 'home.html', 800);
-    } catch (error) {
-      if (error.code === 'auth/email-already-in-use') showErr('Email já cadastrado.');
-      else if (error.code === 'auth/weak-password') showErr('Senha muito fraca.');
-      else if (error.code === 'auth/user-not-found') showErr('Usuário não encontrado.');
-      else if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') showErr('Email ou senha incorretos.');
-      else showErr('Erro: ' + error.message);
-      btn.disabled = false;
-      btn.innerHTML = modoCadastro ? '<i class="fas fa-user-plus"></i> Criar conta' : '<i class="fas fa-sign-in-alt"></i> Entrar';
-    }
-  });
-
-  // ✅ LOGIN GOOGLE
-  document.getElementById('btnGoogle').addEventListener('click', () => {
-    const btn = document.getElementById('btnGoogle');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Conectando...';
-
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        showSuc('✅ Bem-vindo, ' + result.user.displayName + '!');
-        // ✅ Redireciona direto pro home
-        setTimeout(() => window.location.href = 'home.html', 800);
-      })
-      .catch((error) => {
-        if (error.code === 'auth/unauthorized-domain') showErr('⚠️ Domínio não autorizado.');
-        else if (error.code === 'auth/popup-closed-by-user') showErr('Login cancelado.');
-        else if (error.code === 'auth/popup-blocked') showErr('⚠️ Popup bloqueado.');
-        else if (error.code === 'auth/api-key-not-valid') showErr('⚠️ Chave inválida.');
-        else showErr('Erro: ' + error.message);
-        btn.disabled = false;
-        btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Continuar com Google';
-      });
-  });
-
-  // ✅ Se já logado → vai direto pro home
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log('👤 Já logado:', user.displayName);
-      window.location.href = 'home.html';
-    }
-  });
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/Yuna-/sw.js');
-    });
-  }
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/Yuna-/sw.js');
-    });
-  }
-</script>
+            auth.createUserWithEmailAndPassword(email, senha)
+                .then(() => {
+                    alert("Conta criada com sucesso!");
+                    window.location.href = "home.html";
+                })
+                .catch((error) => {
+                    msg.innerText = "Erro: " + error.message;
+                    console.error(error);
+                });
+        }
+    </script>
 </body>
-    </html>
+</html>
