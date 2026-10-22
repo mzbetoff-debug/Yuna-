@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: var(--fundo); color: var(--texto); transition: background 0.3s, color 0.3s; padding-bottom: 70px; }
         
-        /* ===== HEADER (IGUAL À IMAGEM) ===== */
+        /* ===== HEADER ===== */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--borda); background: var(--fundo); position: sticky; top: 0; z-index: 100; }
         .btn-header { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
         .logo-header { color: var(--primaria); font-weight: 800; font-size: 24px; letter-spacing: 1px; }
@@ -26,7 +26,7 @@
         .btn-sino { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
         .user-avatar-header { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--borda); object-fit: cover; }
 
-        /* ===== ABAS (IGUAL À IMAGEM) ===== */
+        /* ===== ABAS ===== */
         .abas { display: flex; padding: 15px 20px; gap: 15px; max-width: 600px; margin: 0 auto; }
         .aba { flex: 1; padding: 12px; text-align: center; border: 1px solid var(--borda); border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 15px; color: var(--texto-suave); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .aba.ativa { background: var(--primaria); color: #fff; border-color: var(--primaria); }
@@ -34,7 +34,7 @@
         /* ===== CONTAINER ===== */
         .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
 
-        /* ===== CRIAR POST (IGUAL À IMAGEM) ===== */
+        /* ===== CRIAR POST ===== */
         .criar-post-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         .criar-post-card input[type="text"] { width: 100%; background: transparent; border: none; color: var(--texto); font-size: 16px; outline: none; margin-bottom: 20px; }
         .criar-post-card input[type="text"]::placeholder { color: var(--texto-suave); }
@@ -43,16 +43,14 @@
         .btn-foto i { font-size: 18px; }
         .btn-publicar { background: var(--primaria); color: #fff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; }
 
-        /* ===== PESQUISA DE NOTÍCIAS ===== */
+        /* ===== PESQUISA ===== */
         .pesquisa-container { display: flex; gap: 10px; margin-bottom: 25px; }
         .pesquisa-container input { flex: 1; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 12px 15px; color: var(--texto); font-size: 15px; outline: none; }
         .pesquisa-container input::placeholder { color: var(--texto-suave); }
         .btn-pesquisar { background: var(--primaria); color: #fff; border: none; width: 50px; border-radius: 15px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* ===== TÍTULOS DE SECÇÃO ===== */
+        /* ===== FEED ===== */
         .titulo-seccao { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-
-        /* ===== POSTS ===== */
         .post { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; margin-bottom: 15px; overflow: hidden; padding: 15px; }
         .post-header { display: flex; align-items: center; margin-bottom: 15px; }
         .post-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-right: 12px; cursor: pointer; border: 1px solid var(--borda); }
@@ -60,16 +58,14 @@
         .post-info h4 { font-size: 16px; font-weight: bold; }
         .post-info span { font-size: 12px; color: var(--texto-suave); }
         .btn-menu-pontos { background: none; border: none; color: var(--texto); font-size: 18px; cursor: pointer; }
-        
         .post-content { margin-bottom: 15px; }
         .post-content p { margin-bottom: 10px; font-size: 15px; line-height: 1.4; }
         .post-img { width: 100%; border-radius: 15px; object-fit: cover; max-height: 400px; }
-
         .post-actions { display: flex; border-top: 1px solid var(--borda); padding-top: 15px; gap: 20px; }
         .action-btn { background: none; border: none; color: var(--texto-suave); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
         .action-btn:hover { color: var(--primaria); }
 
-        /* ===== NAVEGAÇÃO INFERIOR ===== */
+        /* ===== NAVEGAÇÃO ===== */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 11px; gap: 5px; transition: 0.2s; }
         .nav-item i { font-size: 22px; }
@@ -82,19 +78,14 @@
         .btn-salvar { width: 100%; padding: 12px; background: var(--primaria); color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
         .btn-fechar { width: 100%; padding: 12px; background: #ef4444; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
         .btn-ranking { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
-
-        /* COMENTÁRIOS */
         .lista-comentarios { max-height: 200px; overflow-y: auto; margin-bottom: 10px; }
         .comentario-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--borda); font-size: 14px; }
         .btn-eliminar { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
-        
-        /* VÍDEOS E NOTÍCIAS CARD */
         .noticia-card, .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body class="tema-azul">
 
-    <!-- HEADER -->
     <header>
         <button class="btn-header"><i class="fas fa-bars"></i></button>
         <div class="logo-header">YUNA</div>
@@ -104,16 +95,12 @@
         </div>
     </header>
 
-    <!-- ABAS -->
     <div class="abas">
         <div class="aba ativa" id="abaInicio" onclick="mudarAba('inicio')"><i class="fas fa-newspaper"></i> Início</div>
         <div class="aba" id="abaVideos" onclick="mudarAba('videos')"><i class="fas fa-film"></i> Vídeos</div>
     </div>
 
-    <!-- SECÇÃO INÍCIO -->
     <div class="container" id="secaoInicio">
-        
-        <!-- CRIAR POST -->
         <div class="criar-post-card">
             <input type="text" id="inputTextoPost" placeholder="No que estás a pensar?">
             <input type="file" id="inputImagemPost" accept="image/*" style="display: none;" onchange="document.getElementById('nomeFoto').innerText = 'Foto Selecionada'">
@@ -125,18 +112,15 @@
             </div>
         </div>
 
-        <!-- PESQUISA DE NOTÍCIAS -->
         <div class="pesquisa-container">
             <input type="text" id="inputPesquisa" placeholder="Pesquisar notícias...">
             <button class="btn-pesquisar" onclick="pesquisarNoticias()"><i class="fas fa-search"></i></button>
         </div>
 
-        <!-- FEED -->
         <h3 class="titulo-seccao">📰 Publicações da Comunidade</h3>
         <div id="feedPosts"></div>
     </div>
 
-    <!-- SECÇÃO VÍDEOS -->
     <div class="container" id="secaoVideos" style="display: none;">
         <div class="video-card" style="text-align:center;">
             <p><i class="fas fa-spinner fa-spin"></i> A carregar tendências de vídeos...</p>
@@ -144,7 +128,7 @@
         <div id="feedVideos"></div>
     </div>
 
-    <!-- MODAIS (COMENTÁRIOS, MENU, RANKING, PERFIL) -->
+    <!-- MODAIS -->
     <div class="modal" id="modalComentarios">
         <div class="modal-content">
             <h3>Comentários</h3>
@@ -184,7 +168,6 @@
         </div>
     </div>
 
-    <!-- NAVEGAÇÃO INFERIOR -->
     <nav class="bottom-nav">
         <a href="home.html" class="nav-item active"><i class="fas fa-home"></i><span>Início</span></a>
         <a href="musica.html" class="nav-item"><i class="fas fa-music"></i><span>Música</span></a>
@@ -192,13 +175,13 @@
         <a href="educacao.html" class="nav-item"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
         <a href="perfil.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
     </nav>
-    <!-- ===== SCRIPTS ===== -->
+    <!-- IMPORTS DO FIREBASE (VERSÃO 8) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // ⚠️ SUBSTITUI PELA TUA CONFIGURAÇÃO ⚠️
+        // ⚠️ SUBSTITUI PELA TUA CONFIGURAÇÃO REAL DO FIREBASE ⚠️
         const firebaseConfig = {
             apiKey: "A_TUA_API_KEY", 
             authDomain: "O_TEU_AUTH_DOMAIN", 
@@ -216,8 +199,23 @@
         let utilizadorAtual = null;
         let postAtualId = null; 
 
-        // 1. VERIFICAR LOGIN
+        // ==========================================
+        // PROTEÇÃO CONTRA O LOOP DE LOGIN
+        // ==========================================
+        // 1. O Firebase vai demorar 1 segundo a ler a sessão. 
+        // 2. Criamos um temporizador. Se ao fim de 3 segundos ele não souber quem é o user, vai para o login.
+        // 3. Se ele souber, cancela o temporizador e carrega a página normalmente.
+        
+        let verificacaoDeLogin = setTimeout(() => {
+            if (!utilizadorAtual) {
+                console.log("Tempo esgotado. Redirecionando para login...");
+                // window.location.href = "login.html"; // Descomenta esta linha se quiseres que ele expulse
+            }
+        }, 3000);
+
         auth.onAuthStateChanged(user => {
+            clearTimeout(verificacaoDeLogin); // Cancela o temporizador de expulsão porque ele está logado!
+
             if (user) {
                 utilizadorAtual = user;
                 const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
@@ -226,6 +224,7 @@
                 carregarPosts();
                 carregarVideos();
             } else {
+                // Se realmente não estiver logado, expulsa.
                 window.location.href = "login.html";
             }
         });
@@ -304,7 +303,7 @@
             });
         }
 
-        // 4. VÍDEOS (MISTURA DE FONTES)
+        // 4. VÍDEOS
         async function carregarVideos() {
             const container = document.getElementById('feedVideos');
             let todosVideos = [];
@@ -418,7 +417,7 @@
             });
         }
 
-        // 8. PERFIL PÚBLICO (SEM E-MAIL)
+        // 8. PERFIL PÚBLICO
         function abrirPerfilUsuario(uid, nome, foto) {
             document.getElementById('modalUserProfile').style.display = 'flex';
             document.getElementById('modalUserAvatar').src = foto || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
@@ -461,14 +460,10 @@
             document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
         }
 
-        // 10. PESQUISAR NOTÍCIAS (Simulação)
+        // 10. PESQUISAR
         function pesquisarNoticias() {
             const termo = document.getElementById('inputPesquisa').value;
-            if(termo) {
-                alert("A pesquisar notícias sobre: " + termo);
-            } else {
-                alert("Escreve algo para pesquisar!");
-            }
+            if(termo) alert("A pesquisar notícias sobre: " + termo);
         }
     </script>
 </body>
