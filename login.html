@@ -8,7 +8,7 @@
     <style>
         body { background: #0a1428; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .login-box { background: #0f1f3d; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid #1e3a6f; text-align: center; }
-        h1 { color: #3b82f6; margin-bottom: 20px; }
+        h1 { color: #3b82f6; margin-bottom: 20px; font-size: 32px; }
         input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #1e3a6f; background: #0a1428; color: #fff; box-sizing: border-box; outline: none; }
         button { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 10px; }
         button:hover { background: #2563eb; }
@@ -27,11 +27,11 @@
         <div id="mensagem"></div>
     </div>
 
-    <!-- FIREBASE VERSÃO 8 (A MESMA DO HOME.HTML) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script type="module">
+        // Importações do Firebase V10 (Modular)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    <script>
         // ⚠️ AS TUAS CHAVES DO FIREBASE ⚠️
         const firebaseConfig = {
             apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
@@ -42,23 +42,21 @@
             appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
         };
 
-        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-        const auth = firebase.auth();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-        // 🔥 FORÇAR O TELEMÓVEL A LEMBRAR-SE DO LOGIN
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-            
-            // Se o utilizador já estiver logado, manda-o logo para o home
-            auth.onAuthStateChanged(user => {
+        // Forçar a persistência da sessão no telemóvel
+        setPersistence(auth, browserLocalPersistence).then(() => {
+            // Se já estiver logado, vai direto para o home
+            onAuthStateChanged(auth, (user) => {
                 if (user) {
                     window.location.href = "home.html";
                 }
             });
+        });
 
-        }).catch(error => console.error("Erro na persistência:", error));
-
-        // FUNÇÃO DE ENTRAR
-        function entrar() {
+        // Função de Entrar
+        window.entrar = function() {
             const email = document.getElementById('email').value;
             const senha = document.getElementById('password').value;
             const msg = document.getElementById('mensagem');
@@ -66,19 +64,17 @@
             if(!email || !senha) { msg.innerText = "Preenche o e-mail e a palavra-passe."; return; }
             msg.innerText = "A entrar...";
 
-            auth.signInWithEmailAndPassword(email, senha)
+            signInWithEmailAndPassword(auth, email, senha)
                 .then(() => {
-                    // Login com sucesso! Vai para o home.
                     window.location.href = "home.html";
                 })
                 .catch((error) => {
                     msg.innerText = "Erro: E-mail ou palavra-passe incorretos.";
-                    console.error(error);
                 });
         }
 
-        // FUNÇÃO DE REGISTAR
-        function registar() {
+        // Função de Registar
+        window.registar = function() {
             const email = document.getElementById('email').value;
             const senha = document.getElementById('password').value;
             const msg = document.getElementById('mensagem');
@@ -86,14 +82,13 @@
             if(!email || !senha) { msg.innerText = "Preenche o e-mail e a palavra-passe."; return; }
             msg.innerText = "A criar conta...";
 
-            auth.createUserWithEmailAndPassword(email, senha)
+            createUserWithEmailAndPassword(auth, email, senha)
                 .then(() => {
                     alert("Conta criada com sucesso!");
                     window.location.href = "home.html";
                 })
                 .catch((error) => {
                     msg.innerText = "Erro: " + error.message;
-                    console.error(error);
                 });
         }
     </script>
