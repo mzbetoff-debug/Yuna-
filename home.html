@@ -40,13 +40,11 @@
         .criar-post-card input[type="text"]::placeholder { color: var(--texto-suave); }
         .criar-post-acoes { display: flex; justify-content: space-between; align-items: center; }
         .btn-foto { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid var(--borda); color: var(--texto-suave); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; }
-        .btn-foto i { font-size: 18px; }
         .btn-publicar { background: var(--primaria); color: #fff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; }
 
         /* ===== PESQUISA ===== */
         .pesquisa-container { display: flex; gap: 10px; margin-bottom: 25px; }
         .pesquisa-container input { flex: 1; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 12px 15px; color: var(--texto); font-size: 15px; outline: none; }
-        .pesquisa-container input::placeholder { color: var(--texto-suave); }
         .btn-pesquisar { background: var(--primaria); color: #fff; border: none; width: 50px; border-radius: 15px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
         /* ===== FEED ===== */
@@ -63,11 +61,10 @@
         .post-img { width: 100%; border-radius: 15px; object-fit: cover; max-height: 400px; }
         .post-actions { display: flex; border-top: 1px solid var(--borda); padding-top: 15px; gap: 20px; }
         .action-btn { background: none; border: none; color: var(--texto-suave); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .action-btn:hover { color: var(--primaria); }
 
         /* ===== NAVEGAÇÃO ===== */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 11px; gap: 5px; transition: 0.2s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 11px; gap: 5px; }
         .nav-item i { font-size: 22px; }
         .nav-item.active { color: var(--primaria); }
 
@@ -78,13 +75,10 @@
         .btn-salvar { width: 100%; padding: 12px; background: var(--primaria); color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
         .btn-fechar { width: 100%; padding: 12px; background: #ef4444; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
         .btn-ranking { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
-        
         .lista-comentarios { max-height: 200px; overflow-y: auto; margin-bottom: 10px; }
         .comentario-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--borda); font-size: 14px; }
         .btn-eliminar { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
         .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
-        
-        /* ESTILO PARA NOTÍCIAS */
         .noticia-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
         .noticia-card h4 { font-size: 15px; margin-bottom: 8px; }
         .noticia-card p { font-size: 13px; color: var(--texto-suave); margin-bottom: 10px; }
@@ -120,7 +114,7 @@
         </div>
 
         <div class="pesquisa-container">
-            <input type="text" id="inputPesquisa" placeholder="Pesquisar notícias (Wikipedia)...">
+            <input type="text" id="inputPesquisa" placeholder="Pesquisar notícias...">
             <button class="btn-pesquisar" onclick="pesquisarNoticias()"><i class="fas fa-search"></i></button>
         </div>
         
@@ -132,7 +126,7 @@
 
     <div class="container" id="secaoVideos" style="display: none;">
         <div class="video-card" style="text-align:center;">
-            <p><i class="fas fa-spinner fa-spin"></i> A carregar tendências de vídeos...</p>
+            <p><i class="fas fa-spinner fa-spin"></i> A carregar vídeos...</p>
         </div>
         <div id="feedVideos"></div>
     </div>
@@ -184,15 +178,13 @@
         <a href="educacao.html" class="nav-item"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
         <a href="perfil.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
     </nav>
-    <!-- ===== SCRIPTS FIREBASE V8 ===== -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- SCRIPTS V10 MODULAR -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, deleteDoc, updateDoc, arrayUnion, getDoc, getDocs, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    <script>
-        // ========================================================
-        // CHAVES CONFIGURADAS
-        // ========================================================
+        // ⚠️ AS TUAS CHAVES DO FIREBASE ⚠️
         const firebaseConfig = {
             apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
             authDomain: "yuna-8fe24.firebaseapp.com",
@@ -203,18 +195,16 @@
         };
         const IMGBB_KEY = "52ddf1c2a5509391a0edcaadd1d02009";
 
-        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         let utilizadorAtual = null;
         let postAtualId = null; 
 
-        // ==========================================
-        // 🔥 CORREÇÃO DO LOOP DE LOGIN
-        // ==========================================
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-            auth.onAuthStateChanged(user => {
+        // 🔥 PROTEÇÃO CONTRA O LOOP (Só executa depois de verificar a sessão)
+        setPersistence(auth, browserLocalPersistence).then(() => {
+            onAuthStateChanged(auth, (user) => {
                 if (user) {
                     utilizadorAtual = user;
                     const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
@@ -223,24 +213,22 @@
                     carregarPosts();
                     carregarVideos();
                 } else {
-                    window.location.href = "login.html";
-                }
-            });
-        }).catch(error => {
-            console.error("Erro na persistência:", error);
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    utilizadorAtual = user;
-                    carregarPosts();
-                    carregarVideos();
-                } else {
+                    // Se o Firebase tiver a certeza que não está logado, vai para o login
                     window.location.href = "login.html";
                 }
             });
         });
 
+        // EXPOR AS FUNÇÕES PARA O HTML (por causa dos módulos)
+        window.mudarAba = function(aba) {
+            document.getElementById('secaoInicio').style.display = aba === 'inicio' ? 'block' : 'none';
+            document.getElementById('secaoVideos').style.display = aba === 'videos' ? 'block' : 'none';
+            document.getElementById('abaInicio').classList.toggle('ativa', aba === 'inicio');
+            document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
+        };
+
         // 1. CRIAR POST
-        async function criarPost() {
+        window.criarPost = async function() {
             const texto = document.getElementById('inputTextoPost').value;
             const fileInput = document.getElementById('inputImagemPost');
             const file = fileInput.files[0];
@@ -256,7 +244,7 @@
                     if(data.success) urlImagem = data.data.url;
                 }
 
-                await db.collection("posts").add({
+                await addDoc(collection(db, "posts"), {
                     uid: utilizadorAtual.uid,
                     nomeUser: utilizadorAtual.displayName || "Membro YUNA",
                     fotoUser: utilizadorAtual.photoURL || "", 
@@ -264,7 +252,7 @@
                     imagem: urlImagem,
                     likes: 0,
                     comentarios: [],
-                    data: firebase.firestore.FieldValue.serverTimestamp()
+                    data: serverTimestamp()
                 });
 
                 document.getElementById('inputTextoPost').value = '';
@@ -276,25 +264,28 @@
 
         // 2. CARREGAR POSTS
         function carregarPosts() {
-            db.collection("posts").orderBy("data", "desc").onSnapshot(snapshot => {
+            const q = query(collection(db, "posts"), orderBy("data", "desc"));
+            onSnapshot(q, (snapshot) => {
                 const feed = document.getElementById('feedPosts');
                 feed.innerHTML = '';
                 if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Ainda não há publicações.</p>'; return; }
 
-                snapshot.forEach(doc => {
+                snapshot.forEach((doc) => {
                     const post = doc.data();
                     const id = doc.id;
                     const isDono = post.uid === utilizadorAtual.uid; 
                     const fotoPost = post.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
                     const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
                     
+                    const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora';
+
                     const postHTML = `
                         <div class="post">
                             <div class="post-header">
                                 <img src="${fotoPost}" class="post-avatar" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')">
                                 <div class="post-info" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')">
                                     <h4>${post.nomeUser || 'Utilizador'}</h4>
-                                    <span>${new Date(post.data.toDate()).toLocaleString()}</span>
+                                    <span>${dataFormatada}</span>
                                 </div>
                                 <button class="btn-menu-pontos" onclick="abrirMenu('${id}', ${isDono})"><i class="fas fa-ellipsis-v"></i></button>
                             </div>
@@ -348,27 +339,27 @@
         }
 
         // 4. MENU E APAGAR POST
-        function abrirMenu(id, isDono) {
+        window.abrirMenu = function(id, isDono) {
             postAtualId = id;
             document.getElementById('modalMenu').style.display = 'flex';
             document.getElementById('btnApagarPost').style.display = isDono ? 'block' : 'none';
         }
 
-        async function apagarPost() {
+        window.apagarPost = async function() {
             if (confirm("Apagar esta publicação?")) {
-                await db.collection("posts").doc(postAtualId).delete();
+                await deleteDoc(doc(db, "posts", postAtualId));
                 document.getElementById('modalMenu').style.display = 'none';
             }
         }
 
         // 5. COMENTÁRIOS
-        function abrirComentarios(id) {
+        window.abrirComentarios = function(id) {
             postAtualId = id;
             document.getElementById('modalComentarios').style.display = 'flex';
             
-            db.collection("posts").doc(postAtualId).onSnapshot(doc => {
+            onSnapshot(doc(db, "posts", postAtualId), (docSnap) => {
                 const lista = document.getElementById('listaComentarios');
-                const comentarios = doc.data().comentarios || [];
+                const comentarios = docSnap.data().comentarios || [];
                 lista.innerHTML = '';
 
                 if (comentarios.length === 0) {
@@ -383,52 +374,50 @@
             });
         }
 
-        async function adicionarComentario() {
+        window.adicionarComentario = async function() {
             const texto = document.getElementById('inputComentario').value;
             if (!texto) return;
-            await db.collection("posts").doc(postAtualId).update({
-                comentarios: firebase.firestore.FieldValue.arrayUnion({ uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto })
+            await updateDoc(doc(db, "posts", postAtualId), {
+                comentarios: arrayUnion({ uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto })
             });
             document.getElementById('inputComentario').value = '';
         }
 
-        async function apagarComentario(index) {
+        window.apagarComentario = async function(index) {
             if (confirm("Apagar este comentário?")) {
-                db.collection("posts").doc(postAtualId).get().then(doc => {
-                    const comentarios = doc.data().comentarios;
-                    comentarios.splice(index, 1);
-                    db.collection("posts").doc(postAtualId).update({ comentarios: comentarios });
-                });
+                const docSnap = await getDoc(doc(db, "posts", postAtualId));
+                const comentarios = docSnap.data().comentarios;
+                comentarios.splice(index, 1);
+                await updateDoc(doc(db, "posts", postAtualId), { comentarios: comentarios });
             }
         }
 
         // 6. RANKING
-        function verRanking() {
+        window.verRanking = async function() {
             document.getElementById('modalMenu').style.display = 'none';
             document.getElementById('modalRanking').style.display = 'flex';
             const lista = document.getElementById('listaRanking');
             lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A calcular...</p>';
 
-            db.collection("posts").get().then(snapshot => {
-                let contagem = {};
-                snapshot.forEach(doc => {
-                    const post = doc.data();
-                    if(post.nomeUser) contagem[post.nomeUser] = (contagem[post.nomeUser] || 0) + 1;
-                });
+            const querySnapshot = await getDocs(collection(db, "posts"));
+            let contagem = {};
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                if(post.nomeUser) contagem[post.nomeUser] = (contagem[post.nomeUser] || 0) + 1;
+            });
 
-                const arrayRanking = Object.keys(contagem).map(nome => ({ nome: nome, pontos: contagem[nome] }));
-                arrayRanking.sort((a, b) => b.pontos - a.pontos);
+            const arrayRanking = Object.keys(contagem).map(nome => ({ nome: nome, pontos: contagem[nome] }));
+            arrayRanking.sort((a, b) => b.pontos - a.pontos);
 
-                lista.innerHTML = '';
-                arrayRanking.forEach((user, index) => {
-                    let medalha = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '🏅';
-                    lista.innerHTML += `<div class="comentario-item"><span>${medalha} ${index+1}º ${user.nome}</span> <span>${user.pontos} posts</span></div>`;
-                });
+            lista.innerHTML = '';
+            arrayRanking.forEach((user, index) => {
+                let medalha = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '🏅';
+                lista.innerHTML += `<div class="comentario-item"><span>${medalha} ${index+1}º ${user.nome}</span> <span>${user.pontos} posts</span></div>`;
             });
         }
 
-        // 7. PERFIL PÚBLICO (SEM E-MAIL)
-        function abrirPerfilUsuario(uid, nome, foto) {
+        // 7. PERFIL PÚBLICO
+        window.abrirPerfilUsuario = async function(uid, nome, foto) {
             document.getElementById('modalUserProfile').style.display = 'flex';
             document.getElementById('modalUserAvatar').src = foto || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
             document.getElementById('modalUserName').innerText = nome || 'Utilizador';
@@ -436,50 +425,39 @@
             const containerPosts = document.getElementById('modalUserPosts');
             containerPosts.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
 
-            db.collection("posts").where("uid", "==", uid).get().then(snapshot => {
-                if (snapshot.empty) {
-                    containerPosts.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Este utilizador ainda não fez publicações.</p>';
-                    return;
-                }
+            const q = query(collection(db, "posts"), where("uid", "==", uid));
+            const querySnapshot = await getDocs(q);
 
-                let postsDoUser = [];
-                snapshot.forEach(doc => postsDoUser.push(doc.data()));
-                postsDoUser.sort((a, b) => b.data.toMillis() - a.data.toMillis());
+            if (querySnapshot.empty) {
+                containerPosts.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Este utilizador ainda não fez publicações.</p>';
+                return;
+            }
 
-                containerPosts.innerHTML = '';
-                postsDoUser.forEach(post => {
-                    let imgHTML = post.imagem ? `<img src="${post.imagem}" style="width:100%; border-radius:8px; margin-top:8px; max-height:150px; object-fit:cover;">` : '';
-                    containerPosts.innerHTML += `
-                        <div style="background: var(--fundo); padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--borda);">
-                            <p style="margin-bottom: 5px; font-size: 14px;">${post.texto}</p>
-                            ${imgHTML}
-                            <span style="font-size: 11px; color: var(--texto-suave); display:block; margin-top:5px;">
-                                <i class="far fa-clock"></i> ${new Date(post.data.toDate()).toLocaleDateString()}
-                            </span>
-                        </div>
-                    `;
-                });
+            let postsDoUser = [];
+            querySnapshot.forEach((doc) => postsDoUser.push(doc.data()));
+            postsDoUser.sort((a, b) => b.data.toMillis() - a.data.toMillis());
+
+            containerPosts.innerHTML = '';
+            postsDoUser.forEach(post => {
+                let imgHTML = post.imagem ? `<img src="${post.imagem}" style="width:100%; border-radius:8px; margin-top:8px; max-height:150px; object-fit:cover;">` : '';
+                containerPosts.innerHTML += `
+                    <div style="background: var(--fundo); padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--borda);">
+                        <p style="margin-bottom: 5px; font-size: 14px;">${post.texto}</p>
+                        ${imgHTML}
+                        <span style="font-size: 11px; color: var(--texto-suave); display:block; margin-top:5px;">
+                            <i class="far fa-clock"></i> ${new Date(post.data.toDate()).toLocaleDateString()}
+                        </span>
+                    </div>
+                `;
             });
         }
 
-        // 8. MUDAR ABAS E PESQUISAR NOTÍCIAS
-        function mudarAba(aba) {
-            document.getElementById('secaoInicio').style.display = aba === 'inicio' ? 'block' : 'none';
-            document.getElementById('secaoVideos').style.display = aba === 'videos' ? 'block' : 'none';
-            document.getElementById('abaInicio').classList.toggle('ativa', aba === 'inicio');
-            document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
-        }
-
-        // 9. PESQUISAR NOTÍCIAS REAIS (WIKIPEDIA)
-        async function pesquisarNoticias() {
+        // 8. PESQUISAR NOTÍCIAS (WIKIPEDIA)
+        window.pesquisarNoticias = async function() {
             const termo = document.getElementById('inputPesquisa').value;
             const container = document.getElementById('resultadosNoticias');
             
-            if(!termo) { 
-                container.innerHTML = ''; 
-                return; 
-            }
-            
+            if(!termo) { container.innerHTML = ''; return; }
             container.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A procurar...</p>';
 
             try {
