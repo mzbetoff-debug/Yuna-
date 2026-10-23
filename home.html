@@ -18,39 +18,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: var(--fundo); color: var(--texto); transition: background 0.3s, color 0.3s; padding-bottom: 70px; }
         
-        /* ===== HEADER ===== */
+        /* HEADER */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--borda); background: var(--fundo); position: sticky; top: 0; z-index: 100; }
         .btn-header { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
         .logo-header { color: var(--primaria); font-weight: 800; font-size: 24px; letter-spacing: 1px; }
         .header-right { display: flex; align-items: center; gap: 15px; }
-        
-        /* SINO DE NOTIFICAÇÃO */
         .btn-sino-container { position: relative; }
         .btn-sino { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
         .notif-dot { position: absolute; top: 5px; right: 5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; display: none; border: 2px solid var(--fundo); }
         .user-avatar-header { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--borda); object-fit: cover; }
 
-        /* ===== ABAS ===== */
+        /* ABAS */
         .abas { display: flex; padding: 15px 20px; gap: 15px; max-width: 600px; margin: 0 auto; }
         .aba { flex: 1; padding: 12px; text-align: center; border: 1px solid var(--borda); border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 15px; color: var(--texto-suave); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .aba.ativa { background: var(--primaria); color: #fff; border-color: var(--primaria); }
-
-        /* ===== CONTAINER ===== */
         .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
 
-        /* ===== CRIAR POST ===== */
-        .criar-post-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
-        .criar-post-card input[type="text"] { width: 100%; background: transparent; border: none; color: var(--texto); font-size: 16px; outline: none; margin-bottom: 20px; }
-        .criar-post-acoes { display: flex; justify-content: space-between; align-items: center; }
-        .btn-foto { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid var(--borda); color: var(--texto-suave); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; }
-        .btn-publicar { background: var(--primaria); color: #fff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; }
-
-        /* ===== PESQUISA ===== */
-        .pesquisa-container { display: flex; gap: 10px; margin-bottom: 20px; }
-        .pesquisa-container input { flex: 1; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 12px 15px; color: var(--texto); font-size: 15px; outline: none; }
-        .btn-pesquisar { background: var(--primaria); color: #fff; border: none; width: 50px; border-radius: 15px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
-        /* ===== NOTÍCIAS ===== */
+        /* NOTÍCIAS */
         .titulo-seccao { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .noticias-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px; margin-bottom: 20px; scrollbar-width: none; }
         .noticias-scroll::-webkit-scrollbar { display: none; }
@@ -60,7 +44,17 @@
         .noticia-card a { color: var(--primaria); font-size: 12px; text-decoration: none; font-weight: bold; }
         .badge-fonte { display: inline-block; padding: 3px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #fff; margin-bottom: 8px; width: fit-content; }
 
-        /* ===== POSTS ===== */
+        /* CRIAR POST E PESQUISA */
+        .criar-post-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+        .criar-post-card input[type="text"] { width: 100%; background: transparent; border: none; color: var(--texto); font-size: 16px; outline: none; margin-bottom: 20px; }
+        .criar-post-acoes { display: flex; justify-content: space-between; align-items: center; }
+        .btn-foto { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid var(--borda); color: var(--texto-suave); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; }
+        .btn-publicar { background: var(--primaria); color: #fff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; }
+        .pesquisa-container { display: flex; gap: 10px; margin-bottom: 20px; }
+        .pesquisa-container input { flex: 1; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 12px 15px; color: var(--texto); font-size: 15px; outline: none; }
+        .btn-pesquisar { background: var(--primaria); color: #fff; border: none; width: 50px; border-radius: 15px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        /* POSTS */
         .post { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; margin-bottom: 15px; overflow: hidden; padding: 15px; }
         .post-header { display: flex; align-items: center; margin-bottom: 15px; }
         .post-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-right: 12px; cursor: pointer; border: 1px solid var(--borda); }
@@ -75,7 +69,7 @@
         .action-btn { background: none; border: none; color: var(--texto-suave); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
         .action-btn.liked { color: #ef4444; }
 
-        /* ===== VÍDEOS ===== */
+        /* VÍDEOS */
         .video-feed { display: flex; flex-direction: column; gap: 15px; }
         .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; overflow: hidden; cursor: pointer; }
         .video-thumb { width: 100%; height: 200px; object-fit: cover; }
@@ -84,13 +78,13 @@
         .video-title { font-size: 14px; font-weight: bold; margin-bottom: 3px; }
         .video-channel { font-size: 12px; color: var(--texto-suave); }
 
-        /* ===== NAVEGAÇÃO ===== */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
+        /* NAVEGAÇÃO */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 12px 0; z-index: 99999; }
         .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 11px; gap: 5px; }
         .nav-item i { font-size: 22px; }
         .nav-item.active { color: var(--primaria); }
 
-        /* ===== MODAIS ===== */
+        /* MODAIS */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: #0f1f3d; padding: 20px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--borda); max-height: 85vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); color: #fff; }
         .modal-content h3 { margin-bottom: 15px; text-align: center; font-size: 20px; }
@@ -100,7 +94,7 @@
         .btn-ranking { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; font-size: 16px; }
         .btn-chat { width: 100%; padding: 12px; background: #10b981; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; font-size: 16px; }
 
-        /* COMENTÁRIOS E RESPOSTAS */
+        /* COMENTÁRIOS */
         .lista-comentarios { max-height: 300px; overflow-y: auto; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
         .comentario-item { display: flex; flex-direction: column; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 10px; font-size: 14px; }
         .comentario-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
@@ -129,35 +123,33 @@
 <body class="tema-azul">
 
     <header>
-        <button class="btn-header"><i class="fas fa-bars"></i></button>
+        <button class="btn-header" onclick="window.location.href='home.html'"><i class="fas fa-bars"></i></button>
         <div class="logo-header">YUNA</div>
         <div class="header-right">
             <div class="btn-sino-container">
                 <button class="btn-sino" onclick="abrirNotificacoes()"><i class="fas fa-bell"></i></button>
                 <div class="notif-dot" id="notifDot"></div>
             </div>
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="headerAvatar" class="user-avatar-header" alt="Perfil">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="headerAvatar" class="user-avatar-header" alt="Perfil" onclick="window.location.href='perfil.html'">
         </div>
     </header>
 
     <div class="abas">
         <div class="aba ativa" id="abaInicio" onclick="mudarAba('inicio')"><i class="fas fa-newspaper"></i> Início</div>
-        <div class="aba" id="abaVideos" onclick="mudarAba('videos')"><i class="fas fa-film"></i> Vídeos</div>
+        <div class="aba" id="abaVideos" onclick="mudarAba('videos')"><i class="fas fa-play"></i> Vídeos</div>
     </div>
 
     <div class="container" id="secaoInicio">
         <h3 class="titulo-seccao">🗞️ Notícias e Informações</h3>
         <div class="noticias-scroll" id="noticiasContainer">
-            <div class="noticia-card"><p><i class="fas fa-spinner fa-spin"></i> A carregar notícias...</p></div>
+            <div class="noticia-card"><p>Bem-vindo ao YUNA! Explora a nossa plataforma.</p></div>
         </div>
 
         <div class="criar-post-card">
             <input type="text" id="inputTextoPost" placeholder="No que estás a pensar?">
             <input type="file" id="inputImagemPost" accept="image/*" style="display: none;" onchange="document.getElementById('nomeFoto').innerText = 'Foto Selecionada'">
             <div class="criar-post-acoes">
-                <button class="btn-foto" onclick="document.getElementById('inputImagemPost').click()">
-                    <i class="fas fa-camera"></i> <span id="nomeFoto">Foto</span>
-                </button>
+                <button class="btn-foto" onclick="document.getElementById('inputImagemPost').click()"><i class="fas fa-camera"></i> <span id="nomeFoto">Foto</span></button>
                 <button class="btn-publicar" onclick="criarPost()">Publicar</button>
             </div>
         </div>
@@ -168,7 +160,6 @@
         </div>
         
         <div id="resultadosNoticias"></div>
-
         <h3 class="titulo-seccao">📰 Publicações da Comunidade</h3>
         <div id="feedPosts"><p style="text-align:center; color:var(--texto-suave);">A carregar feed...</p></div>
     </div>
@@ -176,9 +167,7 @@
     <div class="container" id="secaoVideos" style="display: none;">
         <h3 class="titulo-seccao">🔥 Virais e Tendências</h3>
         <div class="video-feed" id="feedVideos">
-            <div class="video-card" style="text-align:center; padding: 20px;">
-                <p><i class="fas fa-spinner fa-spin"></i> A carregar vídeos...</p>
-            </div>
+            <p style="text-align:center; color:var(--texto-suave);">A carregar vídeos...</p>
         </div>
     </div>
 
@@ -186,10 +175,7 @@
         <div class="modal-content">
             <h3>Comentários</h3>
             <div class="lista-comentarios" id="listaComentarios"></div>
-            <div class="barra-resposta" id="barraResposta">
-                <div>A responder a <span id="nomeResposta"></span></div>
-                <button class="cancelar-resposta" onclick="cancelarResposta()">X</button>
-            </div>
+            <div class="barra-resposta" id="barraResposta"><div>A responder a <span id="nomeResposta"></span></div><button class="cancelar-resposta" onclick="cancelarResposta()">X</button></div>
             <input type="text" id="inputComentario" placeholder="Escreve um comentário...">
             <button class="btn-salvar" onclick="adicionarComentario()">Enviar</button>
             <button class="btn-fechar" onclick="document.getElementById('modalComentarios').style.display='none'">Fechar</button>
@@ -206,7 +192,7 @@
 
     <div class="modal" id="modalMenu">
         <div class="modal-content">
-            <h3>Opções</h3>
+            <h3>Opções e Temas</h3>
             <div class="cores-container">
                 <button class="cor-btn ativo" data-tema="azul"></button>
                 <button class="cor-btn" data-tema="roxo"></button>
@@ -240,6 +226,7 @@
         </div>
     </div>
 
+    <!-- BARRA DE NAVEGAÇÃO (HTML NATIVO) -->
     <nav class="bottom-nav">
         <a href="home.html" class="nav-item active"><i class="fas fa-home"></i><span>Início</span></a>
         <a href="musica.html" class="nav-item"><i class="fas fa-music"></i><span>Música</span></a>
@@ -247,11 +234,13 @@
         <a href="educacao.html" class="nav-item"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
         <a href="perfil.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
     </nav>
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, deleteDoc, updateDoc, arrayUnion, getDoc, getDocs, where, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<!-- IMPORTS DO FIREBASE V8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
+<script>
+    // CHAVES
     const firebaseConfig = {
         apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
         authDomain: "yuna-8fe24.firebaseapp.com",
@@ -262,14 +251,15 @@
     };
     const IMGBB_KEY = "52ddf1c2a5509391a0edcaadd1d02009";
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
     let utilizadorAtual = null;
     let postAtualId = null; 
     let respondendoA = null;
 
+    // TEMAS
     const TEMAS = ['azul', 'roxo', 'amarelo', 'branco'];
     function aplicarTema(tema) {
         TEMAS.forEach(t => document.body.classList.remove('tema-' + t));
@@ -282,16 +272,28 @@
         document.querySelectorAll('.cor-btn').forEach(btn => btn.addEventListener('click', () => aplicarTema(btn.dataset.tema)));
     });
 
-    setPersistence(auth, browserLocalPersistence).then(() => {
-        onAuthStateChanged(auth, (user) => {
+    // MUDAR ABAS
+    function mudarAba(aba) {
+        document.getElementById('secaoInicio').style.display = (aba === 'inicio') ? 'block' : 'none';
+        document.getElementById('secaoVideos').style.display = (aba === 'videos') ? 'block' : 'none';
+        document.getElementById('abaInicio').classList.toggle('ativa', aba === 'inicio');
+        document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
+        
+        // Se for para vídeos e ainda não carregou nada, mostra os de reserva na hora
+        if(aba === 'videos' && document.getElementById('feedVideos').innerHTML.includes('A carregar')) {
+            carregarVideosReserva();
+        }
+    }
+
+    // LOGIN E INICIALIZAÇÃO
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+        auth.onAuthStateChanged((user) => {
             if (user) {
                 utilizadorAtual = user;
                 const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
                 document.getElementById('headerAvatar').src = foto;
-                
                 carregarPosts();
-                carregarNoticias(); 
-                carregarVideos();   
+                carregarVideosAPI(); 
                 verificarNotificacoes(); 
             } else {
                 window.location.href = "login.html";
@@ -299,249 +301,275 @@
         });
     });
 
-    window.mudarAba = function(aba) {
-        document.getElementById('secaoInicio').style.display = aba === 'inicio' ? 'block' : 'none';
-        document.getElementById('secaoVideos').style.display = aba === 'videos' ? 'block' : 'none';
-        document.getElementById('abaInicio').classList.toggle('ativa', aba === 'inicio');
-        document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
-    };
+    // VÍDEOS - CARREGAMENTO INSTANTÂNEO COM API EM SEGUNDO PLANO
+    function carregarVideosReserva() {
+        const container = document.getElementById('feedVideos');
+        const videosReserva = [
+            { id: "dQw4w9WgXcQ", titulo: "Vídeo em Destaque YUNA", canal: "YouTube" },
+            { id: "5qap5aO4i9A", titulo: "Música Lofi para Relaxar", canal: "Lofi Girl" },
+            { id: "jfKfPfyJRdk", titulo: "Rádio de Estudo e Foco", canal: "Lofi Girl" },
+            { id: "21X5lGlDOfg", titulo: "Vídeos Virais da Semana", canal: "YouTube" }
+        ];
+        
+        container.innerHTML = '';
+        videosReserva.forEach(v => {
+            container.innerHTML += `
+                <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=${v.id}', '_blank')">
+                    <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" class="video-thumb">
+                    <div class="video-info"><div class="video-icon" style="background:#ff0000;"><i class="fab fa-youtube"></i></div><div><div class="video-title">${v.titulo}</div><div class="video-channel">${v.canal}</div></div></div>
+                </div>
+            `;
+        });
+    }
 
-    async function carregarNoticias() {
-        const container = document.getElementById('noticiasContainer');
-        let noticias = [];
+    async function carregarVideosAPI() {
+        const container = document.getElementById('feedVideos');
+        const URL = `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=PT&maxResults=6&key=AIzaSyCpUuhzryLomoGzJ3lVIA7TTjJF5KfVd7s`;
+
         try {
-            const wikiRes = await fetch('https://pt.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0&grnlimit=2');
-            const wikiData = await wikiRes.json();
-            if (wikiData.query && wikiData.query.pages) {
-                Object.values(wikiData.query.pages).forEach(p => {
-                    noticias.push({ titulo: p.title, texto: p.extract ? p.extract.substring(0, 90) + '...' : 'Sem descrição.', link: `https://pt.wikipedia.org/?curid=${p.pageid}`, fonte: 'Wikipedia', cor: '#333' });
+            const res = await fetch(URL);
+            const data = await res.json();
+            
+            if (!data.error && data.items) {
+                container.innerHTML = '';
+                data.items.forEach(video => {
+                    container.innerHTML += `
+                        <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=${video.id}', '_blank')">
+                            <img src="${video.snippet.thumbnails.high.url}" class="video-thumb">
+                            <div class="video-info"><div class="video-icon" style="background:#ff0000;"><i class="fab fa-youtube"></i></div><div><div class="video-title">${video.snippet.title}</div><div class="video-channel">${video.snippet.channelTitle}</div></div></div>
+                        </div>
+                    `;
                 });
             }
-            const hnRes = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
-            const hnIds = await hnRes.json();
-            for (let i = 0; i < 2; i++) {
-                const itemRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${hnIds[i]}.json`);
-                const item = await itemRes.json();
-                if (item.title) noticias.push({ titulo: item.title, texto: 'Notícia de tecnologia e inovação.', link: item.url || `https://news.ycombinator.com/item?id=${hnIds[i]}`, fonte: 'Tech', cor: '#ff6600' });
-            }
-            const spaceRes = await fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=2');
-            const spaceData = await spaceRes.json();
-            spaceData.results.forEach(artigo => {
-                noticias.push({ titulo: artigo.title, texto: artigo.summary.substring(0, 90) + '...', link: artigo.url, fonte: 'Ciência', cor: '#0b3d91' });
-            });
-
-            container.innerHTML = '';
-            noticias.sort(() => Math.random() - 0.5).forEach(n => {
-                container.innerHTML += `
-                    <div class="noticia-card">
-                        <div><span class="badge-fonte" style="background:${n.cor};">${n.fonte}</span><h4>${n.titulo}</h4><p>${n.texto}</p></div>
-                        <a href="${n.link}" target="_blank">Ler mais <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                `;
-            });
-        } catch (e) { container.innerHTML = '<div class="noticia-card"><p>Não foi possível carregar as notícias.</p></div>'; }
+        } catch (error) { console.log("A API do YouTube falhou, mantendo reserva."); }
     }
 
-    async function carregarVideos() {
-        const container = document.getElementById('feedVideos');
-        let todosVideos = [];
+    // NOTÍCIAS - CARREGAMENTO INSTANTÂNEO
+    async function carregarNoticias() {
+        const container = document.getElementById('noticiasContainer');
         try {
-            const dmRes = await fetch('https://api.dailymotion.com/videos?fields=id,title,thumbnail_480_url,url,owner.screenname&limit=4&sort=trending');
-            const dmData = await dmRes.json();
-            dmData.list.forEach(video => {
-                todosVideos.push({ titulo: video.title, thumb: video.thumbnail_480_url, link: video.url, canal: video['owner.screenname'] || 'Dailymotion', plataforma: 'Dailymotion', cor: '#0066ff', icone: 'fa-play' });
-            });
-            todosVideos.push({ titulo: 'Vídeo em Destaque no YouTube', thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg', link: 'https://youtube.com/watch?v=dQw4w9WgXcQ', canal: 'YouTube', plataforma: 'YouTube', cor: '#ff0000', icone: 'fa-youtube' });
+            const res = await fetch('https://pt.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0&grnlimit=3');
+            const data = await res.json();
+            if (data.query && data.query.pages) {
+                container.innerHTML = '';
+                Object.values(data.query.pages).forEach(p => {
+                    let texto = p.extract ? p.extract.substring(0, 90) + '...' : 'Sem descrição.';
+                    container.innerHTML += `
+                        <div class="noticia-card">
+                            <div><span class="badge-fonte" style="background:#333;">Wikipedia</span><h4>${p.title}</h4><p>${texto}</p></div>
+                            <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank">Ler mais <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    `;
+                });
+            }
+        } catch (e) { console.log("Falha nas notícias."); }
+    }
 
-            container.innerHTML = '';
-            todosVideos.sort(() => Math.random() - 0.5).forEach(video => {
-                container.innerHTML += `
-                    <div class="video-card" onclick="window.open('${video.link}', '_blank')">
-                        <img src="${video.thumb}" class="video-thumb">
-                        <div class="video-info"><div class="video-icon" style="background:${video.cor};"><i class="fab ${video.icone}"></i></div><div><div class="video-title">${video.titulo}</div><div class="video-channel">${video.canal} • ${video.plataforma}</div></div></div>
+    // CRIAR POST
+    async function criarPost() {
+        const texto = document.getElementById('inputTextoPost').value;
+        const fileInput = document.getElementById('inputImagemPost');
+        const file = fileInput.files[0];
+        if (!texto && !file) return alert("Escreve algo!");
+        let urlImagem = "";
+        try {
+            if (file) {
+                const formData = new FormData();
+                formData.append('image', file);
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
+                const data = await res.json();
+                if(data.success) urlImagem = data.data.url;
+            }
+            await db.collection("posts").add({
+                uid: utilizadorAtual.uid, nomeUser: utilizadorAtual.displayName || "Membro", fotoUser: utilizadorAtual.photoURL || "", 
+                texto: texto, imagem: urlImagem, likes: 0, comentarios: [], data: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            document.getElementById('inputTextoPost').value = ''; fileInput.value = ''; document.getElementById('nomeFoto').innerText = 'Foto';
+            alert("Publicado!");
+        } catch (error) { alert("Erro ao publicar."); }
+    }
+
+    // CARREGAR POSTS
+    function carregarPosts() {
+        db.collection("posts").orderBy("data", "desc").onSnapshot((snapshot) => {
+            const feed = document.getElementById('feedPosts');
+            feed.innerHTML = '';
+            if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Ainda não há publicações.</p>'; return; }
+
+            snapshot.forEach((doc) => {
+                const post = doc.data();
+                const id = doc.id;
+                const isDono = post.uid === utilizadorAtual.uid; 
+                const fotoPost = post.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+                const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
+                const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora';
+
+                feed.innerHTML += `
+                    <div class="post">
+                        <div class="post-header">
+                            <img src="${fotoPost}" class="post-avatar" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')">
+                            <div class="post-info" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')"><h4>${post.nomeUser}</h4><span>${dataFormatada}</span></div>
+                            <button class="btn-menu-pontos" onclick="abrirMenu('${id}', ${isDono})"><i class="fas fa-ellipsis-v"></i></button>
+                        </div>
+                        <div class="post-content"><p>${post.texto}</p>${imagemHTML}</div>
+                        <div class="post-actions">
+                            <button class="action-btn" id="btn-like-${id}" onclick="darLike('${id}')"><i class="fas fa-heart"></i> <span id="like-count-${id}">${post.likes || 0}</span> Likes</button>
+                            <button class="action-btn" onclick="abrirComentarios('${id}')"><i class="fas fa-comment"></i> ${post.comentarios ? post.comentarios.length : 0} Comentários</button>
+                        </div>
                     </div>
                 `;
             });
-        } catch (e) { container.innerHTML = '<p style="text-align:center;">Erro ao carregar os vídeos.</p>'; }
+        }, (error) => {
+            document.getElementById('feedPosts').innerHTML = '<p style="text-align:center; color:#ef4444;">Erro ao ligar à base de dados.</p>';
+        });
     }
-window.criarPost = async function() {
-    const texto = document.getElementById('inputTextoPost').value;
-    const fileInput = document.getElementById('inputImagemPost');
-    const file = fileInput.files[0];
-    if (!texto && !file) return alert("Escreve algo ou escolhe uma foto!");
-    let urlImagem = "";
 
-    try {
-        if (file) {
-            const formData = new FormData();
-            formData.append('image', file);
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
-            const data = await res.json();
-            if(data.success) urlImagem = data.data.url;
+    async function darLike(id) {
+        try {
+            await db.collection("posts").doc(id).update({ likes: firebase.firestore.FieldValue.increment(1) });
+            document.getElementById(`btn-like-${id}`).classList.add('liked');
+        } catch(e) { console.log(e); }
+    }
+        // ==========================================
+        // FOCO PRINCIPAL: COMENTÁRIOS E RESPOSTAS
+        // ==========================================
+        function abrirComentarios(id) {
+            postAtualId = id; 
+            cancelarResposta(); 
+            document.getElementById('modalComentarios').style.display = 'flex';
+            
+            db.collection("posts").doc(postAtualId).onSnapshot((docSnap) => {
+                const lista = document.getElementById('listaComentarios');
+                if (!docSnap.exists) return;
+                
+                const comentarios = docSnap.data().comentarios || [];
+                lista.innerHTML = '';
+                
+                if (comentarios.length === 0) { 
+                    lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Nenhum comentário.</p>'; 
+                    return; 
+                }
+
+                comentarios.forEach((c, index) => {
+                    const commentId = c.id || index; 
+                    const btnApagar = (c.uid === utilizadorAtual.uid) ? `<button class="btn-eliminar" onclick="apagarComentario(${index})"><i class="fas fa-trash"></i></button>` : '';
+                    let respostasHTML = '';
+                    
+                    if (c.respostas && c.respostas.length > 0) {
+                        respostasHTML = `<div class="respostas-container">`;
+                        c.respostas.forEach(r => respostasHTML += `<div class="resposta-item"><strong>${r.nome}:</strong> ${r.texto}</div>`);
+                        respostasHTML += `</div>`;
+                    }
+                    lista.innerHTML += `
+                        <div class="comentario-item">
+                            <div class="comentario-header"><div><strong>${c.nome}:</strong> ${c.texto}</div>${btnApagar}</div>
+                            <button class="btn-responder" onclick="prepararResposta('${commentId}', '${c.nome}')"><i class="fas fa-reply"></i> Responder</button>
+                            ${respostasHTML}
+                        </div>
+                    `;
+                });
+            });
         }
 
-        await addDoc(collection(db, "posts"), {
-            uid: utilizadorAtual.uid, nomeUser: utilizadorAtual.displayName || "Membro YUNA", fotoUser: utilizadorAtual.photoURL || "", 
-            texto: texto, imagem: urlImagem, likes: 0, comentarios: [], data: serverTimestamp()
-        });
-        document.getElementById('inputTextoPost').value = ''; fileInput.value = ''; document.getElementById('nomeFoto').innerText = 'Foto';
-        alert("Publicado com sucesso!");
-    } catch (error) { alert("Erro ao publicar."); }
-}
+        function prepararResposta(commentId, nome) {
+            respondendoA = { id: commentId, nome: nome };
+            document.getElementById('barraResposta').style.display = 'flex';
+            document.getElementById('nomeResposta').innerText = nome;
+            document.getElementById('inputComentario').focus();
+        }
 
-function carregarPosts() {
-    const q = query(collection(db, "posts"), orderBy("data", "desc"));
-    onSnapshot(q, (snapshot) => {
-        const feed = document.getElementById('feedPosts');
-        feed.innerHTML = '';
-        if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Ainda não há publicações.</p>'; return; }
+        function cancelarResposta() {
+            respondendoA = null; 
+            document.getElementById('barraResposta').style.display = 'none'; 
+            document.getElementById('inputComentario').value = '';
+        }
 
-        snapshot.forEach((doc) => {
-            const post = doc.data();
-            const id = doc.id;
-            const isDono = post.uid === utilizadorAtual.uid; 
-            const fotoPost = post.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-            const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
-            const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora';
+        async function adicionarComentario() {
+            const texto = document.getElementById('inputComentario').value;
+            if (!texto) return;
 
-            feed.innerHTML += `
-                <div class="post">
-                    <div class="post-header">
-                        <img src="${fotoPost}" class="post-avatar" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')">
-                        <div class="post-info" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')"><h4>${post.nomeUser || 'Utilizador'}</h4><span>${dataFormatada}</span></div>
-                        <button class="btn-menu-pontos" onclick="abrirMenu('${id}', ${isDono})"><i class="fas fa-ellipsis-v"></i></button>
-                    </div>
-                    <div class="post-content"><p>${post.texto}</p>${imagemHTML}</div>
-                    <div class="post-actions">
-                        <button class="action-btn" id="btn-like-${id}" onclick="darLike('${id}')"><i class="fas fa-heart"></i> <span id="like-count-${id}">${post.likes || 0}</span> Likes</button>
-                        <button class="action-btn" onclick="abrirComentarios('${id}')"><i class="fas fa-comment"></i> ${post.comentarios ? post.comentarios.length : 0} Comentários</button>
-                    </div>
-                </div>
-            `;
-        });
-    });
-}
+            const postRef = db.collection("posts").doc(postAtualId);
+            const docSnap = await postRef.get();
+            let comentarios = docSnap.data().comentarios || [];
 
-window.darLike = async function(id) {
-    await updateDoc(doc(db, "posts", id), { likes: increment(1) });
-    document.getElementById(`btn-like-${id}`).classList.add('liked');
-}
-
-window.abrirComentarios = function(id) {
-    postAtualId = id; cancelarResposta(); document.getElementById('modalComentarios').style.display = 'flex';
-    onSnapshot(doc(db, "posts", postAtualId), (docSnap) => {
-        const lista = document.getElementById('listaComentarios');
-        const comentarios = docSnap.data().comentarios || [];
-        lista.innerHTML = '';
-        if (comentarios.length === 0) { lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Nenhum comentário.</p>'; return; }
-
-        comentarios.forEach((c, index) => {
-            const commentId = c.id || index; 
-            const btnApagar = (c.uid === utilizadorAtual.uid) ? `<button class="btn-eliminar" onclick="apagarComentario(${index})"><i class="fas fa-trash"></i></button>` : '';
-            let respostasHTML = '';
-            if (c.respostas && c.respostas.length > 0) {
-                respostasHTML = `<div class="respostas-container">`;
-                c.respostas.forEach(r => respostasHTML += `<div class="resposta-item"><strong>${r.nome}:</strong> ${r.texto}</div>`);
-                respostasHTML += `</div>`;
+            if (respondendoA) {
+                const index = comentarios.findIndex(c => c.id == respondendoA.id || comentarios.indexOf(c) == respondendoA.id);
+                if (index !== -1) {
+                    if (!comentarios[index].respostas) comentarios[index].respostas = [];
+                    comentarios[index].respostas.push({ uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto });
+                    await postRef.update({ comentarios: comentarios });
+                    
+                    if (comentarios[index].uid !== utilizadorAtual.uid) {
+                        await db.collection("notificacoes").add({ userId: comentarios[index].uid, deQuem: utilizadorAtual.displayName || "Alguém", texto: `respondeu ao teu comentário: "${texto}"`, lida: false, data: firebase.firestore.FieldValue.serverTimestamp() });
+                    }
+                }
+                cancelarResposta();
+            } else {
+                const novoComentario = { id: Date.now().toString(), uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto, respostas: [] };
+                await postRef.update({ comentarios: firebase.firestore.FieldValue.arrayUnion(novoComentario) });
+                
+                if (docSnap.data().uid !== utilizadorAtual.uid) {
+                    await db.collection("notificacoes").add({ userId: docSnap.data().uid, deQuem: utilizadorAtual.displayName || "Alguém", texto: `comentou na tua publicação: "${texto}"`, lida: false, data: firebase.firestore.FieldValue.serverTimestamp() });
+                }
             }
-            lista.innerHTML += `
-                <div class="comentario-item">
-                    <div class="comentario-header"><div><strong>${c.nome}:</strong> ${c.texto}</div>${btnApagar}</div>
-                    <button class="btn-responder" onclick="prepararResposta('${commentId}', '${c.nome}')"><i class="fas fa-reply"></i> Responder</button>
-                    ${respostasHTML}
-                </div>
-            `;
-        });
-    });
-}
+            document.getElementById('inputComentario').value = '';
+        }
 
-window.prepararResposta = function(commentId, nome) {
-    respondendoA = { id: commentId, nome: nome };
-    document.getElementById('barraResposta').style.display = 'flex';
-    document.getElementById('nomeResposta').innerText = nome;
-    document.getElementById('inputComentario').focus();
-}
-
-window.cancelarResposta = function() {
-    respondendoA = null; document.getElementById('barraResposta').style.display = 'none'; document.getElementById('inputComentario').value = '';
-}
-
-window.adicionarComentario = async function() {
-    const texto = document.getElementById('inputComentario').value;
-    if (!texto) return;
-
-    const postRef = doc(db, "posts", postAtualId);
-    const docSnap = await getDoc(postRef);
-    let comentarios = docSnap.data().comentarios || [];
-
-    if (respondendoA) {
-        const index = comentarios.findIndex(c => c.id == respondendoA.id || comentarios.indexOf(c) == respondendoA.id);
-        if (index !== -1) {
-            if (!comentarios[index].respostas) comentarios[index].respostas = [];
-            comentarios[index].respostas.push({ uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto });
-            await updateDoc(postRef, { comentarios: comentarios });
-            if (comentarios[index].uid !== utilizadorAtual.uid) {
-                await addDoc(collection(db, "notificacoes"), { userId: comentarios[index].uid, deQuem: utilizadorAtual.displayName || "Alguém", texto: `respondeu ao teu comentário: "${texto}"`, lida: false, data: serverTimestamp() });
+        async function apagarComentario(index) {
+            if (confirm("Apagar este comentário?")) {
+                const docSnap = await db.collection("posts").doc(postAtualId).get();
+                const comentarios = docSnap.data().comentarios;
+                comentarios.splice(index, 1);
+                await db.collection("posts").doc(postAtualId).update({ comentarios: comentarios });
             }
         }
-        cancelarResposta();
-    } else {
-        const novoComentario = { id: Date.now().toString(), uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto, respostas: [] };
-        await updateDoc(postRef, { comentarios: arrayUnion(novoComentario) });
-        if (docSnap.data().uid !== utilizadorAtual.uid) {
-            await addDoc(collection(db, "notificacoes"), { userId: docSnap.data().uid, deQuem: utilizadorAtual.displayName || "Alguém", texto: `comentou na tua publicação: "${texto}"`, lida: false, data: serverTimestamp() });
-        }
-    }
-    document.getElementById('inputComentario').value = '';
-}
 
-window.apagarComentario = async function(index) {
-    if (confirm("Apagar este comentário?")) {
-        const docSnap = await getDoc(doc(db, "posts", postAtualId));
-        const comentarios = docSnap.data().comentarios;
-        comentarios.splice(index, 1);
-        await updateDoc(doc(db, "posts", postAtualId), { comentarios: comentarios });
-    }
-}        function verificarNotificacoes() {
-            const q = query(collection(db, "notificacoes"), where("userId", "==", utilizadorAtual.uid), where("lida", "==", false));
-            onSnapshot(q, (snapshot) => {
+        // NOTIFICAÇÕES
+        function verificarNotificacoes() {
+            db.collection("notificacoes").where("userId", "==", utilizadorAtual.uid).where("lida", "==", false).onSnapshot((snapshot) => {
                 document.getElementById('notifDot').style.display = !snapshot.empty ? 'block' : 'none';
             });
         }
 
-        window.abrirNotificacoes = async function() {
+        async function abrirNotificacoes() {
             document.getElementById('notifDot').style.display = 'none';
             document.getElementById('modalNotificacoes').style.display = 'flex';
             const lista = document.getElementById('listaNotificacoes');
             lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
 
-            const q = query(collection(db, "notificacoes"), where("userId", "==", utilizadorAtual.uid), orderBy("data", "desc"));
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await db.collection("notificacoes").where("userId", "==", utilizadorAtual.uid).orderBy("data", "desc").get();
 
             if (querySnapshot.empty) { lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Não tens notificações.</p>'; return; }
-
             lista.innerHTML = '';
             querySnapshot.forEach(async (documento) => {
                 const n = documento.data();
                 lista.innerHTML += `<div class="notif-item"><span>${n.deQuem}</span> ${n.texto}</div>`;
-                if (n.lida === false) await updateDoc(doc(db, "notificacoes", documento.id), { lida: true });
+                if (n.lida === false) await db.collection("notificacoes").doc(documento.id).update({ lida: true });
             });
         }
 
-        window.abrirMenu = function(id, isDono) {
-            postAtualId = id; document.getElementById('modalMenu').style.display = 'flex'; document.getElementById('btnApagarPost').style.display = isDono ? 'block' : 'none';
+        // MENU, RANKING E PERFIL
+        function abrirMenu(id, isDono) {
+            postAtualId = id; 
+            document.getElementById('modalMenu').style.display = 'flex'; 
+            document.getElementById('btnApagarPost').style.display = isDono ? 'block' : 'none';
         }
 
-        window.apagarPost = async function() {
-            if (confirm("Apagar esta publicação?")) { await deleteDoc(doc(db, "posts", postAtualId)); document.getElementById('modalMenu').style.display = 'none'; }
+        async function apagarPost() {
+            if (confirm("Apagar esta publicação?")) { 
+                await db.collection("posts").doc(postAtualId).delete(); 
+                document.getElementById('modalMenu').style.display = 'none'; 
+            }
         }
 
-        window.abrirChat = function() { document.getElementById('modalMenu').style.display = 'none'; alert("🚀 O Chat da YUNA estará disponível muito em breve!"); }
+        function abrirChat() { document.getElementById('modalMenu').style.display = 'none'; alert("🚀 O Chat da YUNA estará disponível muito em breve!"); }
 
-        window.verRanking = async function() {
-            document.getElementById('modalMenu').style.display = 'none'; document.getElementById('modalRanking').style.display = 'flex';
-            const lista = document.getElementById('listaRanking'); lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A calcular...</p>';
-            const querySnapshot = await getDocs(collection(db, "posts"));
+        async function verRanking() {
+            document.getElementById('modalMenu').style.display = 'none'; 
+            document.getElementById('modalRanking').style.display = 'flex';
+            const lista = document.getElementById('listaRanking'); 
+            lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A calcular...</p>';
+            const querySnapshot = await db.collection("posts").get();
             let contagem = {};
             querySnapshot.forEach((doc) => { const post = doc.data(); if(post.nomeUser) contagem[post.nomeUser] = (contagem[post.nomeUser] || 0) + 1; });
             const arrayRanking = Object.keys(contagem).map(nome => ({ nome: nome, pontos: contagem[nome] }));
@@ -553,14 +581,13 @@ window.apagarComentario = async function(index) {
             });
         }
 
-        window.abrirPerfilUsuario = async function(uid, nome, foto) {
+        async function abrirPerfilUsuario(uid, nome, foto) {
             document.getElementById('modalUserProfile').style.display = 'flex';
             document.getElementById('modalUserAvatar').src = foto || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
             document.getElementById('modalUserName').innerText = nome || 'Utilizador';
             const containerPosts = document.getElementById('modalUserPosts');
             containerPosts.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
-            const q = query(collection(db, "posts"), where("uid", "==", uid));
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await db.collection("posts").where("uid", "==", uid).get();
             if (querySnapshot.empty) { containerPosts.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Este utilizador ainda não fez publicações.</p>'; return; }
             let postsDoUser = []; querySnapshot.forEach((doc) => postsDoUser.push(doc.data()));
             postsDoUser.sort((a, b) => b.data.toMillis() - a.data.toMillis());
@@ -576,7 +603,7 @@ window.apagarComentario = async function(index) {
             });
         }
 
-        window.pesquisarNoticias = async function() {
+        async function pesquisarNoticias() {
             const termo = document.getElementById('inputPesquisa').value;
             const container = document.getElementById('resultadosNoticias');
             if(!termo) { container.innerHTML = ''; return; }
