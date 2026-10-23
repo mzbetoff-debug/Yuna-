@@ -38,6 +38,7 @@ body{padding-bottom:80px}
 .logo-text{font-size:20px;font-weight:900;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .header-right{display:flex;align-items:center;gap:12px}
 .notif-btn{position:relative;width:40px;height:40px;border-radius:50%;background:var(--card-bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-main)}
+.notif-dot{position:absolute;top:6px;right:6px;width:10px;height:10px;background:#ef4444;border-radius:50%;display:none;border:1px solid var(--bg);}
 .user-avatar{width:40px;height:40px;border-radius:50%;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid var(--border);text-decoration:none;color:#fff}
 .user-avatar img{width:100%;height:100%;object-fit:cover}
 
@@ -52,6 +53,7 @@ body{padding-bottom:80px}
 .novo-post .footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
 .btn-foto{background:transparent;border:1px solid var(--border);color:var(--text-main);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .btn-publicar{background:var(--accent-gradient);color:#fff;border:none;padding:10px 20px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer}
+.btn-publicar:disabled{opacity:0.5;cursor:not-allowed;}
 
 .search-info{display:flex;gap:8px;padding:0 16px 16px}
 .search-info input{flex:1;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-main);outline:none}
@@ -72,6 +74,7 @@ body{padding-bottom:80px}
 .post-acoes a:hover {color:var(--accent);}
 .btn-mais-info{width:calc(100% - 32px);margin:0 16px 20px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--accent);font-weight:bold;cursor:pointer}
 
+/* VÍDEOS SHORTS */
 .tela-videos{height:calc(100vh - 130px);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;background:#000}
 .tela-videos::-webkit-scrollbar{display:none}
 .video-slide{position:relative;height:calc(100vh - 130px);width:100%;scroll-snap-align:start;background:#000;display:flex;align-items:center;justify-content:center}
@@ -85,13 +88,18 @@ body{padding-bottom:80px}
 .overlay-video h4{font-size:15px;font-weight:bold;color:#fff;margin-bottom:4px}
 .overlay-video p{font-size:13px;color:#eee;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
+/* MODAIS */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:flex-end}
 .modal.aberto{display:flex}
 .modal-content{width:100%;background:var(--bg);border-radius:24px 24px 0 0;max-height:85vh;overflow-y:auto;padding:20px;border-top:1px solid var(--border)}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .modal-close{background:var(--card-bg);border:none;color:var(--text-main);width:32px;height:32px;border-radius:50%;cursor:pointer}
 
-/* ESTILOS DOS COMENTÁRIOS E RESPOSTAS */
+/* NOTIFICAÇÕES ITEM */
+.notif-item{background:var(--card-bg);padding:12px;border-radius:10px;margin-bottom:10px;font-size:14px;border-left:4px solid var(--accent);}
+.notif-item span{font-weight:bold;color:var(--accent);}
+
+/* COMENTÁRIOS E RESPOSTAS */
 .comentario{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--border); flex-direction:column;}
 .comentario-header{display:flex;gap:10px;align-items:center;}
 .comentario-foto{width:36px;height:36px;border-radius:50%;object-fit:cover;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;flex-shrink:0; overflow:hidden;}
@@ -148,7 +156,10 @@ body{padding-bottom:80px}
   <button class="menu-btn" onclick="abrirMenu()"><i class="fas fa-bars"></i></button>
   <div class="logo-text">YUNA</div>
   <div class="header-right">
-    <div class="notif-btn" onclick="abrirNotificacoes()"><i class="fas fa-bell"></i></div>
+    <div class="notif-btn" onclick="abrirNotificacoes()">
+      <i class="fas fa-bell"></i>
+      <div class="notif-dot" id="notifDot"></div>
+    </div>
     <a class="user-avatar" href="perfil.html" id="userAvatar"><i class="fas fa-user"></i></a>
   </div>
 </header>
@@ -167,9 +178,11 @@ body{padding-bottom:80px}
         <button class="btn-foto" onclick="document.getElementById('inputFotoPost').click()"><i class="fas fa-camera"></i></button>
         <span style="color:var(--text-sub);font-size:12px">Foto</span>
       </div>
-      <button class="btn-publicar" onclick="criarPost()">Publicar</button>
+      <button class="btn-publicar" id="btnPublicar" onclick="criarPost()">Publicar</button>
     </div>
   </div>
+  
+  <input type="file" id="inputFotoPost" accept="image/*" style="display:none" onchange="previewFoto(this)">
 
   <div class="search-info">
     <input type="text" id="inputPesquisaInfo" placeholder="Pesquisar notícias..." onkeypress="if(event.key==='Enter') pesquisarInfo()">
@@ -186,12 +199,21 @@ body{padding-bottom:80px}
 </div>
 
 <button class="btn-topo" id="btnTopo" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
-<input type="file" id="inputFotoPost" accept="image/*" style="display:none" onchange="previewFoto(this)">
 
+<!-- MODAL DE PERFIL -->
 <div class="modal" id="modalPerfil" onclick="if(event.target===this)this.classList.remove('aberto')">
   <div class="modal-content"><div class="modal-header"><h3>Perfil</h3><button class="modal-close" onclick="document.getElementById('modalPerfil').classList.remove('aberto')"><i class="fas fa-times"></i></button></div><div class="perfil-modal" id="perfilConteudo"></div></div>
 </div>
 
+<!-- MODAL DE NOTIFICAÇÕES -->
+<div class="modal" id="modalNotificacoes" onclick="if(event.target===this)this.classList.remove('aberto')">
+  <div class="modal-content">
+    <div class="modal-header"><h3>Notificações</h3><button class="modal-close" onclick="document.getElementById('modalNotificacoes').classList.remove('aberto')"><i class="fas fa-times"></i></button></div>
+    <div id="listaNotificacoes"></div>
+  </div>
+</div>
+
+<!-- MODAL DE COMENTÁRIOS -->
 <div class="modal" id="modalComentariosPost" onclick="if(event.target===this)this.classList.remove('aberto')">
   <div class="modal-content">
     <div class="modal-header">
@@ -278,12 +300,14 @@ body{padding-bottom:80px}
     if(aba === 'videos' && window.iniciarVideos) iniciarVideos();
   }
 
-  function previewFoto(input) {
+  // MOSTRAR A FOTO NA TELA (PREVIEW)
+  window.previewFoto = function(input) {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = function(e) {
-        document.getElementById('previewImagem').src = e.target.result;
-        document.getElementById('previewImagem').style.display = 'block';
+        const img = document.getElementById('previewImagem');
+        img.src = e.target.result;
+        img.style.display = 'block'; 
       };
       reader.readAsDataURL(input.files[0]);
     }
@@ -293,8 +317,6 @@ body{padding-bottom:80px}
     const btn = document.getElementById('btnTopo');
     if (window.scrollY > 300) btn.classList.add('mostrar'); else btn.classList.remove('mostrar');
   });
-
-  function abrirNotificacoes() { alert("🔔 Nenhuma notificação nova no momento!"); }
 
   // ==========================================
   // VÍDEOS SHORTS (TIKTOK)
@@ -466,7 +488,7 @@ body{padding-bottom:80px}
     } catch(e) { btn.textContent = 'Erro. Tentar novamente'; btn.style.display = 'block'; }
   };
   // ==========================================
-  // INTEGRAÇÃO COM O FIREBASE E COMENTÁRIOS
+  // FIREBASE, POSTS E COMENTÁRIOS
   // ==========================================
   const firebaseConfig = {
       apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
@@ -485,6 +507,7 @@ body{padding-bottom:80px}
   let utilizadorAtual = null;
   let idPostAtual = null; 
   let respondendoA = null;
+  let isPosting = false; // EVITA CLIQUE DUPLO NO BOTÃO PUBLICAR
 
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
       auth.onAuthStateChanged((user) => {
@@ -493,6 +516,7 @@ body{padding-bottom:80px}
               const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
               document.getElementById('userAvatar').innerHTML = `<img src="${foto}">`;
               carregarPosts();
+              verificarNotificacoes(); 
           } else {
               window.location.href = "login.html";
           }
@@ -501,11 +525,19 @@ body{padding-bottom:80px}
 
   // CRIAR POST
   async function criarPost() {
+      if (isPosting) return; 
+      
       const texto = document.getElementById('textoPost').value;
       const fileInput = document.getElementById('inputFotoPost');
       const file = fileInput.files[0];
       if (!texto && !file) return alert("Escreve algo ou escolhe uma foto!");
       
+      isPosting = true;
+      const btn = document.getElementById('btnPublicar');
+      const textoOriginalBtn = btn.innerText;
+      btn.innerText = "A publicar...";
+      btn.disabled = true;
+
       let urlImagem = "";
       try {
           if (file) {
@@ -525,13 +557,21 @@ body{padding-bottom:80px}
               comentarios: [], 
               data: firebase.firestore.FieldValue.serverTimestamp()
           });
+          
           document.getElementById('textoPost').value = ''; 
           fileInput.value = ''; 
           document.getElementById('previewImagem').style.display = 'none';
-      } catch (error) { alert("Erro ao publicar."); }
+          document.getElementById('previewImagem').src = '';
+      } catch (error) { 
+          alert("Erro ao publicar."); 
+      } finally {
+          isPosting = false;
+          btn.innerText = textoOriginalBtn;
+          btn.disabled = false;
+      }
   }
 
-  // CARREGAR POSTS E BOTÃO APAGAR
+  // CARREGAR POSTS
   function carregarPosts() {
       db.collection("posts").orderBy("data", "desc").onSnapshot((snapshot) => {
           const feed = document.getElementById('feedPosts');
@@ -586,7 +626,7 @@ body{padding-bottom:80px}
   }
 
   // ==========================================
-  // FUNÇÕES DE COMENTÁRIOS, FOTOS E RESPOSTAS
+  // FUNÇÕES DE COMENTÁRIOS, RESPOSTAS E NOTIFICAÇÕES
   // ==========================================
   window.abrirComentariosPost = function(idPost) {
       idPostAtual = idPost;
@@ -686,6 +726,16 @@ body{padding-bottom:80px}
                   if (!comentarios[index].respostas) comentarios[index].respostas = [];
                   comentarios[index].respostas.push(dadosUser);
                   await postRef.set({ comentarios: comentarios }, { merge: true });
+                  
+                  if (comentarios[index].uid !== utilizadorAtual.uid) {
+                      await db.collection("notificacoes").add({
+                          userId: comentarios[index].uid,
+                          deQuem: utilizadorAtual.displayName || "Alguém",
+                          texto: `respondeu ao teu comentário: "${texto}"`,
+                          lida: false,
+                          data: firebase.firestore.FieldValue.serverTimestamp()
+                      });
+                  }
               }
               cancelarResposta();
           } else {
@@ -693,6 +743,19 @@ body{padding-bottom:80px}
               await postRef.set({
                   comentarios: firebase.firestore.FieldValue.arrayUnion(novoComentario)
               }, { merge: true });
+              
+              if (colecaoAlvo === "posts") {
+                  const postOwnerId = docSnap.data().uid;
+                  if (postOwnerId && postOwnerId !== utilizadorAtual.uid) {
+                      await db.collection("notificacoes").add({
+                          userId: postOwnerId,
+                          deQuem: utilizadorAtual.displayName || "Alguém",
+                          texto: `comentou na tua publicação: "${texto}"`,
+                          lida: false,
+                          data: firebase.firestore.FieldValue.serverTimestamp()
+                      });
+                  }
+              }
           }
       } catch (error) {
           console.error(error);
@@ -708,6 +771,47 @@ body{padding-bottom:80px}
           let comentarios = docSnap.data().comentarios || [];
           comentarios.splice(index, 1);
           await postRef.update({ comentarios: comentarios });
+      }
+  };
+
+  // ==========================================
+  // SISTEMA DE NOTIFICAÇÕES (SINO)
+  // ==========================================
+  function verificarNotificacoes() {
+      db.collection("notificacoes").where("userId", "==", utilizadorAtual.uid).where("lida", "==", false).onSnapshot((snapshot) => {
+          const dot = document.getElementById('notifDot');
+          if (!snapshot.empty) {
+              dot.style.display = 'block'; 
+          } else {
+              dot.style.display = 'none'; 
+          }
+      });
+  }
+
+  window.abrirNotificacoes = async function() {
+      document.getElementById('notifDot').style.display = 'none';
+      document.getElementById('modalNotificacoes').classList.add('aberto');
+      const lista = document.getElementById('listaNotificacoes');
+      lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
+
+      try {
+          const snapshot = await db.collection("notificacoes").where("userId", "==", utilizadorAtual.uid).orderBy("data", "desc").get();
+          
+          if (snapshot.empty) {
+              lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);">Não tens notificações.</p>';
+              return;
+          }
+
+          lista.innerHTML = '';
+          snapshot.forEach(async (doc) => {
+              const n = doc.data();
+              lista.innerHTML += `<div class="notif-item"><span>${n.deQuem}</span> ${n.texto}</div>`;
+              if (n.lida === false) {
+                  await db.collection("notificacoes").doc(doc.id).update({ lida: true });
+              }
+          });
+      } catch(e) {
+          lista.innerHTML = '<p style="text-align:center;color:red;">Erro ao carregar notificações.</p>';
       }
   };
 
