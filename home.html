@@ -1,630 +1,638 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YUNA - Início</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* ===== TEMAS ===== */
-        :root { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; }
-        body.tema-azul { --fundo: #0a1428; --fundo-card: #0f1f3d; --texto: #ffffff; --texto-suave: #a0b8d8; --primaria: #3b82f6; --primaria-hover: #2563eb; --borda: #1e3a6f; }
-        body.tema-roxo { --fundo: #0f0a1f; --fundo-card: #1a1033; --texto: #ffffff; --texto-suave: #b8b0d0; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #2d1b4e; }
-        body.tema-branco { --fundo: #f5f5f7; --fundo-card: #ffffff; --texto: #1a1a1a; --texto-suave: #555555; --primaria: #8b5cf6; --primaria-hover: #7c3aed; --borda: #e0e0e0; }
-        body.tema-amarelo { --fundo: #1a1500; --fundo-card: #2a2000; --texto: #ffffff; --texto-suave: #d0c890; --primaria: #fbbf24; --primaria-hover: #f59e0b; --borda: #4a3a00; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0e1a">
+<title>YUNA · Início</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* 🎨 SISTEMA DE TEMAS GLOBAL */
+:root { 
+  --bg: #0a0e1a; --card-bg: rgba(18,24,42,.7); --text-main: #f1f5f9; --text-sub: #94a3b8; 
+  --accent: #f472b6; --accent-gradient: linear-gradient(135deg,#f472b6,#a78bfa); 
+  --nav-bg: rgba(10,14,26,.98); --border: rgba(255,255,255,.06); 
+}
+body.theme-branco { 
+  --bg: #f8fafc; --card-bg: #ffffff; --text-main: #1e293b; --text-sub: #64748b; 
+  --accent: #8b5cf6; --accent-gradient: linear-gradient(135deg,#8b5cf6,#ec4899); 
+  --nav-bg: #ffffff; --border: rgba(0,0,0,.1); 
+}
+body.theme-azul { 
+  --bg: #0f172a; --card-bg: rgba(30,41,59,.8); --text-main: #f8fafc; --text-sub: #94a3b8; 
+  --accent: #38bdf8; --accent-gradient: linear-gradient(135deg,#38bdf8,#0ea5e9); 
+  --nav-bg: #0f172a; --border: rgba(56,189,248,.2); 
+}
+body.theme-amarelo { 
+  --bg: #000000; --card-bg: rgba(20,20,20,.9); --text-main: #fef08a; --text-sub: #ca8a04; 
+  --accent: #facc15; --accent-gradient: linear-gradient(135deg,#facc15,#eab308); 
+  --nav-bg: #000000; --border: rgba(250,204,21,.2); 
+}
 
-        /* ===== ESTILOS GERAIS ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: var(--fundo); color: var(--texto); transition: background 0.3s, color 0.3s; padding-bottom: 70px; }
-        
-        /* HEADER */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--borda); background: var(--fundo); position: sticky; top: 0; z-index: 100; }
-        .btn-header { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
-        .logo-header { color: var(--primaria); font-weight: 800; font-size: 24px; letter-spacing: 1px; }
-        .header-right { display: flex; align-items: center; gap: 15px; }
-        .btn-sino-container { position: relative; }
-        .btn-sino { background: transparent; border: 1px solid var(--borda); color: var(--texto); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
-        .notif-dot { position: absolute; top: 5px; right: 5px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; display: none; border: 2px solid var(--fundo); }
-        .user-avatar-header { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--borda); object-fit: cover; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transition: background 0.3s, color 0.3s, border-color 0.3s;}
+html,body{background:var(--bg);color:var(--text-main);min-height:100vh;scroll-behavior:smooth;}
+body{padding-bottom:80px}
 
-        /* ABAS */
-        .abas { display: flex; padding: 15px 20px; gap: 15px; max-width: 600px; margin: 0 auto; }
-        .aba { flex: 1; padding: 12px; text-align: center; border: 1px solid var(--borda); border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 15px; color: var(--texto-suave); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .aba.ativa { background: var(--primaria); color: #fff; border-color: var(--primaria); }
-        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.menu-btn{width:40px;height:40px;border-radius:12px;background:var(--card-bg);border:1px solid var(--border);color:var(--text-main);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.logo-text{font-size:20px;font-weight:900;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-right{display:flex;align-items:center;gap:12px}
+.notif-btn{position:relative;width:40px;height:40px;border-radius:50%;background:var(--card-bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-main)}
+.user-avatar{width:40px;height:40px;border-radius:50%;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid var(--border);text-decoration:none;color:#fff}
+.user-avatar img{width:100%;height:100%;object-fit:cover}
 
-        /* NOTÍCIAS */
-        .titulo-seccao { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .noticias-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px; margin-bottom: 20px; scrollbar-width: none; }
-        .noticias-scroll::-webkit-scrollbar { display: none; }
-        .noticia-card { min-width: 260px; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
-        .noticia-card h4 { font-size: 14px; margin-bottom: 8px; }
-        .noticia-card p { font-size: 12px; color: var(--texto-suave); margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .noticia-card a { color: var(--primaria); font-size: 12px; text-decoration: none; font-weight: bold; }
-        .badge-fonte { display: inline-block; padding: 3px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #fff; margin-bottom: 8px; width: fit-content; }
+/* ABAS */
+.tabs-info{display:flex;gap:8px;padding:16px;overflow-x:auto;border-bottom:1px solid var(--border)}
+.tab-info{flex:1;text-align:center;padding:10px 16px;border-radius:20px;background:var(--card-bg);border:1px solid var(--border);color:var(--text-sub);font-size:13px;font-weight:700;cursor:pointer}
+.tab-info.active{background:var(--accent-gradient);color:#fff;border:none}
 
-        /* CRIAR POST E PESQUISA */
-        .criar-post-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
-        .criar-post-card input[type="text"] { width: 100%; background: transparent; border: none; color: var(--texto); font-size: 16px; outline: none; margin-bottom: 20px; }
-        .criar-post-acoes { display: flex; justify-content: space-between; align-items: center; }
-        .btn-foto { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid var(--borda); color: var(--texto-suave); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; }
-        .btn-publicar { background: var(--primaria); color: #fff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; }
-        .pesquisa-container { display: flex; gap: 10px; margin-bottom: 20px; }
-        .pesquisa-container input { flex: 1; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 12px 15px; color: var(--texto); font-size: 15px; outline: none; }
-        .btn-pesquisar { background: var(--primaria); color: #fff; border: none; width: 50px; border-radius: 15px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+/* MURAL E NOTÍCIAS */
+.novo-post{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:16px;margin:16px}
+.novo-post textarea{width:100%;height:60px;background:transparent;border:none;color:var(--text-main);font-size:15px;resize:none;outline:none}
+.novo-post textarea::placeholder{color:var(--text-sub)}
+.preview-img{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-top:10px;display:none}
+.novo-post .footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.btn-foto{background:transparent;border:1px solid var(--border);color:var(--text-main);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.btn-publicar{background:var(--accent-gradient);color:#fff;border:none;padding:10px 20px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer}
 
-        /* POSTS */
-        .post { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; margin-bottom: 15px; overflow: hidden; padding: 15px; }
-        .post-header { display: flex; align-items: center; margin-bottom: 15px; }
-        .post-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-right: 12px; cursor: pointer; border: 1px solid var(--borda); }
-        .post-info { flex: 1; cursor: pointer; }
-        .post-info h4 { font-size: 16px; font-weight: bold; }
-        .post-info span { font-size: 12px; color: var(--texto-suave); }
-        .btn-menu-pontos { background: none; border: none; color: var(--texto); font-size: 18px; cursor: pointer; }
-        .post-content { margin-bottom: 15px; }
-        .post-content p { margin-bottom: 10px; font-size: 15px; line-height: 1.4; }
-        .post-img { width: 100%; border-radius: 15px; object-fit: cover; max-height: 400px; }
-        .post-actions { display: flex; border-top: 1px solid var(--borda); padding-top: 15px; gap: 20px; }
-        .action-btn { background: none; border: none; color: var(--texto-suave); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
-        .action-btn.liked { color: #ef4444; }
+.search-info{display:flex;gap:8px;padding:0 16px 16px}
+.search-info input{flex:1;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-main);outline:none}
+.search-info button{padding:0 20px;border-radius:12px;border:none;background:var(--accent-gradient);color:#fff;font-weight:bold;cursor:pointer}
 
-        /* VÍDEOS */
-        .video-feed { display: flex; flex-direction: column; gap: 15px; }
-        .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; overflow: hidden; cursor: pointer; }
-        .video-thumb { width: 100%; height: 200px; object-fit: cover; }
-        .video-info { padding: 15px; display: flex; align-items: center; gap: 10px; }
-        .video-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
-        .video-title { font-size: 14px; font-weight: bold; margin-bottom: 3px; }
-        .video-channel { font-size: 12px; color: var(--texto-suave); }
+.feed{padding:0 16px}
+.post{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px}
+.post-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer}
+.post-foto{width:40px;height:40px;border-radius:50%;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;overflow:hidden;flex-shrink:0}
+.post-foto img{width:100%;height:100%;object-fit:cover}
+.post-info h4{font-size:14px;font-weight:700;color:var(--text-main)}
+.post-info p{font-size:11px;color:var(--text-sub)}
+.post-conteudo{font-size:14px;line-height:1.5;color:var(--text-main);margin-bottom:12px;white-space:pre-wrap}
+.post-img{width:100%;border-radius:12px;margin-bottom:12px;max-height:400px;object-fit:cover}
+.post-acoes{display:flex;gap:16px;font-size:12px;color:var(--text-sub);border-top:1px solid var(--border);padding-top:10px;align-items:center;}
+.post-acoes span, .post-acoes a {cursor:pointer;display:flex;align-items:center;gap:5px;text-decoration:none;color:var(--text-sub);}
+.post-acoes a:hover {color:var(--accent);}
+.btn-mais-info{width:calc(100% - 32px);margin:0 16px 20px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--accent);font-weight:bold;cursor:pointer}
 
-        /* NAVEGAÇÃO */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 12px 0; z-index: 99999; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--texto-suave); font-size: 11px; gap: 5px; }
-        .nav-item i { font-size: 22px; }
-        .nav-item.active { color: var(--primaria); }
+/* VÍDEOS SHORTS */
+.tela-videos{height:calc(100vh - 130px);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;background:#000}
+.tela-videos::-webkit-scrollbar{display:none}
+.video-slide{position:relative;height:calc(100vh - 130px);width:100%;scroll-snap-align:start;background:#000;display:flex;align-items:center;justify-content:center}
+.video-slide iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;pointer-events:auto;}
+.acoes-laterais{position:absolute;right:12px;bottom:80px;display:flex;flex-direction:column;gap:20px;z-index:10}
+.acao{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff}
+.acao-btn{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(255,255,255,.2);transition:0.2s;}
+.acao-btn.like-ativo{background:var(--accent-gradient);border:none}
+.acao span{font-size:11px;font-weight:bold;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.overlay-video{position:absolute;bottom:0;left:0;right:70px;padding:20px 16px 40px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:5;pointer-events:none}
+.overlay-video h4{font-size:15px;font-weight:bold;color:#fff;margin-bottom:4px}
+.overlay-video p{font-size:13px;color:#eee;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-        /* MODAIS */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: #0f1f3d; padding: 20px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--borda); max-height: 85vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); color: #fff; }
-        .modal-content h3 { margin-bottom: 15px; text-align: center; font-size: 20px; }
-        
-        .btn-salvar { width: 100%; padding: 12px; background: var(--primaria); color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; font-size: 16px; }
-        .btn-fechar { width: 100%; padding: 12px; background: #ef4444; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; font-size: 16px; }
-        .btn-ranking { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; font-size: 16px; }
-        .btn-chat { width: 100%; padding: 12px; background: #10b981; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: bold; font-size: 16px; }
+/* MODAIS */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:flex-end}
+.modal.aberto{display:flex}
+.modal-content{width:100%;background:var(--bg);border-radius:24px 24px 0 0;max-height:85vh;overflow-y:auto;padding:20px;border-top:1px solid var(--border)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-close{background:var(--card-bg);border:none;color:var(--text-main);width:32px;height:32px;border-radius:50%;cursor:pointer}
+.comentario{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.comentario-foto{width:36px;height:36px;border-radius:50%;object-fit:cover;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;flex-shrink:0}
+.comentario-info h5{font-size:13px;font-weight:bold;color:var(--text-main);margin-bottom:3px}
+.comentario-info p{font-size:13px;color:var(--text-sub);line-height:1.4}
+.input-comentario{display:flex;gap:8px;margin-top:16px}
+.input-comentario input{flex:1;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:12px 16px;color:var(--text-main);outline:none}
+.input-comentario button{background:var(--accent-gradient);border:none;border-radius:50%;width:44px;height:44px;color:#fff;font-size:16px;cursor:pointer}
+.perfil-modal{text-align:center;padding:20px}
+.perfil-modal img{width:80px;height:80px;border-radius:50%;margin-bottom:10px;object-fit:cover}
 
-        /* COMENTÁRIOS */
-        .lista-comentarios { max-height: 300px; overflow-y: auto; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .comentario-item { display: flex; flex-direction: column; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 10px; font-size: 14px; }
-        .comentario-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .comentario-item strong { color: var(--primaria); }
-        .btn-eliminar { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; padding: 5px; }
-        .btn-responder { background: none; border: none; color: var(--texto-suave); font-size: 12px; cursor: pointer; text-align: left; margin-top: 5px; text-decoration: underline; }
-        .respostas-container { margin-top: 10px; margin-left: 15px; padding-left: 10px; border-left: 2px solid var(--borda); display: flex; flex-direction: column; gap: 8px; }
-        .resposta-item { font-size: 13px; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 8px; }
-        #inputComentario { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid var(--borda); background: #0a1428; color: #fff; outline: none; font-size: 15px; }
-        .barra-resposta { display: none; background: rgba(59, 130, 246, 0.2); border: 1px solid var(--primaria); padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; justify-content: space-between; align-items: center; font-size: 13px; }
-        .barra-resposta span { color: var(--primaria); font-weight: bold; }
-        .cancelar-resposta { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 14px; font-weight: bold; }
+/* MENUS */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);border-top:1px solid var(--border);padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-around;z-index:997}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--text-sub);font-size:10px;text-decoration:none;flex:1}
+.nav-item i{font-size:20px}
+.nav-item.active{color:var(--accent)}
 
-        /* NOTIFICAÇÕES E CORES */
-        .notif-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 10px; font-size: 14px; border-left: 4px solid var(--primaria); }
-        .notif-item span { font-weight: bold; color: var(--primaria); }
-        .cores-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; background: #0a1428; padding: 15px; border-radius: 10px; border: 1px solid var(--borda); }
-        .cor-btn { width: 35px; height: 35px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; }
-        .cor-btn[data-tema="roxo"] { background: #8b5cf6; }
-        .cor-btn[data-tema="branco"] { background: #ffffff; border-color: #ccc; }
-        .cor-btn[data-tema="azul"] { background: #3b82f6; }
-        .cor-btn[data-tema="amarelo"] { background: #fbbf24; }
-        .cor-btn.ativo { border-color: #fff; transform: scale(1.15); }
-    </style>
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:998;opacity:0;pointer-events:none;transition:.3s}
+.menu-overlay.aberto{opacity:1;pointer-events:auto}
+.menu-lateral{position:fixed;top:0;left:0;bottom:0;width:290px;background:var(--bg);z-index:999;transform:translateX(-100%);transition:.35s;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.menu-lateral.aberto{transform:translateX(0)}
+.menu-topo{padding:16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.menu-lista{flex:1;padding:16px 12px}
+.menu-item{display:flex;align-items:center;gap:14px;padding:14px 16px;color:var(--text-main);text-decoration:none;font-size:15px;font-weight:600;cursor:pointer}
+.menu-item i{width:24px;text-align:center;color:var(--text-sub)}
+.temas-grid{display:flex;gap:12px;padding:10px 16px;justify-content:space-around}
+.tema-btn{width:40px;height:40px;border-radius:50%;border:2px solid transparent;cursor:pointer}
+.tema-btn.padrao{background:linear-gradient(135deg,#f472b6,#a78bfa)}
+.tema-btn.branco{background:#fff;border-color:#cbd5e1}
+.tema-btn.azul{background:linear-gradient(135deg,#38bdf8,#0ea5e9)}
+.tema-btn.amarelo{background:linear-gradient(135deg,#facc15,#eab308)}
+.tema-btn.ativo{border-color:var(--text-main);transform:scale(1.1)}
+
+.btn-topo{position:fixed;bottom:90px;right:16px;width:46px;height:46px;border-radius:50%;background:var(--accent-gradient);color:#fff;border:none;display:none;align-items:center;justify-content:center;font-size:18px;z-index:990;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.4)}
+.btn-topo.mostrar{display:flex}
+</style>
 </head>
-<body class="tema-azul">
+<body class="theme-padrao">
 
-    <header>
-        <button class="btn-header" onclick="window.location.href='home.html'"><i class="fas fa-bars"></i></button>
-        <div class="logo-header">YUNA</div>
-        <div class="header-right">
-            <div class="btn-sino-container">
-                <button class="btn-sino" onclick="abrirNotificacoes()"><i class="fas fa-bell"></i></button>
-                <div class="notif-dot" id="notifDot"></div>
-            </div>
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="headerAvatar" class="user-avatar-header" alt="Perfil" onclick="window.location.href='perfil.html'">
-        </div>
-    </header>
+<header class="header">
+  <button class="menu-btn" onclick="abrirMenu()"><i class="fas fa-bars"></i></button>
+  <div class="logo-text">YUNA</div>
+  <div class="header-right">
+    <div class="notif-btn" onclick="abrirNotificacoes()"><i class="fas fa-bell"></i></div>
+    <a class="user-avatar" href="perfil.html" id="userAvatar"><i class="fas fa-user"></i></a>
+  </div>
+</header>
 
-    <div class="abas">
-        <div class="aba ativa" id="abaInicio" onclick="mudarAba('inicio')"><i class="fas fa-newspaper"></i> Início</div>
-        <div class="aba" id="abaVideos" onclick="mudarAba('videos')"><i class="fas fa-play"></i> Vídeos</div>
+<div class="tabs-info">
+  <div class="tab-info active" onclick="mudarAba('feed', this)">📰 Início</div>
+  <div class="tab-info" onclick="mudarAba('videos', this)">🎬 Vídeos</div>
+</div>
+
+<div id="aba-feed">
+  <div class="novo-post">
+    <textarea id="textoPost" placeholder="No que estás a pensar?" maxlength="280"></textarea>
+    <img id="previewImagem" class="preview-img">
+    <div class="footer">
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="btn-foto" onclick="document.getElementById('inputFotoPost').click()"><i class="fas fa-camera"></i></button>
+        <span style="color:var(--text-sub);font-size:12px">Foto</span>
+      </div>
+      <button class="btn-publicar" onclick="criarPost()">Publicar</button>
     </div>
+  </div>
 
-    <div class="container" id="secaoInicio">
-        <h3 class="titulo-seccao">🗞️ Notícias e Informações</h3>
-        <div class="noticias-scroll" id="noticiasContainer">
-            <div class="noticia-card"><p>Bem-vindo ao YUNA! Explora a nossa plataforma.</p></div>
-        </div>
+  <div class="search-info">
+    <input type="text" id="inputPesquisaInfo" placeholder="Pesquisar notícias..." onkeypress="if(event.key==='Enter') pesquisarInfo()">
+    <button onclick="pesquisarInfo()"><i class="fas fa-search"></i></button>
+  </div>
 
-        <div class="criar-post-card">
-            <input type="text" id="inputTextoPost" placeholder="No que estás a pensar?">
-            <input type="file" id="inputImagemPost" accept="image/*" style="display: none;" onchange="document.getElementById('nomeFoto').innerText = 'Foto Selecionada'">
-            <div class="criar-post-acoes">
-                <button class="btn-foto" onclick="document.getElementById('inputImagemPost').click()"><i class="fas fa-camera"></i> <span id="nomeFoto">Foto</span></button>
-                <button class="btn-publicar" onclick="criarPost()">Publicar</button>
-            </div>
-        </div>
+  <div class="feed" id="feedPosts"></div>
+  <div class="feed" id="feedInfo"></div>
+  <button class="btn-mais-info" id="btnMaisInfo" onclick="carregarMaisInfo()">Ver mais notícias 🌍</button>
+</div>
 
-        <div class="pesquisa-container">
-            <input type="text" id="inputPesquisa" placeholder="Pesquisar notícias...">
-            <button class="btn-pesquisar" onclick="pesquisarNoticias()"><i class="fas fa-search"></i></button>
-        </div>
-        
-        <div id="resultadosNoticias"></div>
-        <h3 class="titulo-seccao">📰 Publicações da Comunidade</h3>
-        <div id="feedPosts"><p style="text-align:center; color:var(--texto-suave);">A carregar feed...</p></div>
+<div id="aba-videos" style="display:none;">
+  <div class="tela-videos" id="telaVideos"></div>
+</div>
+
+<button class="btn-topo" id="btnTopo" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+<input type="file" id="inputFotoPost" accept="image/*" style="display:none" onchange="previewFoto(this)">
+
+<!-- MODAL DE PERFIL -->
+<div class="modal" id="modalPerfil" onclick="if(event.target===this)this.classList.remove('aberto')">
+  <div class="modal-content"><div class="modal-header"><h3>Perfil</h3><button class="modal-close" onclick="document.getElementById('modalPerfil').classList.remove('aberto')"><i class="fas fa-times"></i></button></div><div class="perfil-modal" id="perfilConteudo"></div></div>
+</div>
+
+<!-- MODAL DE COMENTÁRIOS (CORRIGIDO) -->
+<div class="modal" id="modalComentariosPost" onclick="if(event.target===this)this.classList.remove('aberto')">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Comentários</h3>
+      <button class="modal-close" onclick="document.getElementById('modalComentariosPost').classList.remove('aberto')"><i class="fas fa-times"></i></button>
     </div>
-
-    <div class="container" id="secaoVideos" style="display: none;">
-        <h3 class="titulo-seccao">🔥 Virais e Tendências</h3>
-        <div class="video-feed" id="feedVideos">
-            <p style="text-align:center; color:var(--texto-suave);">A carregar vídeos...</p>
-        </div>
+    <div id="listaComentariosPost">
+      <!-- Os comentários vão aparecer aqui -->
     </div>
-
-    <div class="modal" id="modalComentarios">
-        <div class="modal-content">
-            <h3>Comentários</h3>
-            <div class="lista-comentarios" id="listaComentarios"></div>
-            <div class="barra-resposta" id="barraResposta"><div>A responder a <span id="nomeResposta"></span></div><button class="cancelar-resposta" onclick="cancelarResposta()">X</button></div>
-            <input type="text" id="inputComentario" placeholder="Escreve um comentário...">
-            <button class="btn-salvar" onclick="adicionarComentario()">Enviar</button>
-            <button class="btn-fechar" onclick="document.getElementById('modalComentarios').style.display='none'">Fechar</button>
-        </div>
+    <div class="input-comentario">
+      <input type="text" id="inputComentarioPost" placeholder="Comentar...">
+      <button onclick="enviarComentarioPost()"><i class="fas fa-paper-plane"></i></button>
     </div>
+  </div>
+</div>
 
-    <div class="modal" id="modalNotificacoes">
-        <div class="modal-content">
-            <h3>Notificações</h3>
-            <div id="listaNotificacoes" style="max-height: 300px; overflow-y: auto;"></div>
-            <button class="btn-fechar" onclick="document.getElementById('modalNotificacoes').style.display='none'">Fechar</button>
-        </div>
-    </div>
+<nav class="bottom-nav">
+  <a class="nav-item active" href="home.html"><i class="fas fa-home"></i><span>Início</span></a>
+  <a class="nav-item" href="musica.html"><i class="fas fa-music"></i><span>Música</span></a>
+  <a class="nav-item" href="animes.html"><i class="fas fa-dragon"></i><span>Animes</span></a>
+  <a class="nav-item" href="educacao.html"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
+  <a class="nav-item" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
 
-    <div class="modal" id="modalMenu">
-        <div class="modal-content">
-            <h3>Opções e Temas</h3>
-            <div class="cores-container">
-                <button class="cor-btn ativo" data-tema="azul"></button>
-                <button class="cor-btn" data-tema="roxo"></button>
-                <button class="cor-btn" data-tema="amarelo"></button>
-                <button class="cor-btn" data-tema="branco"></button>
-            </div>
-            <button class="btn-ranking" onclick="verRanking()"><i class="fas fa-trophy"></i> Ver Ranking</button>
-            <button class="btn-chat" onclick="abrirChat()"><i class="fas fa-comments"></i> Abrir Chat</button>
-            <button class="btn-fechar" id="btnApagarPost" onclick="apagarPost()" style="display:none; background:#ef4444;"><i class="fas fa-trash"></i> Eliminar Publicação</button>
-            <button class="btn-fechar" onclick="document.getElementById('modalMenu').style.display='none'" style="background:transparent; border:1px solid var(--borda); color:var(--texto);">Cancelar</button>
-        </div>
-    </div>
-
-    <div class="modal" id="modalRanking">
-        <div class="modal-content">
-            <h3><i class="fas fa-trophy" style="color:gold;"></i> Ranking YUNA</h3>
-            <div id="listaRanking" style="max-height: 200px; overflow-y: auto;"></div>
-            <button class="btn-fechar" onclick="document.getElementById('modalRanking').style.display='none'">Fechar</button>
-        </div>
-    </div>
-
-    <div class="modal" id="modalUserProfile">
-        <div class="modal-content">
-            <div style="text-align: center; margin-bottom: 15px;">
-                <img id="modalUserAvatar" src="" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primaria); margin-bottom: 10px;">
-                <h3 id="modalUserName" style="margin: 0;"></h3>
-            </div>
-            <h4 style="margin-bottom: 15px; color: var(--primaria); font-size: 16px;">Publicações:</h4>
-            <div id="modalUserPosts" style="max-height: 300px; overflow-y: auto;"></div>
-            <button class="btn-fechar" onclick="document.getElementById('modalUserProfile').style.display='none'">Fechar</button>
-        </div>
-    </div>
-
-    <!-- BARRA DE NAVEGAÇÃO (HTML NATIVO) -->
-    <nav class="bottom-nav">
-        <a href="home.html" class="nav-item active"><i class="fas fa-home"></i><span>Início</span></a>
-        <a href="musica.html" class="nav-item"><i class="fas fa-music"></i><span>Música</span></a>
-        <a href="animes.html" class="nav-item"><i class="fas fa-mask"></i><span>Animes</span></a>
-        <a href="educacao.html" class="nav-item"><i class="fas fa-graduation-cap"></i><span>Educação</span></a>
-        <a href="perfil.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
-    </nav>
+<div class="menu-overlay" id="menuOverlay" onclick="fecharMenu()"></div>
+<aside class="menu-lateral" id="menuLateral">
+  <div class="menu-topo"><div class="logo-text">YUNA</div><button class="menu-btn" onclick="fecharMenu()"><i class="fas fa-times"></i></button></div>
+  <div style="padding:10px 16px 0;font-size:12px;color:var(--text-sub);font-weight:bold">COR DO APP:</div>
+  <div class="temas-grid">
+    <div class="tema-btn padrao ativo" onclick="mudarTemaGlobal('padrao', this)"></div>
+    <div class="tema-btn branco" onclick="mudarTemaGlobal('branco', this)"></div>
+    <div class="tema-btn azul" onclick="mudarTemaGlobal('azul', this)"></div>
+    <div class="tema-btn amarelo" onclick="mudarTemaGlobal('amarelo', this)"></div>
+  </div>
+  <nav class="menu-lista">
+    <a class="menu-item" href="home.html"><i class="fas fa-home"></i> Início</a>
+    <a class="menu-item" href="musica.html"><i class="fas fa-music"></i> Música</a>
+    <a class="menu-item" href="educacao.html"><i class="fas fa-book"></i> Livros</a>
+    <a class="menu-item" href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
+  </nav>
+</aside>
 <!-- IMPORTS DO FIREBASE V8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-    // CHAVES
-    const firebaseConfig = {
-        apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
-        authDomain: "yuna-8fe24.firebaseapp.com",
-        projectId: "yuna-8fe24",
-        storageBucket: "yuna-8fe24.firebasestorage.app",
-        messagingSenderId: "531340097112",
-        appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
-    };
-    const IMGBB_KEY = "52ddf1c2a5509391a0edcaadd1d02009";
+  // ================= SISTEMA DE TEMAS GLOBAL =================
+  (function() {
+    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+    document.body.className = 'theme-' + temaSalvo;
+  })();
 
-    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+  function mudarTemaGlobal(tema, el) { 
+    document.body.className = 'theme-' + tema; 
+    localStorage.setItem('yuna_theme', tema); 
+    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('ativo')); 
+    el.classList.add('ativo'); 
+  }
 
-    let utilizadorAtual = null;
-    let postAtualId = null; 
-    let respondendoA = null;
-
-    // TEMAS
-    const TEMAS = ['azul', 'roxo', 'amarelo', 'branco'];
-    function aplicarTema(tema) {
-        TEMAS.forEach(t => document.body.classList.remove('tema-' + t));
-        document.body.classList.add('tema-' + tema);
-        localStorage.setItem('yuna-tema', tema);
-        document.querySelectorAll('.cor-btn').forEach(btn => btn.classList.toggle('ativo', btn.dataset.tema === tema));
-    }
-    aplicarTema(localStorage.getItem('yuna-tema') || 'azul');
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.cor-btn').forEach(btn => btn.addEventListener('click', () => aplicarTema(btn.dataset.tema)));
+  setTimeout(() => {
+    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+    document.querySelectorAll('.tema-btn').forEach(b => {
+      if(b.classList.contains(temaSalvo)) b.classList.add('ativo');
     });
+  }, 100);
 
-    // MUDAR ABAS
-    function mudarAba(aba) {
-        document.getElementById('secaoInicio').style.display = (aba === 'inicio') ? 'block' : 'none';
-        document.getElementById('secaoVideos').style.display = (aba === 'videos') ? 'block' : 'none';
-        document.getElementById('abaInicio').classList.toggle('ativa', aba === 'inicio');
-        document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
+  function abrirMenu(){document.getElementById('menuLateral').classList.add('aberto');document.getElementById('menuOverlay').classList.add('aberto')}
+  function fecharMenu(){document.getElementById('menuLateral').classList.remove('aberto');document.getElementById('menuOverlay').classList.remove('aberto')}
+
+  function mudarAba(aba, botaoClicado) {
+    document.getElementById('aba-feed').style.display = aba === 'feed' ? 'block' : 'none';
+    document.getElementById('aba-videos').style.display = aba === 'videos' ? 'block' : 'none';
+    document.querySelectorAll('.tab-info').forEach(t => t.classList.remove('active'));
+    botaoClicado.classList.add('active');
+    
+    if(aba === 'feed' && window.carregarInfoInicial) carregarInfoInicial();
+    if(aba === 'videos' && window.iniciarVideos) iniciarVideos();
+  }
+
+  function previewFoto(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('previewImagem').src = e.target.result;
+        document.getElementById('previewImagem').style.display = 'block';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('btnTopo');
+    if (window.scrollY > 300) btn.classList.add('mostrar'); else btn.classList.remove('mostrar');
+  });
+
+  function abrirNotificacoes() { alert("🔔 Nenhuma notificação nova no momento!"); }
+
+  // ========== VÍDEOS (SHORTS) ==========
+  const YT_KEY = 'AIzaSyCpUuhzryLomoGzJ3lVIA7TTjJF5KfVd7s';
+  let videosCarregados = false;
+
+  window.iniciarVideos = async () => {
+    if (videosCarregados) return;
+    videosCarregados = true;
+    const el = document.getElementById('telaVideos');
+    el.innerHTML = '<div style="display:flex;height:100%;align-items:center;justify-content:center;color:#fff"><i class="fas fa-spinner fa-spin fa-2x"></i></div>';
+
+    try {
+      const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=humor%20%23shorts&type=video&videoDuration=short&maxResults=10&key=${YT_KEY}`;
+      const r = await fetch(url);
+      const d = await r.json();
+      
+      if (!d.items) { el.innerHTML = '<p style="color:#fff;text-align:center;padding:20px">Erro ao carregar vídeos.</p>'; return; }
+      
+      el.innerHTML = '';
+      
+      d.items.forEach(item => {
+        if(!item.id.videoId) return;
+        const vId = item.id.videoId;
         
-        // Se for para vídeos e ainda não carregou nada, mostra os de reserva na hora
-        if(aba === 'videos' && document.getElementById('feedVideos').innerHTML.includes('A carregar')) {
-            carregarVideosReserva();
-        }
-    }
+        const slide = document.createElement('div');
+        slide.className = 'video-slide';
+        slide.innerHTML = `
+          <iframe src="https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&controls=1&modestbranding=1&playsinline=1&rel=0&loop=1&playlist=${vId}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          
+          <div class="acoes-laterais">
+            <div class="acao" onclick="toggleLike('${vId}', this)">
+              <div class="acao-btn"><i class="far fa-heart"></i></div><span>Curtir</span>
+            </div>
+            <div class="acao" onclick="abrirComentariosPost('video_${vId}')">
+              <div class="acao-btn"><i class="fas fa-comment"></i></div><span>Comentar</span>
+            </div>
+            <div class="acao" onclick="baixarMidia('${vId}')">
+              <div class="acao-btn"><i class="fas fa-download"></i></div><span>Baixar</span>
+            </div>
+          </div>
+          <div class="overlay-video">
+            <h4>@${item.snippet.channelTitle}</h4>
+            <p>${item.snippet.title}</p>
+          </div>
+        `;
+        el.appendChild(slide);
+      });
+    } catch(e) { console.log(e); }
+  };
 
-    // LOGIN E INICIALIZAÇÃO
-    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                utilizadorAtual = user;
-                const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-                document.getElementById('headerAvatar').src = foto;
-                carregarPosts();
-                carregarVideosAPI(); 
-                verificarNotificacoes(); 
-            } else {
-                window.location.href = "login.html";
-            }
-        });
-    });
+  window.toggleLike = (vId, el) => {
+    const btn = el.querySelector('.acao-btn');
+    const icone = el.querySelector('i');
+    btn.classList.toggle('like-ativo');
+    if(btn.classList.contains('like-ativo')) { icone.className = 'fas fa-heart'; } 
+    else { icone.className = 'far fa-heart'; }
+  };
 
-    // VÍDEOS - CARREGAMENTO INSTANTÂNEO COM API EM SEGUNDO PLANO
-    function carregarVideosReserva() {
-        const container = document.getElementById('feedVideos');
-        const videosReserva = [
-            { id: "dQw4w9WgXcQ", titulo: "Vídeo em Destaque YUNA", canal: "YouTube" },
-            { id: "5qap5aO4i9A", titulo: "Música Lofi para Relaxar", canal: "Lofi Girl" },
-            { id: "jfKfPfyJRdk", titulo: "Rádio de Estudo e Foco", canal: "Lofi Girl" },
-            { id: "21X5lGlDOfg", titulo: "Vídeos Virais da Semana", canal: "YouTube" }
-        ];
+  const SERVIDORES_DOWNLOAD = [
+    'https://pipedapi.adminforge.de', 'https://pipedapi.kavin.rocks',
+    'https://api.piped.yt', 'https://pipedapi.projectsegfau.lt', 'https://pipedapi.nosebs.ru'
+  ];
+
+  window.baixarMidia = async (vId) => {
+    const btn = event.currentTarget;
+    const textoOriginal = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...';
+    btn.disabled = true;
+
+    let linkDownload = '';
+
+    for (let server of SERVIDORES_DOWNLOAD) {
+      try {
+        const res = await fetch(`${server}/streams/${vId}`);
+        if (!res.ok) continue;
+        const data = await res.json();
         
-        container.innerHTML = '';
-        videosReserva.forEach(v => {
-            container.innerHTML += `
-                <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=${v.id}', '_blank')">
-                    <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" class="video-thumb">
-                    <div class="video-info"><div class="video-icon" style="background:#ff0000;"><i class="fab fa-youtube"></i></div><div><div class="video-title">${v.titulo}</div><div class="video-channel">${v.canal}</div></div></div>
-                </div>
-            `;
+        if (data.videoStreams) {
+          const mp4s = data.videoStreams.filter(v => v.mimeType.includes('mp4') && v.videoOnly === false);
+          if (mp4s.length > 0) { linkDownload = mp4s[0].url; break; }
+        }
+      } catch (e) { console.log(`Servidor ${server} falhou.`); }
+    }
+
+    btn.innerHTML = textoOriginal;
+    btn.disabled = false;
+
+    if (linkDownload) {
+      const a = document.createElement('a');
+      a.href = linkDownload;
+      a.target = '_blank';
+      a.download = `yuna_${vId}.mp4`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } else {
+      alert('❌ O YouTube bloqueou os servidores agora. Tenta novamente mais tarde.');
+    }
+  };
+
+  // ========== NOTÍCIAS (WIKIPEDIA) ==========
+  let termoPesquisaAtual = '';
+
+  window.carregarInfoInicial = () => {
+    if (document.getElementById('feedInfo').innerHTML !== '') return;
+    carregarMaisInfo();
+  };
+
+  window.pesquisarInfo = () => {
+    termoPesquisaAtual = document.getElementById('inputPesquisaInfo').value.trim();
+    document.getElementById('feedInfo').innerHTML = ''; 
+    carregarMaisInfo(); 
+  };
+
+  window.carregarMaisInfo = async () => {
+    const feed = document.getElementById('feedInfo');
+    const btn = document.getElementById('btnMaisInfo');
+    btn.style.display = 'none';
+    
+    try {
+      let url = '';
+      if (termoPesquisaAtual) {
+        url = `https://pt.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(termoPesquisaAtual)}&gsrlimit=5&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize=500&format=json&origin=*`;
+      } else {
+        url = `https://pt.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize=500&grnlimit=5&format=json&origin=*`;
+      }
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.query && data.query.pages) {
+        const pages = Object.values(data.query.pages);
+        
+        if(!document.getElementById('titulo-noticias')) {
+            const t = document.createElement('div');
+            t.id = 'titulo-noticias';
+            t.style.cssText = 'margin:16px 0 10px;font-weight:bold;font-size:14px;color:var(--text-sub);border-bottom:1px solid var(--border);padding-bottom:8px';
+            t.textContent = termoPesquisaAtual ? '🌍 Resultados da Busca' : '🌍 Notícias e Informações';
+            feed.appendChild(t);
+        }
+
+        pages.forEach(p => {
+          if (!p.extract) return;
+          const infoCard = document.createElement('div');
+          infoCard.className = 'post';
+          infoCard.innerHTML = `
+            <div class="post-header">
+              <div class="post-foto" style="background:#3b82f6;color:#fff"><i class="fas fa-globe"></i></div>
+              <div class="post-info"><h4>Sabias que?</h4><p>${termoPesquisaAtual ? 'Busca' : 'Mundo'}</p></div>
+            </div>
+            ${p.thumbnail ? `<img src="${p.thumbnail.source}" class="post-img">` : ''}
+            <div class="post-conteudo" style="font-weight:bold;font-size:16px;margin-bottom:8px">${p.title}</div>
+            <div class="post-conteudo" style="font-size:13px;color:var(--text-sub)">${p.extract}</div>
+            <div class="post-acoes">
+              <span onclick="abrirComentariosPost('info_${p.pageid}')"><i class="fas fa-comment"></i> Comentar</span>
+              <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank" style="color:var(--accent);text-decoration:none;margin-left:auto;font-weight:bold">Ler mais →</a>
+            </div>
+          `;
+          feed.appendChild(infoCard);
         });
-    }
+      }
+      btn.style.display = 'block';
+      btn.textContent = termoPesquisaAtual ? 'Ver mais resultados...' : 'Ver mais notícias 🌍';
+    } catch(e) { btn.textContent = 'Erro. Tentar novamente'; btn.style.display = 'block'; }
+  };
 
-    async function carregarVideosAPI() {
-        const container = document.getElementById('feedVideos');
-        const URL = `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=PT&maxResults=6&key=AIzaSyCpUuhzryLomoGzJ3lVIA7TTjJF5KfVd7s`;
+  // ==========================================
+  // INTEGRAÇÃO COM O FIREBASE E COMENTÁRIOS
+  // ==========================================
+  const firebaseConfig = {
+      apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+      authDomain: "yuna-8fe24.firebaseapp.com",
+      projectId: "yuna-8fe24",
+      storageBucket: "yuna-8fe24.firebasestorage.app",
+      messagingSenderId: "531340097112",
+      appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+  };
+  const IMGBB_KEY = "52ddf1c2a5509391a0edcaadd1d02009";
 
-        try {
-            const res = await fetch(URL);
-            const data = await res.json();
-            
-            if (!data.error && data.items) {
-                container.innerHTML = '';
-                data.items.forEach(video => {
-                    container.innerHTML += `
-                        <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=${video.id}', '_blank')">
-                            <img src="${video.snippet.thumbnails.high.url}" class="video-thumb">
-                            <div class="video-info"><div class="video-icon" style="background:#ff0000;"><i class="fab fa-youtube"></i></div><div><div class="video-title">${video.snippet.title}</div><div class="video-channel">${video.snippet.channelTitle}</div></div></div>
-                        </div>
-                    `;
-                });
-            }
-        } catch (error) { console.log("A API do YouTube falhou, mantendo reserva."); }
-    }
+  if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-    // NOTÍCIAS - CARREGAMENTO INSTANTÂNEO
-    async function carregarNoticias() {
-        const container = document.getElementById('noticiasContainer');
-        try {
-            const res = await fetch('https://pt.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0&grnlimit=3');
-            const data = await res.json();
-            if (data.query && data.query.pages) {
-                container.innerHTML = '';
-                Object.values(data.query.pages).forEach(p => {
-                    let texto = p.extract ? p.extract.substring(0, 90) + '...' : 'Sem descrição.';
-                    container.innerHTML += `
-                        <div class="noticia-card">
-                            <div><span class="badge-fonte" style="background:#333;">Wikipedia</span><h4>${p.title}</h4><p>${texto}</p></div>
-                            <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank">Ler mais <i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    `;
-                });
-            }
-        } catch (e) { console.log("Falha nas notícias."); }
-    }
+  let utilizadorAtual = null;
+  let idPostAtual = null; 
 
-    // CRIAR POST
-    async function criarPost() {
-        const texto = document.getElementById('inputTextoPost').value;
-        const fileInput = document.getElementById('inputImagemPost');
-        const file = fileInput.files[0];
-        if (!texto && !file) return alert("Escreve algo!");
-        let urlImagem = "";
-        try {
-            if (file) {
-                const formData = new FormData();
-                formData.append('image', file);
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
-                const data = await res.json();
-                if(data.success) urlImagem = data.data.url;
-            }
-            await db.collection("posts").add({
-                uid: utilizadorAtual.uid, nomeUser: utilizadorAtual.displayName || "Membro", fotoUser: utilizadorAtual.photoURL || "", 
-                texto: texto, imagem: urlImagem, likes: 0, comentarios: [], data: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            document.getElementById('inputTextoPost').value = ''; fileInput.value = ''; document.getElementById('nomeFoto').innerText = 'Foto';
-            alert("Publicado!");
-        } catch (error) { alert("Erro ao publicar."); }
-    }
+  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+      auth.onAuthStateChanged((user) => {
+          if (user) {
+              utilizadorAtual = user;
+              const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+              document.getElementById('userAvatar').innerHTML = `<img src="${foto}">`;
+              carregarPosts();
+          } else {
+              window.location.href = "login.html";
+          }
+      });
+  });
 
-    // CARREGAR POSTS
-    function carregarPosts() {
-        db.collection("posts").orderBy("data", "desc").onSnapshot((snapshot) => {
-            const feed = document.getElementById('feedPosts');
-            feed.innerHTML = '';
-            if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Ainda não há publicações.</p>'; return; }
+  // CRIAR POST
+  async function criarPost() {
+      const texto = document.getElementById('textoPost').value;
+      const fileInput = document.getElementById('inputFotoPost');
+      const file = fileInput.files[0];
+      if (!texto && !file) return alert("Escreve algo ou escolhe uma foto!");
+      
+      let urlImagem = "";
+      try {
+          if (file) {
+              const formData = new FormData();
+              formData.append('image', file);
+              const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
+              const data = await res.json();
+              if(data.success) urlImagem = data.data.url;
+          }
+          await db.collection("posts").add({
+              uid: utilizadorAtual.uid, 
+              nomeUser: utilizadorAtual.displayName || "Membro", 
+              fotoUser: utilizadorAtual.photoURL || "", 
+              texto: texto, 
+              imagem: urlImagem, 
+              likes: 0, 
+              comentarios: [], 
+              data: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          document.getElementById('textoPost').value = ''; 
+          fileInput.value = ''; 
+          document.getElementById('previewImagem').style.display = 'none';
+      } catch (error) { alert("Erro ao publicar."); }
+  }
 
-            snapshot.forEach((doc) => {
-                const post = doc.data();
-                const id = doc.id;
-                const isDono = post.uid === utilizadorAtual.uid; 
-                const fotoPost = post.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-                const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
-                const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora';
+  // CARREGAR POSTS
+  function carregarPosts() {
+      db.collection("posts").orderBy("data", "desc").onSnapshot((snapshot) => {
+          const feed = document.getElementById('feedPosts');
+          feed.innerHTML = '';
+          if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--text-sub);">Ainda não há publicações.</p>'; return; }
 
-                feed.innerHTML += `
-                    <div class="post">
-                        <div class="post-header">
-                            <img src="${fotoPost}" class="post-avatar" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')">
-                            <div class="post-info" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')"><h4>${post.nomeUser}</h4><span>${dataFormatada}</span></div>
-                            <button class="btn-menu-pontos" onclick="abrirMenu('${id}', ${isDono})"><i class="fas fa-ellipsis-v"></i></button>
-                        </div>
-                        <div class="post-content"><p>${post.texto}</p>${imagemHTML}</div>
-                        <div class="post-actions">
-                            <button class="action-btn" id="btn-like-${id}" onclick="darLike('${id}')"><i class="fas fa-heart"></i> <span id="like-count-${id}">${post.likes || 0}</span> Likes</button>
-                            <button class="action-btn" onclick="abrirComentarios('${id}')"><i class="fas fa-comment"></i> ${post.comentarios ? post.comentarios.length : 0} Comentários</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }, (error) => {
-            document.getElementById('feedPosts').innerHTML = '<p style="text-align:center; color:#ef4444;">Erro ao ligar à base de dados.</p>';
-        });
-    }
+          snapshot.forEach((doc) => {
+              const post = doc.data();
+              const id = doc.id;
+              const fotoPost = post.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+              const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
+              const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora';
+              const qtdComentarios = post.comentarios ? post.comentarios.length : 0;
 
-    async function darLike(id) {
-        try {
-            await db.collection("posts").doc(id).update({ likes: firebase.firestore.FieldValue.increment(1) });
-            document.getElementById(`btn-like-${id}`).classList.add('liked');
-        } catch(e) { console.log(e); }
-    }
-        // ==========================================
-        // FOCO PRINCIPAL: COMENTÁRIOS E RESPOSTAS
-        // ==========================================
-        function abrirComentarios(id) {
-            postAtualId = id; 
-            cancelarResposta(); 
-            document.getElementById('modalComentarios').style.display = 'flex';
-            
-            db.collection("posts").doc(postAtualId).onSnapshot((docSnap) => {
-                const lista = document.getElementById('listaComentarios');
-                if (!docSnap.exists) return;
-                
-                const comentarios = docSnap.data().comentarios || [];
-                lista.innerHTML = '';
-                
-                if (comentarios.length === 0) { 
-                    lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Nenhum comentário.</p>'; 
-                    return; 
-                }
+              feed.innerHTML += `
+                  <div class="post">
+                      <div class="post-header" onclick="abrirPerfil('${post.nomeUser}', '${fotoPost}')">
+                          <img src="${fotoPost}" class="post-foto">
+                          <div class="post-info"><h4>${post.nomeUser}</h4><p>${dataFormatada}</p></div>
+                      </div>
+                      <div class="post-conteudo">${post.texto}</div>
+                      ${imagemHTML}
+                      <div class="post-acoes">
+                          <span onclick="darLike('${id}')" id="btn-like-${id}"><i class="far fa-heart"></i> <span id="count-like-${id}">${post.likes || 0}</span> Likes</span>
+                          <span onclick="abrirComentariosPost('${id}')"><i class="fas fa-comment"></i> ${qtdComentarios} Comentários</span>
+                      </div>
+                  </div>
+              `;
+          });
+      }, (error) => {
+          document.getElementById('feedPosts').innerHTML = '<p style="text-align:center; color:#ef4444;">Erro de rede. Verifica as Regras do Firestore.</p>';
+      });
+  }
 
-                comentarios.forEach((c, index) => {
-                    const commentId = c.id || index; 
-                    const btnApagar = (c.uid === utilizadorAtual.uid) ? `<button class="btn-eliminar" onclick="apagarComentario(${index})"><i class="fas fa-trash"></i></button>` : '';
-                    let respostasHTML = '';
-                    
-                    if (c.respostas && c.respostas.length > 0) {
-                        respostasHTML = `<div class="respostas-container">`;
-                        c.respostas.forEach(r => respostasHTML += `<div class="resposta-item"><strong>${r.nome}:</strong> ${r.texto}</div>`);
-                        respostasHTML += `</div>`;
-                    }
-                    lista.innerHTML += `
-                        <div class="comentario-item">
-                            <div class="comentario-header"><div><strong>${c.nome}:</strong> ${c.texto}</div>${btnApagar}</div>
-                            <button class="btn-responder" onclick="prepararResposta('${commentId}', '${c.nome}')"><i class="fas fa-reply"></i> Responder</button>
-                            ${respostasHTML}
-                        </div>
-                    `;
-                });
-            });
-        }
+  async function darLike(id) {
+      try {
+          await db.collection("posts").doc(id).update({ likes: firebase.firestore.FieldValue.increment(1) });
+          document.getElementById(`btn-like-${id}`).style.color = 'var(--accent)';
+          document.querySelector(`#btn-like-${id} i`).className = 'fas fa-heart';
+      } catch(e) { console.log(e); }
+  }
 
-        function prepararResposta(commentId, nome) {
-            respondendoA = { id: commentId, nome: nome };
-            document.getElementById('barraResposta').style.display = 'flex';
-            document.getElementById('nomeResposta').innerText = nome;
-            document.getElementById('inputComentario').focus();
-        }
+  // ==========================================
+  // FUNÇÕES DE COMENTÁRIOS
+  // ==========================================
+  window.abrirComentariosPost = function(idPost) {
+      idPostAtual = idPost;
+      const modal = document.getElementById('modalComentariosPost');
+      modal.classList.add('aberto');
+      const lista = document.getElementById('listaComentariosPost');
+      lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
 
-        function cancelarResposta() {
-            respondendoA = null; 
-            document.getElementById('barraResposta').style.display = 'none'; 
-            document.getElementById('inputComentario').value = '';
-        }
+      if (idPost.startsWith('video_') || idPost.startsWith('info_')) {
+          lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);">Os comentários em vídeos e notícias estarão disponíveis em breve!</p>';
+          return;
+      }
 
-        async function adicionarComentario() {
-            const texto = document.getElementById('inputComentario').value;
-            if (!texto) return;
+      db.collection("posts").doc(idPostAtual).onSnapshot((doc) => {
+          if (!doc.exists) return;
+          const comentarios = doc.data().comentarios || [];
+          lista.innerHTML = '';
 
-            const postRef = db.collection("posts").doc(postAtualId);
-            const docSnap = await postRef.get();
-            let comentarios = docSnap.data().comentarios || [];
+          if (comentarios.length === 0) {
+              lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);">Nenhum comentário ainda. Sê o primeiro!</p>';
+              return;
+          }
 
-            if (respondendoA) {
-                const index = comentarios.findIndex(c => c.id == respondendoA.id || comentarios.indexOf(c) == respondendoA.id);
-                if (index !== -1) {
-                    if (!comentarios[index].respostas) comentarios[index].respostas = [];
-                    comentarios[index].respostas.push({ uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto });
-                    await postRef.update({ comentarios: comentarios });
-                    
-                    if (comentarios[index].uid !== utilizadorAtual.uid) {
-                        await db.collection("notificacoes").add({ userId: comentarios[index].uid, deQuem: utilizadorAtual.displayName || "Alguém", texto: `respondeu ao teu comentário: "${texto}"`, lida: false, data: firebase.firestore.FieldValue.serverTimestamp() });
-                    }
-                }
-                cancelarResposta();
-            } else {
-                const novoComentario = { id: Date.now().toString(), uid: utilizadorAtual.uid, nome: utilizadorAtual.displayName || "Membro", texto: texto, respostas: [] };
-                await postRef.update({ comentarios: firebase.firestore.FieldValue.arrayUnion(novoComentario) });
-                
-                if (docSnap.data().uid !== utilizadorAtual.uid) {
-                    await db.collection("notificacoes").add({ userId: docSnap.data().uid, deQuem: utilizadorAtual.displayName || "Alguém", texto: `comentou na tua publicação: "${texto}"`, lida: false, data: firebase.firestore.FieldValue.serverTimestamp() });
-                }
-            }
-            document.getElementById('inputComentario').value = '';
-        }
+          comentarios.forEach((c) => {
+              lista.innerHTML += `
+                  <div class="comentario">
+                      <div class="comentario-foto"><i class="fas fa-user"></i></div>
+                      <div class="comentario-info">
+                          <h5>${c.nome}</h5>
+                          <p>${c.texto}</p>
+                      </div>
+                  </div>
+              `;
+          });
+      });
+  };
 
-        async function apagarComentario(index) {
-            if (confirm("Apagar este comentário?")) {
-                const docSnap = await db.collection("posts").doc(postAtualId).get();
-                const comentarios = docSnap.data().comentarios;
-                comentarios.splice(index, 1);
-                await db.collection("posts").doc(postAtualId).update({ comentarios: comentarios });
-            }
-        }
+  window.enviarComentarioPost = async function() {
+      const texto = document.getElementById('inputComentarioPost').value.trim();
+      if (!texto) return;
 
-        // NOTIFICAÇÕES
-        function verificarNotificacoes() {
-            db.collection("notificacoes").where("userId", "==", utilizadorAtual.uid).where("lida", "==", false).onSnapshot((snapshot) => {
-                document.getElementById('notifDot').style.display = !snapshot.empty ? 'block' : 'none';
-            });
-        }
+      if (idPostAtual.startsWith('video_') || idPostAtual.startsWith('info_')) {
+          document.getElementById('inputComentarioPost').value = '';
+          alert("Comentário enviado! (Mas ainda não é guardado permanentemente nestas secções).");
+          return;
+      }
 
-        async function abrirNotificacoes() {
-            document.getElementById('notifDot').style.display = 'none';
-            document.getElementById('modalNotificacoes').style.display = 'flex';
-            const lista = document.getElementById('listaNotificacoes');
-            lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
+      const input = document.getElementById('inputComentarioPost');
+      input.value = '';
 
-            const querySnapshot = await db.collection("notificacoes").where("userId", "==", utilizadorAtual.uid).orderBy("data", "desc").get();
+      try {
+          const postRef = db.collection("posts").doc(idPostAtual);
+          const novoComentario = {
+              uid: utilizadorAtual.uid,
+              nome: utilizadorAtual.displayName || "Membro",
+              texto: texto,
+              data: new Date()
+          };
+          await postRef.update({
+              comentarios: firebase.firestore.FieldValue.arrayUnion(novoComentario)
+          });
+      } catch (error) {
+          console.error(error);
+          alert("Erro ao enviar o comentário.");
+      }
+  };
 
-            if (querySnapshot.empty) { lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Não tens notificações.</p>'; return; }
-            lista.innerHTML = '';
-            querySnapshot.forEach(async (documento) => {
-                const n = documento.data();
-                lista.innerHTML += `<div class="notif-item"><span>${n.deQuem}</span> ${n.texto}</div>`;
-                if (n.lida === false) await db.collection("notificacoes").doc(documento.id).update({ lida: true });
-            });
-        }
+  window.abrirPerfil = function(nome, foto) {
+      document.getElementById('perfilConteudo').innerHTML = `
+          <img src="${foto}">
+          <h3>${nome}</h3>
+          <p style="color:var(--text-sub); margin-top:10px;">Membro do YUNA</p>
+      `;
+      document.getElementById('modalPerfil').classList.add('aberto');
+  };
 
-        // MENU, RANKING E PERFIL
-        function abrirMenu(id, isDono) {
-            postAtualId = id; 
-            document.getElementById('modalMenu').style.display = 'flex'; 
-            document.getElementById('btnApagarPost').style.display = isDono ? 'block' : 'none';
-        }
+</script>
 
-        async function apagarPost() {
-            if (confirm("Apagar esta publicação?")) { 
-                await db.collection("posts").doc(postAtualId).delete(); 
-                document.getElementById('modalMenu').style.display = 'none'; 
-            }
-        }
-
-        function abrirChat() { document.getElementById('modalMenu').style.display = 'none'; alert("🚀 O Chat da YUNA estará disponível muito em breve!"); }
-
-        async function verRanking() {
-            document.getElementById('modalMenu').style.display = 'none'; 
-            document.getElementById('modalRanking').style.display = 'flex';
-            const lista = document.getElementById('listaRanking'); 
-            lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A calcular...</p>';
-            const querySnapshot = await db.collection("posts").get();
-            let contagem = {};
-            querySnapshot.forEach((doc) => { const post = doc.data(); if(post.nomeUser) contagem[post.nomeUser] = (contagem[post.nomeUser] || 0) + 1; });
-            const arrayRanking = Object.keys(contagem).map(nome => ({ nome: nome, pontos: contagem[nome] }));
-            arrayRanking.sort((a, b) => b.pontos - a.pontos);
-            lista.innerHTML = '';
-            arrayRanking.forEach((user, index) => {
-                let medalha = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '🏅';
-                lista.innerHTML += `<div class="comentario-item"><span>${medalha} ${index+1}º ${user.nome}</span> <span>${user.pontos} posts</span></div>`;
-            });
-        }
-
-        async function abrirPerfilUsuario(uid, nome, foto) {
-            document.getElementById('modalUserProfile').style.display = 'flex';
-            document.getElementById('modalUserAvatar').src = foto || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-            document.getElementById('modalUserName').innerText = nome || 'Utilizador';
-            const containerPosts = document.getElementById('modalUserPosts');
-            containerPosts.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
-            const querySnapshot = await db.collection("posts").where("uid", "==", uid).get();
-            if (querySnapshot.empty) { containerPosts.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Este utilizador ainda não fez publicações.</p>'; return; }
-            let postsDoUser = []; querySnapshot.forEach((doc) => postsDoUser.push(doc.data()));
-            postsDoUser.sort((a, b) => b.data.toMillis() - a.data.toMillis());
-            containerPosts.innerHTML = '';
-            postsDoUser.forEach(post => {
-                let imgHTML = post.imagem ? `<img src="${post.imagem}" style="width:100%; border-radius:8px; margin-top:8px; max-height:150px; object-fit:cover;">` : '';
-                containerPosts.innerHTML += `
-                    <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--borda);">
-                        <p style="margin-bottom: 5px; font-size: 14px;">${post.texto}</p>${imgHTML}
-                        <span style="font-size: 11px; color: var(--texto-suave); display:block; margin-top:5px;"><i class="far fa-clock"></i> ${new Date(post.data.toDate()).toLocaleDateString()}</span>
-                    </div>
-                `;
-            });
-        }
-
-        async function pesquisarNoticias() {
-            const termo = document.getElementById('inputPesquisa').value;
-            const container = document.getElementById('resultadosNoticias');
-            if(!termo) { container.innerHTML = ''; return; }
-            container.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A procurar...</p>';
-            try {
-                const res = await fetch(`https://pt.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=search&gsrsearch=${encodeURIComponent(termo)}&gsrlimit=3`);
-                const data = await res.json();
-                if(data.query && data.query.pages) {
-                    container.innerHTML = '';
-                    Object.values(data.query.pages).forEach(p => {
-                        let texto = p.extract ? p.extract.substring(0, 100) + '...' : 'Sem descrição.';
-                        container.innerHTML += `
-                            <div class="noticia-card" style="min-width:100%; margin-bottom:10px;">
-                                <h4>${p.title}</h4><p>${texto}</p>
-                                <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank" style="color:var(--primaria); text-decoration:none; font-weight:bold;">Ler na Wikipedia <i class="fas fa-external-link-alt"></i></a>
-                            </div>
-                        `;
-                    });
-                } else { container.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Nenhuma notícia encontrada.</p>'; }
-            } catch(e) { container.innerHTML = '<p style="text-align:center; color:red;">Erro ao pesquisar notícias.</p>'; }
-        }
-    </script>
 </body>
 </html>
