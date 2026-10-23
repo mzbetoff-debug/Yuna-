@@ -45,13 +45,22 @@
         .btn-foto { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid var(--borda); color: var(--texto-suave); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; }
         .btn-publicar { background: var(--primaria); color: #fff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; }
 
-        /* ===== PESQUISA ===== */
-        .pesquisa-container { display: flex; gap: 10px; margin-bottom: 25px; }
+        /* ===== PESQUISA E NOTÍCIAS ===== */
+        .pesquisa-container { display: flex; gap: 10px; margin-bottom: 20px; }
         .pesquisa-container input { flex: 1; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 12px 15px; color: var(--texto); font-size: 15px; outline: none; }
         .btn-pesquisar { background: var(--primaria); color: #fff; border: none; width: 50px; border-radius: 15px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* ===== POSTS ===== */
+        /* ESTILO DO CARROSSEL DE NOTÍCIAS */
         .titulo-seccao { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .noticias-scroll { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px; margin-bottom: 20px; scrollbar-width: none; }
+        .noticias-scroll::-webkit-scrollbar { display: none; }
+        .noticia-card { min-width: 260px; background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
+        .noticia-card h4 { font-size: 14px; margin-bottom: 8px; }
+        .noticia-card p { font-size: 12px; color: var(--texto-suave); margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .noticia-card a { color: var(--primaria); font-size: 12px; text-decoration: none; font-weight: bold; }
+        .badge-fonte { display: inline-block; padding: 3px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #fff; margin-bottom: 8px; width: fit-content; }
+
+        /* ===== POSTS ===== */
         .post { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 20px; margin-bottom: 15px; overflow: hidden; padding: 15px; }
         .post-header { display: flex; align-items: center; margin-bottom: 15px; }
         .post-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-right: 12px; cursor: pointer; border: 1px solid var(--borda); }
@@ -65,6 +74,15 @@
         .post-actions { display: flex; border-top: 1px solid var(--borda); padding-top: 15px; gap: 20px; }
         .action-btn { background: none; border: none; color: var(--texto-suave); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
         .action-btn.liked { color: #ef4444; }
+
+        /* ===== VÍDEOS ===== */
+        .video-feed { display: flex; flex-direction: column; gap: 15px; }
+        .video-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; overflow: hidden; cursor: pointer; }
+        .video-thumb { width: 100%; height: 200px; object-fit: cover; }
+        .video-info { padding: 15px; display: flex; align-items: center; gap: 10px; }
+        .video-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
+        .video-title { font-size: 14px; font-weight: bold; margin-bottom: 3px; }
+        .video-channel { font-size: 12px; color: var(--texto-suave); }
 
         /* ===== NAVEGAÇÃO ===== */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--fundo-card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
@@ -89,21 +107,16 @@
         .comentario-item strong { color: var(--primaria); }
         .btn-eliminar { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; padding: 5px; }
         .btn-responder { background: none; border: none; color: var(--texto-suave); font-size: 12px; cursor: pointer; text-align: left; margin-top: 5px; text-decoration: underline; }
-        
         .respostas-container { margin-top: 10px; margin-left: 15px; padding-left: 10px; border-left: 2px solid var(--borda); display: flex; flex-direction: column; gap: 8px; }
         .resposta-item { font-size: 13px; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 8px; }
-
         #inputComentario { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid var(--borda); background: #0a1428; color: #fff; outline: none; font-size: 15px; }
-        
         .barra-resposta { display: none; background: rgba(59, 130, 246, 0.2); border: 1px solid var(--primaria); padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; justify-content: space-between; align-items: center; font-size: 13px; }
         .barra-resposta span { color: var(--primaria); font-weight: bold; }
         .cancelar-resposta { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 14px; font-weight: bold; }
 
-        /* NOTIFICAÇÕES */
+        /* NOTIFICAÇÕES E CORES */
         .notif-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 10px; font-size: 14px; border-left: 4px solid var(--primaria); }
         .notif-item span { font-weight: bold; color: var(--primaria); }
-
-        /* CORES NO MENU */
         .cores-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; background: #0a1428; padding: 15px; border-radius: 10px; border: 1px solid var(--borda); }
         .cor-btn { width: 35px; height: 35px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; }
         .cor-btn[data-tema="roxo"] { background: #8b5cf6; }
@@ -111,8 +124,6 @@
         .cor-btn[data-tema="azul"] { background: #3b82f6; }
         .cor-btn[data-tema="amarelo"] { background: #fbbf24; }
         .cor-btn.ativo { border-color: #fff; transform: scale(1.15); }
-
-        .video-card, .noticia-card { background: var(--fundo-card); border: 1px solid var(--borda); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body class="tema-azul">
@@ -135,6 +146,12 @@
     </div>
 
     <div class="container" id="secaoInicio">
+        <!-- NOTÍCIAS E INFORMAÇÕES (DE VOLTA) -->
+        <h3 class="titulo-seccao">🗞️ Notícias e Informações</h3>
+        <div class="noticias-scroll" id="noticiasContainer">
+            <div class="noticia-card"><p><i class="fas fa-spinner fa-spin"></i> A carregar notícias...</p></div>
+        </div>
+
         <div class="criar-post-card">
             <input type="text" id="inputTextoPost" placeholder="No que estás a pensar?">
             <input type="file" id="inputImagemPost" accept="image/*" style="display: none;" onchange="document.getElementById('nomeFoto').innerText = 'Foto Selecionada'">
@@ -157,11 +174,14 @@
         <div id="feedPosts"><p style="text-align:center; color:var(--texto-suave);">A carregar feed...</p></div>
     </div>
 
+    <!-- VÍDEOS (DE VOLTA) -->
     <div class="container" id="secaoVideos" style="display: none;">
-        <div class="video-card" style="text-align:center;">
-            <p><i class="fas fa-spinner fa-spin"></i> A carregar vídeos...</p>
+        <h3 class="titulo-seccao">🔥 Virais e Tendências</h3>
+        <div class="video-feed" id="feedVideos">
+            <div class="video-card" style="text-align:center; padding: 20px;">
+                <p><i class="fas fa-spinner fa-spin"></i> A carregar vídeos...</p>
+            </div>
         </div>
-        <div id="feedVideos"></div>
     </div>
 
     <!-- MODAL COMENTÁRIOS -->
@@ -276,8 +296,10 @@
                 utilizadorAtual = user;
                 const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
                 document.getElementById('headerAvatar').src = foto;
+                
                 carregarPosts();
-                carregarVideos();
+                carregarNoticias(); // <--- API DE NOTÍCIAS DE VOLTA
+                carregarVideos();   // <--- API DE VÍDEOS DE VOLTA
                 verificarNotificacoes(); 
             } else {
                 window.location.href = "login.html";
@@ -292,7 +314,89 @@
         document.getElementById('abaVideos').classList.toggle('ativa', aba === 'videos');
     };
 
-    // CRIAR POST
+    // ==========================================
+    // APIs DE NOTÍCIAS RESTAURADAS (Wikipedia + Tech + Espaço)
+    // ==========================================
+    async function carregarNoticias() {
+        const container = document.getElementById('noticiasContainer');
+        let noticias = [];
+        try {
+            const wikiRes = await fetch('https://pt.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0&grnlimit=2');
+            const wikiData = await wikiRes.json();
+            if (wikiData.query && wikiData.query.pages) {
+                Object.values(wikiData.query.pages).forEach(p => {
+                    noticias.push({ titulo: p.title, texto: p.extract ? p.extract.substring(0, 90) + '...' : 'Sem descrição.', link: `https://pt.wikipedia.org/?curid=${p.pageid}`, fonte: 'Wikipedia', cor: '#333' });
+                });
+            }
+
+            const hnRes = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
+            const hnIds = await hnRes.json();
+            for (let i = 0; i < 2; i++) {
+                const itemRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${hnIds[i]}.json`);
+                const item = await itemRes.json();
+                if (item.title) {
+                    noticias.push({ titulo: item.title, texto: 'Notícia de tecnologia e inovação.', link: item.url || `https://news.ycombinator.com/item?id=${hnIds[i]}`, fonte: 'Tech', cor: '#ff6600' });
+                }
+            }
+
+            const spaceRes = await fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=2');
+            const spaceData = await spaceRes.json();
+            spaceData.results.forEach(artigo => {
+                noticias.push({ titulo: artigo.title, texto: artigo.summary.substring(0, 90) + '...', link: artigo.url, fonte: 'Ciência', cor: '#0b3d91' });
+            });
+
+            container.innerHTML = '';
+            noticias.sort(() => Math.random() - 0.5).forEach(n => {
+                container.innerHTML += `
+                    <div class="noticia-card">
+                        <div>
+                            <span class="badge-fonte" style="background:${n.cor};">${n.fonte}</span>
+                            <h4>${n.titulo}</h4>
+                            <p>${n.texto}</p>
+                        </div>
+                        <a href="${n.link}" target="_blank">Ler mais <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            container.innerHTML = '<div class="noticia-card"><p>Não foi possível carregar as notícias.</p></div>';
+        }
+    }
+
+    // ==========================================
+    // APIs DE VÍDEOS RESTAURADAS (Dailymotion + YouTube)
+    // ==========================================
+    async function carregarVideos() {
+        const container = document.getElementById('feedVideos');
+        let todosVideos = [];
+        try {
+            const dmRes = await fetch('https://api.dailymotion.com/videos?fields=id,title,thumbnail_480_url,url,owner.screenname&limit=4&sort=trending');
+            const dmData = await dmRes.json();
+            dmData.list.forEach(video => {
+                todosVideos.push({ titulo: video.title, thumb: video.thumbnail_480_url, link: video.url, canal: video['owner.screenname'] || 'Dailymotion', plataforma: 'Dailymotion', cor: '#0066ff', icone: 'fa-play' });
+            });
+
+            todosVideos.push({ titulo: 'Vídeo em Destaque no YouTube', thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg', link: 'https://youtube.com/watch?v=dQw4w9WgXcQ', canal: 'YouTube', plataforma: 'YouTube', cor: '#ff0000', icone: 'fa-youtube' });
+
+            container.innerHTML = '';
+            todosVideos.sort(() => Math.random() - 0.5).forEach(video => {
+                container.innerHTML += `
+                    <div class="video-card" onclick="window.open('${video.link}', '_blank')">
+                        <img src="${video.thumb}" class="video-thumb">
+                        <div class="video-info">
+                            <div class="video-icon" style="background:${video.cor};"><i class="fab ${video.icone}"></i></div>
+                            <div>
+                                <div class="video-title">${video.titulo}</div>
+                                <div class="video-channel">${video.canal} • ${video.plataforma}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        } catch (e) { container.innerHTML = '<p style="text-align:center;">Erro ao carregar os vídeos.</p>'; }
+    }
+
+    // CRIAR POST E LIKES
     window.criarPost = async function() {
         const texto = document.getElementById('inputTextoPost').value;
         const fileInput = document.getElementById('inputImagemPost');
@@ -327,7 +431,6 @@
         } catch (error) { alert("Erro ao publicar."); }
     }
 
-    // CARREGAR POSTS
     function carregarPosts() {
         const q = query(collection(db, "posts"), orderBy("data", "desc"));
         onSnapshot(q, (snapshot) => {
@@ -371,161 +474,160 @@
         });
     }
 
-    // DAR LIKE
     window.darLike = async function(id) {
         await updateDoc(doc(db, "posts", id), { likes: increment(1) });
         document.getElementById(`btn-like-${id}`).classList.add('liked');
     }
+        // COMENTÁRIOS, RESPOSTAS E NOTIFICAÇÕES
+        window.abrirComentarios = function(id) {
+            postAtualId = id;
+            cancelarResposta(); 
+            document.getElementById('modalComentarios').style.display = 'flex';
+            
+            onSnapshot(doc(db, "posts", postAtualId), (docSnap) => {
+                const lista = document.getElementById('listaComentarios');
+                const comentarios = docSnap.data().comentarios || [];
+                lista.innerHTML = '';
 
-    // COMENTÁRIOS E RESPOSTAS
-    window.abrirComentarios = function(id) {
-        postAtualId = id;
-        cancelarResposta(); 
-        document.getElementById('modalComentarios').style.display = 'flex';
-        
-        onSnapshot(doc(db, "posts", postAtualId), (docSnap) => {
-            const lista = document.getElementById('listaComentarios');
-            const comentarios = docSnap.data().comentarios || [];
-            lista.innerHTML = '';
-
-            if (comentarios.length === 0) {
-                lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Nenhum comentário.</p>';
-                return;
-            }
-
-            comentarios.forEach((c, index) => {
-                const commentId = c.id || index; 
-                const btnApagar = (c.uid === utilizadorAtual.uid) ? `<button class="btn-eliminar" onclick="apagarComentario(${index})"><i class="fas fa-trash"></i></button>` : '';
-                
-                let respostasHTML = '';
-                if (c.respostas && c.respostas.length > 0) {
-                    respostasHTML = `<div class="respostas-container">`;
-                    c.respostas.forEach(r => {
-                        respostasHTML += `<div class="resposta-item"><strong>${r.nome}:</strong> ${r.texto}</div>`;
-                    });
-                    respostasHTML += `</div>`;
+                if (comentarios.length === 0) {
+                    lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Nenhum comentário.</p>';
+                    return;
                 }
 
-                lista.innerHTML += `
-                    <div class="comentario-item">
-                        <div class="comentario-header">
-                            <div><strong>${c.nome}:</strong> ${c.texto}</div>
-                            ${btnApagar}
+                comentarios.forEach((c, index) => {
+                    const commentId = c.id || index; 
+                    const btnApagar = (c.uid === utilizadorAtual.uid) ? `<button class="btn-eliminar" onclick="apagarComentario(${index})"><i class="fas fa-trash"></i></button>` : '';
+                    
+                    let respostasHTML = '';
+                    if (c.respostas && c.respostas.length > 0) {
+                        respostasHTML = `<div class="respostas-container">`;
+                        c.respostas.forEach(r => {
+                            respostasHTML += `<div class="resposta-item"><strong>${r.nome}:</strong> ${r.texto}</div>`;
+                        });
+                        respostasHTML += `</div>`;
+                    }
+
+                    lista.innerHTML += `
+                        <div class="comentario-item">
+                            <div class="comentario-header">
+                                <div><strong>${c.nome}:</strong> ${c.texto}</div>
+                                ${btnApagar}
+                            </div>
+                            <button class="btn-responder" onclick="prepararResposta('${commentId}', '${c.nome}')"><i class="fas fa-reply"></i> Responder</button>
+                            ${respostasHTML}
                         </div>
-                        <button class="btn-responder" onclick="prepararResposta('${commentId}', '${c.nome}')"><i class="fas fa-reply"></i> Responder</button>
-                        ${respostasHTML}
-                    </div>
-                `;
+                    `;
+                });
             });
-        });
-    }
+        }
 
-    window.prepararResposta = function(commentId, nome) {
-        respondendoA = { id: commentId, nome: nome };
-        document.getElementById('barraResposta').style.display = 'flex';
-        document.getElementById('nomeResposta').innerText = nome;
-        document.getElementById('inputComentario').focus();
-    }
+        window.prepararResposta = function(commentId, nome) {
+            respondendoA = { id: commentId, nome: nome };
+            document.getElementById('barraResposta').style.display = 'flex';
+            document.getElementById('nomeResposta').innerText = nome;
+            document.getElementById('inputComentario').focus();
+        }
 
-    window.cancelarResposta = function() {
-        respondendoA = null;
-        document.getElementById('barraResposta').style.display = 'none';
-        document.getElementById('inputComentario').value = '';
-    }
+        window.cancelarResposta = function() {
+            respondendoA = null;
+            document.getElementById('barraResposta').style.display = 'none';
+            document.getElementById('inputComentario').value = '';
+        }
 
-    window.adicionarComentario = async function() {
-        const texto = document.getElementById('inputComentario').value;
-        if (!texto) return;
+        window.adicionarComentario = async function() {
+            const texto = document.getElementById('inputComentario').value;
+            if (!texto) return;
 
-        const postRef = doc(db, "posts", postAtualId);
-        const docSnap = await getDoc(postRef);
-        let comentarios = docSnap.data().comentarios || [];
+            const postRef = doc(db, "posts", postAtualId);
+            const docSnap = await getDoc(postRef);
+            let comentarios = docSnap.data().comentarios || [];
 
-        if (respondendoA) {
-            const index = comentarios.findIndex(c => c.id == respondendoA.id || comentarios.indexOf(c) == respondendoA.id);
-            if (index !== -1) {
-                if (!comentarios[index].respostas) comentarios[index].respostas = [];
-                comentarios[index].respostas.push({
+            if (respondendoA) {
+                const index = comentarios.findIndex(c => c.id == respondendoA.id || comentarios.indexOf(c) == respondendoA.id);
+                if (index !== -1) {
+                    if (!comentarios[index].respostas) comentarios[index].respostas = [];
+                    comentarios[index].respostas.push({
+                        uid: utilizadorAtual.uid,
+                        nome: utilizadorAtual.displayName || "Membro",
+                        texto: texto
+                    });
+                    await updateDoc(postRef, { comentarios: comentarios });
+                    
+                    if (comentarios[index].uid !== utilizadorAtual.uid) {
+                        await addDoc(collection(db, "notificacoes"), {
+                            userId: comentarios[index].uid,
+                            deQuem: utilizadorAtual.displayName || "Alguém",
+                            texto: `respondeu ao teu comentário: "${texto}"`,
+                            lida: false,
+                            data: serverTimestamp()
+                        });
+                    }
+                }
+                cancelarResposta();
+            } else {
+                const novoComentario = {
+                    id: Date.now().toString(),
                     uid: utilizadorAtual.uid,
                     nome: utilizadorAtual.displayName || "Membro",
-                    texto: texto
-                });
-                await updateDoc(postRef, { comentarios: comentarios });
+                    texto: texto,
+                    respostas: []
+                };
+                await updateDoc(postRef, { comentarios: arrayUnion(novoComentario) });
                 
-                if (comentarios[index].uid !== utilizadorAtual.uid) {
+                if (docSnap.data().uid !== utilizadorAtual.uid) {
                     await addDoc(collection(db, "notificacoes"), {
-                        userId: comentarios[index].uid,
+                        userId: docSnap.data().uid,
                         deQuem: utilizadorAtual.displayName || "Alguém",
-                        texto: `respondeu ao teu comentário: "${texto}"`,
+                        texto: `comentou na tua publicação: "${texto}"`,
                         lida: false,
                         data: serverTimestamp()
                     });
                 }
             }
-            cancelarResposta();
-        } else {
-            const novoComentario = {
-                id: Date.now().toString(),
-                uid: utilizadorAtual.uid,
-                nome: utilizadorAtual.displayName || "Membro",
-                texto: texto,
-                respostas: []
-            };
-            await updateDoc(postRef, { comentarios: arrayUnion(novoComentario) });
-            
-            if (docSnap.data().uid !== utilizadorAtual.uid) {
-                await addDoc(collection(db, "notificacoes"), {
-                    userId: docSnap.data().uid,
-                    deQuem: utilizadorAtual.displayName || "Alguém",
-                    texto: `comentou na tua publicação: "${texto}"`,
-                    lida: false,
-                    data: serverTimestamp()
-                });
+            document.getElementById('inputComentario').value = '';
+        }
+
+        window.apagarComentario = async function(index) {
+            if (confirm("Apagar este comentário?")) {
+                const docSnap = await getDoc(doc(db, "posts", postAtualId));
+                const comentarios = docSnap.data().comentarios;
+                comentarios.splice(index, 1);
+                await updateDoc(doc(db, "posts", postAtualId), { comentarios: comentarios });
             }
         }
-        document.getElementById('inputComentario').value = '';
-    }
 
-    window.apagarComentario = async function(index) {
-        if (confirm("Apagar este comentário?")) {
-            const docSnap = await getDoc(doc(db, "posts", postAtualId));
-            const comentarios = docSnap.data().comentarios;
-            comentarios.splice(index, 1);
-            await updateDoc(doc(db, "posts", postAtualId), { comentarios: comentarios });
-        }
-    }
-
-    // NOTIFICAÇÕES
-    function verificarNotificacoes() {
-        const q = query(collection(db, "notificacoes"), where("userId", "==", utilizadorAtual.uid), where("lida", "==", false));
-        onSnapshot(q, (snapshot) => {
-            const dot = document.getElementById('notifDot');
-            dot.style.display = !snapshot.empty ? 'block' : 'none';
-        });
-    }
-
-    window.abrirNotificacoes = async function() {
-        document.getElementById('notifDot').style.display = 'none';
-        document.getElementById('modalNotificacoes').style.display = 'flex';
-        const lista = document.getElementById('listaNotificacoes');
-        lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
-
-        const q = query(collection(db, "notificacoes"), where("userId", "==", utilizadorAtual.uid), orderBy("data", "desc"));
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-            lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Não tens notificações.</p>';
-            return;
+        // SISTEMA DE NOTIFICAÇÕES
+        function verificarNotificacoes() {
+            const q = query(collection(db, "notificacoes"), where("userId", "==", utilizadorAtual.uid), where("lida", "==", false));
+            onSnapshot(q, (snapshot) => {
+                const dot = document.getElementById('notifDot');
+                dot.style.display = !snapshot.empty ? 'block' : 'none';
+            });
         }
 
-        lista.innerHTML = '';
-        querySnapshot.forEach(async (documento) => {
-            const n = documento.data();
-            lista.innerHTML += `<div class="notif-item"><span>${n.deQuem}</span> ${n.texto}</div>`;
-            if (n.lida === false) await updateDoc(doc(db, "notificacoes", documento.id), { lida: true });
-        });
-    }
-        // MENU E OUTRAS FUNÇÕES
+        window.abrirNotificacoes = async function() {
+            document.getElementById('notifDot').style.display = 'none';
+            document.getElementById('modalNotificacoes').style.display = 'flex';
+            const lista = document.getElementById('listaNotificacoes');
+            lista.innerHTML = '<p style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
+
+            const q = query(collection(db, "notificacoes"), where("userId", "==", utilizadorAtual.uid), orderBy("data", "desc"));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                lista.innerHTML = '<p style="text-align:center; color:var(--texto-suave);">Não tens notificações.</p>';
+                return;
+            }
+
+            lista.innerHTML = '';
+            querySnapshot.forEach(async (documento) => {
+                const n = documento.data();
+                lista.innerHTML += `<div class="notif-item"><span>${n.deQuem}</span> ${n.texto}</div>`;
+                if (n.lida === false) await updateDoc(doc(db, "notificacoes", documento.id), { lida: true });
+            });
+        }
+
+        // MENU, RANKING, PERFIL E PESQUISA
         window.abrirMenu = function(id, isDono) {
             postAtualId = id;
             document.getElementById('modalMenu').style.display = 'flex';
@@ -542,35 +644,6 @@
         window.abrirChat = function() {
             document.getElementById('modalMenu').style.display = 'none';
             alert("🚀 O Chat da YUNA estará disponível muito em breve!");
-        }
-
-        async function carregarVideos() {
-            const container = document.getElementById('feedVideos');
-            let todosVideos = [];
-            try {
-                const dmRes = await fetch('https://api.dailymotion.com/videos?fields=id,title,thumbnail_480_url,url,owner.screenname&limit=4&sort=trending');
-                const dmData = await dmRes.json();
-                dmData.list.forEach(video => {
-                    todosVideos.push({ titulo: video.title, thumb: video.thumbnail_480_url, link: video.url, canal: video['owner.screenname'] || 'Dailymotion', plataforma: 'Dailymotion', cor: '#0066ff', icone: 'fa-play' });
-                });
-                todosVideos.push({ titulo: 'Vídeo em Destaque no YouTube', thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg', link: 'https://youtube.com/watch?v=dQw4w9WgXcQ', canal: 'YouTube', plataforma: 'YouTube', cor: '#ff0000', icone: 'fa-youtube' });
-
-                container.innerHTML = '';
-                todosVideos.sort(() => Math.random() - 0.5).forEach(video => {
-                    container.innerHTML += `
-                        <div class="video-card" onclick="window.open('${video.link}', '_blank')" style="cursor:pointer;">
-                            <img src="${video.thumb}" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:10px;">
-                            <div style="display:flex; gap:10px; align-items:center;">
-                                <div style="width:40px; height:40px; border-radius:50%; background:${video.cor}; display:flex; align-items:center; justify-content:center; color:white;"><i class="fab ${video.icone}"></i></div>
-                                <div>
-                                    <div style="font-weight:bold; font-size:15px; margin-bottom:3px;">${video.titulo}</div>
-                                    <div style="font-size:12px; color:var(--texto-suave);">${video.canal} • ${video.plataforma}</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch (error) { container.innerHTML = '<p style="text-align:center;">Erro ao carregar os vídeos.</p>'; }
         }
 
         window.verRanking = async function() {
@@ -634,7 +707,7 @@
                     Object.values(data.query.pages).forEach(p => {
                         let texto = p.extract ? p.extract.substring(0, 100) + '...' : 'Sem descrição.';
                         container.innerHTML += `
-                            <div class="noticia-card">
+                            <div class="noticia-card" style="min-width:100%; margin-bottom:10px;">
                                 <h4>${p.title}</h4>
                                 <p>${texto}</p>
                                 <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank" style="color:var(--primaria); text-decoration:none; font-weight:bold;">Ler na Wikipedia <i class="fas fa-external-link-alt"></i></a>
