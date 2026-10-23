@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0e1a">
 <title>YUNA · Início</title>
-<link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* 🎨 SISTEMA DE TEMAS GLOBAL */
@@ -75,7 +74,7 @@ body{padding-bottom:80px}
 .post-acoes a:hover {color:var(--accent);}
 .btn-mais-info{width:calc(100% - 32px);margin:0 16px 20px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--accent);font-weight:bold;cursor:pointer}
 
-/* VÍDEOS SHORTS */
+/* VÍDEOS SHORTS (ESTILO TIKTOK) */
 .tela-videos{height:calc(100vh - 130px);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;background:#000}
 .tela-videos::-webkit-scrollbar{display:none}
 .video-slide{position:relative;height:calc(100vh - 130px);width:100%;scroll-snap-align:start;background:#000;display:flex;align-items:center;justify-content:center}
@@ -182,16 +181,14 @@ body{padding-bottom:80px}
   <div class="modal-content"><div class="modal-header"><h3>Perfil</h3><button class="modal-close" onclick="document.getElementById('modalPerfil').classList.remove('aberto')"><i class="fas fa-times"></i></button></div><div class="perfil-modal" id="perfilConteudo"></div></div>
 </div>
 
-<!-- MODAL DE COMENTÁRIOS (CORRIGIDO) -->
+<!-- MODAL DE COMENTÁRIOS -->
 <div class="modal" id="modalComentariosPost" onclick="if(event.target===this)this.classList.remove('aberto')">
   <div class="modal-content">
     <div class="modal-header">
       <h3>Comentários</h3>
       <button class="modal-close" onclick="document.getElementById('modalComentariosPost').classList.remove('aberto')"><i class="fas fa-times"></i></button>
     </div>
-    <div id="listaComentariosPost">
-      <!-- Os comentários vão aparecer aqui -->
-    </div>
+    <div id="listaComentariosPost"></div>
     <div class="input-comentario">
       <input type="text" id="inputComentarioPost" placeholder="Comentar...">
       <button onclick="enviarComentarioPost()"><i class="fas fa-paper-plane"></i></button>
@@ -281,7 +278,9 @@ body{padding-bottom:80px}
 
   function abrirNotificacoes() { alert("🔔 Nenhuma notificação nova no momento!"); }
 
-  // ========== VÍDEOS (SHORTS) ==========
+  // ==========================================
+  // VÍDEOS SHORTS (TIKTOK)
+  // ==========================================
   const YT_KEY = 'AIzaSyCpUuhzryLomoGzJ3lVIA7TTjJF5KfVd7s';
   let videosCarregados = false;
 
@@ -289,6 +288,7 @@ body{padding-bottom:80px}
     if (videosCarregados) return;
     videosCarregados = true;
     const el = document.getElementById('telaVideos');
+    
     el.innerHTML = '<div style="display:flex;height:100%;align-items:center;justify-content:center;color:#fff"><i class="fas fa-spinner fa-spin fa-2x"></i></div>';
 
     try {
@@ -380,7 +380,9 @@ body{padding-bottom:80px}
     }
   };
 
-  // ========== NOTÍCIAS (WIKIPEDIA) ==========
+  // ==========================================
+  // NOTÍCIAS (WIKIPEDIA)
+  // ==========================================
   let termoPesquisaAtual = '';
 
   window.carregarInfoInicial = () => {
@@ -555,7 +557,7 @@ body{padding-bottom:80px}
   }
 
   // ==========================================
-  // FUNÇÕES DE COMENTÁRIOS
+  // FUNÇÕES DE COMENTÁRIOS (CORRIGIDAS E A FUNCIONAR PARA TUDO)
   // ==========================================
   window.abrirComentariosPost = function(idPost) {
       idPostAtual = idPost;
@@ -564,14 +566,15 @@ body{padding-bottom:80px}
       const lista = document.getElementById('listaComentariosPost');
       lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
 
+      // Define onde os comentários vão ser guardados
+      let colecaoAlvo = "posts"; // Comentários do Feed
       if (idPost.startsWith('video_') || idPost.startsWith('info_')) {
-          lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);">Os comentários em vídeos e notícias estarão disponíveis em breve!</p>';
-          return;
+          colecaoAlvo = "comentarios_externos"; // Comentários de Vídeos e Notícias
       }
 
-      db.collection("posts").doc(idPostAtual).onSnapshot((doc) => {
-          if (!doc.exists) return;
-          const comentarios = doc.data().comentarios || [];
+      db.collection(colecaoAlvo).doc(idPostAtual).onSnapshot((doc) => {
+          const data = doc.exists ? doc.data() : { comentarios: [] };
+          const comentarios = data.comentarios || [];
           lista.innerHTML = '';
 
           if (comentarios.length === 0) {
@@ -597,26 +600,29 @@ body{padding-bottom:80px}
       const texto = document.getElementById('inputComentarioPost').value.trim();
       if (!texto) return;
 
-      if (idPostAtual.startsWith('video_') || idPostAtual.startsWith('info_')) {
-          document.getElementById('inputComentarioPost').value = '';
-          alert("Comentário enviado! (Mas ainda não é guardado permanentemente nestas secções).");
-          return;
-      }
-
       const input = document.getElementById('inputComentarioPost');
       input.value = '';
 
+      // Define onde o comentário vai ser guardado
+      let colecaoAlvo = "posts";
+      if (idPostAtual.startsWith('video_') || idPostAtual.startsWith('info_')) {
+          colecaoAlvo = "comentarios_externos";
+      }
+
       try {
-          const postRef = db.collection("posts").doc(idPostAtual);
+          const postRef = db.collection(colecaoAlvo).doc(idPostAtual);
           const novoComentario = {
               uid: utilizadorAtual.uid,
               nome: utilizadorAtual.displayName || "Membro",
               texto: texto,
               data: new Date()
           };
-          await postRef.update({
+          
+          // Usa o set com merge: true para criar o documento se ele não existir (para vídeos/notícias)
+          await postRef.set({
               comentarios: firebase.firestore.FieldValue.arrayUnion(novoComentario)
-          });
+          }, { merge: true });
+          
       } catch (error) {
           console.error(error);
           alert("Erro ao enviar o comentário.");
