@@ -628,20 +628,27 @@ body{padding-bottom:80px}
       } catch(e) { console.log(e); }
   }
 
-  // APAGAR POST
-  window.apagarPost = async function(id) {
-      if(confirm("Tens a certeza que queres apagar esta publicação?")) {
-          try {
-              await db.collection("posts").doc(id).delete();
-              const card = document.getElementById(`post-card-${id}`);
-              if (card) card.remove();
-              alert("✅ Publicação eliminada com sucesso!");
-          } catch(e) { 
-              alert("❌ ERRO DO FIREBASE AO APAGAR:\n\n" + e.message + "\n\n(Dica: Verifica as regras do Firestore e se tens a permissão de 'delete' ativada)."); 
-              console.error(e);
-          }
-      }
-  }
+// TESTE DE DIAGNÓSTICO PARA APAGAR POST
+window.apagarPost = function(id) {
+    alert("1. Botão clicado! O ID do post é: " + id);
+
+    if(confirm("Tens a certeza que queres apagar esta publicação?")) {
+        alert("2. Confirmado. A tentar apagar do Firebase...");
+
+        db.collection("posts").doc(id).delete()
+        .then(() => {
+            alert("✅ 3. SUCESSO! O Firebase apagou o post.");
+            const card = document.getElementById('post-card-' + id);
+            if (card) card.remove();
+        })
+        .catch((e) => {
+            alert("❌ 3. ERRO DO FIREBASE:\n\n" + e.message);
+            console.error(e);
+        });
+    } else {
+        alert("2. Ação cancelada.");
+    }
+}
 
   // INSPECIONAR PERFIL DO UTILIZADOR
   window.abrirPerfilUsuario = async function(uid, nome, foto) {
