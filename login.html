@@ -1,175 +1,354 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YUNA - Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background: #0a1428; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-box { background: #0f1f3d; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid #1e3a6f; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        h1 { color: #3b82f6; margin-bottom: 25px; font-size: 32px; font-weight: 800; letter-spacing: 1px; }
-        
-        /* CAMPOS DE TEXTO */
-        input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px; border: 1px solid #1e3a6f; background: #0a1428; color: #fff; box-sizing: border-box; outline: none; font-size: 15px; }
-        
-        /* BOTÕES AZUIS */
-        .btn-principal { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 15px; transition: 0.2s; }
-        .btn-principal:hover { background: #2563eb; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YUNA - Atualização V1</title>
+  <!-- Fonte e Ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
 
-        /* BOTÃO DO GOOGLE */
-        .btn-google { width: 100%; padding: 12px; background: #ffffff; color: #333; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; margin-bottom: 15px; }
-        .btn-google:hover { background: #f1f1f1; }
-        .btn-google img { width: 20px; height: 20px; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0B0914;
+      /* Efeito de estrelas e gradiente de fundo */
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(228, 77, 140, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(75, 93, 240, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(159, 77, 228, 0.1) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: #ffffff;
+      padding: 20px;
+    }
 
-        /* LINKS DE MUDANÇA DE ECRÃ (LOGIN / CRIAR CONTA) */
-        .link-mudar { font-size: 14px; color: #a0b8d8; cursor: pointer; margin-top: 10px; display: inline-block; }
-        .link-mudar:hover { color: #fff; text-decoration: underline; }
-        .link-mudar span { color: #3b82f6; font-weight: bold; }
-        
-        #mensagem { margin-top: 15px; font-size: 14px; color: #ef4444; font-weight: bold; }
+    /* Pequenos pontos brancos para simular estrelas */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(1px 1px at 10% 10%, white, transparent),
+        radial-gradient(1px 1px at 30% 40%, white, transparent),
+        radial-gradient(1px 1px at 70% 20%, white, transparent),
+        radial-gradient(1.5px 1.5px at 80% 60%, white, transparent),
+        radial-gradient(1px 1px at 40% 80%, white, transparent),
+        radial-gradient(1px 1px at 60% 90%, white, transparent);
+      background-size: 200px 200px;
+      opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-        /* ESCONDER O ECRÃ DE REGISTO INICIALMENTE */
-        #ecraRegisto { display: none; }
-    </style>
+    .container {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Logo YUNA */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .logo-icon {
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(135deg, #F14B8B, #9B51E0);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(228, 77, 140, 0.4);
+    }
+
+    .logo-icon i {
+      font-size: 28px;
+      color: white;
+    }
+
+    .logo-text {
+      text-align: left;
+    }
+
+    .logo-text h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(to right, #9B51E0, #4B5DF0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+
+    .logo-text span {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #A0A0B0;
+      text-transform: uppercase;
+    }
+
+    /* Descrição */
+    .description {
+      font-size: 15px;
+      color: #D1D1D6;
+      line-height: 1.5;
+      margin-bottom: 30px;
+      padding: 0 10px;
+    }
+
+    /* Área do Contador */
+    .countdown-wrapper {
+      width: 100%;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .countdown-title {
+      font-size: 13px;
+      color: #A0A0B0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .time-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      border-radius: 12px;
+      min-width: 70px;
+      border: 1px solid rgba(159, 77, 228, 0.3);
+      box-shadow: inset 0 0 10px rgba(159, 77, 228, 0.1);
+    }
+
+    .time-box span {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .time-box small {
+      font-size: 11px;
+      color: #A0A0B0;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Botões */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+
+    .btn-discord {
+      background: #4B5DF0;
+      box-shadow: 0 8px 20px rgba(75, 93, 240, 0.3);
+    }
+
+    /* Redes Sociais */
+    .socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 5px;
+      margin-bottom: 30px;
+    }
+
+    .social-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #A0A0B0;
+      font-size: 20px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .social-icon:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .footer i {
+      color: #E44D8C;
+      font-size: 10px;
+    }
+
+    /* Efeito concluído */
+    .finished .time-box {
+      border-color: #16a34a;
+      box-shadow: inset 0 0 15px rgba(22, 163, 74, 0.2);
+    }
+    .finished .time-box span {
+      color: #16a34a;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="login-box">
+  <div class="container">
+    
+    <!-- Logo -->
+    <div class="logo-container">
+      <div class="logo-icon">
+        <i class="fa-regular fa-compass"></i>
+      </div>
+      <div class="logo-text">
         <h1>YUNA</h1>
-
-        <!-- ECRÃ 1: FAZER LOGIN -->
-        <div id="ecraLogin">
-            <input type="email" id="login-email" placeholder="O teu e-mail">
-            <input type="password" id="login-senha" placeholder="A tua palavra-passe">
-            <button class="btn-principal" onclick="entrar()">Entrar</button>
-
-            < class="btn-google" onclick="entrarComGoogle()">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-                Continuar com Google
-            </button>
-
-            <div id="msg-login" style="color: #ef4444; font-size: 14px; margin-bottom: 10px;"></div>
-
-            <div class="link-mudar" onclick="mostrarRegisto()">Ainda não tens conta? <span>Cria uma aqui</span></div>
-        </div>
-
-        <!-- ECRÃ 2: CRIAR CONTA -->
-        <div id="ecraRegisto">
-            <input type="text" id="reg-nome" placeholder="O teu nome ou apelido">
-            <input type="email" id="reg-email" placeholder="Escolhe um e-mail">
-            <input type="password" id="reg-senha" placeholder="Cria uma palavra-passe">
-            
-            <button class="btn-principal" onclick="registar()">Criar a minha conta</button>
-            
-            <div id="msg-registo" style="color: #ef4444; font-size: 14px; margin-bottom: 10px;"></div>
-
-            <div class="link-mudar" onclick="mostrarLogin()">Já tens conta? <span>Entra aqui</span></div>
-        </div>
+        <span>SEU UNIVERSO</span>
+      </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    <!-- Texto de descrição -->
+    <p class="description">
+      Explore filmes, séries, músicas, animes e educação em um só lugar. Descubra, aprenda e conecte-se com o que você ama. 🚀
+    </p>
 
-        // ⚠️ AS TUAS CHAVES DO FIREBASE ⚠️
-        const firebaseConfig = {
-            apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
-            authDomain: "yuna-8fe24.firebaseapp.com",
-            projectId: "yuna-8fe24",
-            storageBucket: "yuna-8fe24.firebasestorage.app",
-            messagingSenderId: "531340097112",
-            appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
-        };
+    <!-- Contador Regressivo -->
+    <div class="countdown-wrapper" id="countdown-container">
+      <div class="countdown-title">A nova atualização da V1 chega em:</div>
+      <div class="countdown-timer">
+        <div class="time-box"><span id="days">00</span><small>Dias</small></div>
+        <div class="time-box"><span id="hours">00</span><small>Horas</small></div>
+        <div class="time-box"><span id="minutes">00</span><small>Min</small></div>
+        <div class="time-box"><span id="seconds">00</span><small>Seg</small></div>
+      </div>
+    </div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+    <!-- Botão Discord (Principal) -->
+    <a href="https://discord.gg/vSuvKTJxS" target="_blank" class="btn btn-discord">
+      <i class="fa-brands fa-discord"></i> Entrar no Discord
+    </a>
 
-        // Manter sessão no telemóvel
-        setPersistence(auth, browserLocalPersistence).then(() => {
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    window.location.href = "home.html";
-                }
-            });
-        });
+    <!-- Ícones Sociais -->
+    <div class="socials">
+      <a href="https://discord.gg/vSuvKTJxS" target="_blank" class="social-icon"><i class="fa-brands fa-discord"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
+    </div>
 
-        // 🔄 FUNÇÕES PARA TROCAR DE ECRÃ
-        window.mostrarRegisto = function() {
-            document.getElementById('ecraLogin').style.display = 'none';
-            document.getElementById('ecraRegisto').style.display = 'block';
+    <!-- Footer -->
+    <div class="footer">
+      <i class="fa-solid fa-heart"></i> YUNA © 2025 · Versão 1.0
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      const SETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000; // 7 dias em milissegundos
+      const CHAVE = "yuna_v1_countdown";
+      
+      // Pega a data final salva ou define uma nova (agora + 7 dias)
+      let dataFinal = Number(localStorage.getItem(CHAVE));
+      if (!dataFinal || isNaN(dataFinal)) {
+        dataFinal = Date.now() + SETE_DIAS_MS;
+        localStorage.setItem(CHAVE, String(dataFinal));
+      }
+
+      const elDias = document.getElementById("days");
+      const elHoras = document.getElementById("hours");
+      const elMinutos = document.getElementById("minutes");
+      const elSegundos = document.getElementById("seconds");
+      const container = document.getElementById("countdown-container");
+
+      let intervalo = null;
+
+      function atualizarContagem() {
+        const restante = dataFinal - Date.now();
+
+        // Se o tempo acabar
+        if (restante <= 0) {
+          container.classList.add("finished");
+          container.querySelector('.countdown-title').innerHTML = "<strong>Atualização Disponível!</strong>";
+          elDias.textContent = "00";
+          elHoras.textContent = "00";
+          elMinutos.textContent = "00";
+          elSegundos.textContent = "00";
+          clearInterval(intervalo);
+          return;
         }
 
-        window.mostrarLogin = function() {
-            document.getElementById('ecraRegisto').style.display = 'none';
-            document.getElementById('ecraLogin').style.display = 'block';
-        }
+        const dias = Math.floor(restante / (24 * 60 * 60 * 1000));
+        const horas = Math.floor((restante % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+        const minutos = Math.floor((restante % (60 * 60 * 1000)) / (60 * 1000));
+        const segundos = Math.floor((restante % (60 * 1000)) / 1000);
 
-        // 1. FUNÇÃO ENTRAR (ECRÃ DE LOGIN)
-        window.entrar = function() {
-            const email = document.getElementById('login-email').value;
-            const senha = document.getElementById('login-senha').value;
-            const msg = document.getElementById('msg-login');
+        // Formata com zero à esquerda
+        elDias.textContent = String(dias).padStart(2, '0');
+        elHoras.textContent = String(horas).padStart(2, '0');
+        elMinutos.textContent = String(minutos).padStart(2, '0');
+        elSegundos.textContent = String(segundos).padStart(2, '0');
+      }
 
-            if(!email || !senha) { msg.innerText = "Preenche o e-mail e a palavra-passe."; return; }
-            msg.style.color = "#3b82f6";
-            msg.innerText = "A entrar...";
+      // Inicia
+      atualizarContagem();
+      intervalo = setInterval(atualizarContagem, 1000);
+    })();
+  </script>
 
-            signInWithEmailAndPassword(auth, email, senha)
-                .then(() => { window.location.href = "home.html"; })
-                .catch((error) => { 
-                    msg.style.color = "#ef4444";
-                    msg.innerText = "E-mail ou palavra-passe incorretos."; 
-                });
-        }
-
-        // 2. FUNÇÃO REGISTAR (ECRÃ DE CRIAR CONTA)
-        window.registar = function() {
-            const nome = document.getElementById('reg-nome').value;
-            const email = document.getElementById('reg-email').value;
-            const senha = document.getElementById('reg-senha').value;
-            const msg = document.getElementById('msg-registo');
-
-            if(!nome || !email || !senha) { msg.innerText = "Preenche todos os campos acima."; return; }
-            msg.style.color = "#3b82f6";
-            msg.innerText = "A criar a tua conta...";
-
-            createUserWithEmailAndPassword(auth, email, senha)
-                .then((userCredential) => {
-                    // Guardar o Nome no perfil da pessoa
-                    return updateProfile(userCredential.user, { displayName: nome });
-                })
-                .then(() => {
-                    alert("Conta criada com sucesso!");
-                    window.location.href = "home.html";
-                })
-                .catch((error) => { 
-                    msg.style.color = "#ef4444";
-                    if (error.code === 'auth/email-already-in-use') {
-                        msg.innerText = "Este e-mail já está a ser usado.";
-                    } else if (error.code === 'auth/weak-password') {
-                        msg.innerText = "A senha deve ter pelo menos 6 caracteres.";
-                    } else {
-                        msg.innerText = "Erro: " + error.message; 
-                    }
-                });
-        }
-
-        // 3. FUNÇÃO ENTRAR COM GOOGLE
-        window.entrarComGoogle = function() {
-            const provider = new GoogleAuthProvider();
-            const msg = document.getElementById('msg-login');
-            msg.style.color = "#3b82f6"; 
-            msg.innerText = "A ligar ao Google...";
-
-            signInWithPopup(auth, provider)
-                .then(() => { window.location.href = "home.html"; })
-                .catch((error) => {
-                    console.error(error);
-                    msg.style.color = "#ef4444";
-                    msg.innerText = "Erro ao ligar ao Google.";
-                });
-        }
-    </script>
 </body>
 </html>
