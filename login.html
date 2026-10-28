@@ -1,385 +1,354 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0a0e1a">
-<title>YUNA · Login</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-    /* ===== RESET E FUNDO ESTRELADO ===== */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    
-    body { 
-        background-color: #0d0914; 
-        /* Efeito de estrelas e brilho roxo no fundo */
-        background-image: 
-            radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 10% 10%, rgba(255,255,255,0.2) 1px, transparent 1px),
-            radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 1px, transparent 1px),
-            radial-gradient(circle at 40% 70%, rgba(255,255,255,0.1) 1px, transparent 1px),
-            radial-gradient(circle at 90% 80%, rgba(255,255,255,0.2) 1px, transparent 1px),
-            radial-gradient(circle at 20% 90%, rgba(255,255,255,0.1) 1px, transparent 1px);
-        background-size: 100% 100%, 100px 100px, 150px 150px, 120px 120px, 180px 180px, 200px 200px;
-        color: #ffffff;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        overflow-x: hidden;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YUNA - Atualização V1</title>
+  <!-- Fonte e Ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
     }
 
-    /* ===== LOGOTIPO ===== */
-    .logo-container {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0B0914;
+      /* Efeito de estrelas e gradiente de fundo */
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(228, 77, 140, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(75, 93, 240, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(159, 77, 228, 0.1) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: #ffffff;
+      padding: 20px;
     }
-    
+
+    /* Pequenos pontos brancos para simular estrelas */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(1px 1px at 10% 10%, white, transparent),
+        radial-gradient(1px 1px at 30% 40%, white, transparent),
+        radial-gradient(1px 1px at 70% 20%, white, transparent),
+        radial-gradient(1.5px 1.5px at 80% 60%, white, transparent),
+        radial-gradient(1px 1px at 40% 80%, white, transparent),
+        radial-gradient(1px 1px at 60% 90%, white, transparent);
+      background-size: 200px 200px;
+      opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Logo YUNA */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
     .logo-icon {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, #f472b6, #8b5cf6);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 35px;
-        color: #fff;
-        box-shadow: 0 0 30px rgba(244, 114, 182, 0.4);
-        transform: rotate(-5deg);
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(135deg, #F14B8B, #9B51E0);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(228, 77, 140, 0.4);
+    }
+
+    .logo-icon i {
+      font-size: 28px;
+      color: white;
     }
 
     .logo-text {
-        display: flex;
-        flex-direction: column;
+      text-align: left;
     }
 
     .logo-text h1 {
-        font-size: 42px;
-        font-weight: 900;
-        color: #6b8cff; /* Azul claro do logotipo */
-        margin: 0;
-        letter-spacing: 2px;
-        line-height: 1;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(to right, #9B51E0, #4B5DF0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
     }
 
     .logo-text span {
-        font-size: 11px;
-        color: #a0a0a0;
-        letter-spacing: 3px;
-        font-weight: 600;
-        margin-top: 5px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #A0A0B0;
+      text-transform: uppercase;
     }
 
-    /* ===== TEXTO DE APRESENTAÇÃO ===== */
-    .welcome-text {
-        text-align: center;
-        font-size: 16px;
-        color: #d1d5db;
-        line-height: 1.6;
-        margin-bottom: 40px;
-        max-width: 350px;
+    /* Descrição */
+    .description {
+      font-size: 15px;
+      color: #D1D1D6;
+      line-height: 1.5;
+      margin-bottom: 30px;
+      padding: 0 10px;
     }
 
-    /* ===== BOTÕES PRINCIPAIS ===== */
-    .btn-principal {
-        width: 100%;
-        max-width: 350px;
-        padding: 18px;
-        border-radius: 25px;
-        border: none;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        color: #fff;
-        margin-bottom: 15px;
-        transition: transform 0.2s, box-shadow 0.2s;
+    /* Área do Contador */
+    .countdown-wrapper {
+      width: 100%;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px 15px;
+      backdrop-filter: blur(10px);
     }
 
-    .btn-principal:active {
-        transform: scale(0.95);
+    .countdown-title {
+      font-size: 13px;
+      color: #A0A0B0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+      font-weight: 500;
     }
 
-    /* Botão de Aventura (Rosa/Roxo) */
-    .btn-aventura {
-        background: linear-gradient(90deg, #f472b6, #a78bfa);
-        box-shadow: 0 0 20px rgba(244, 114, 182, 0.3);
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
     }
 
-    /* Botão do Discord (Azul) */
+    .time-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      border-radius: 12px;
+      min-width: 70px;
+      border: 1px solid rgba(159, 77, 228, 0.3);
+      box-shadow: inset 0 0 10px rgba(159, 77, 228, 0.1);
+    }
+
+    .time-box span {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .time-box small {
+      font-size: 11px;
+      color: #A0A0B0;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Botões */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+
     .btn-discord {
-        background: #5865F2;
-        box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);
+      background: #4B5DF0;
+      box-shadow: 0 8px 20px rgba(75, 93, 240, 0.3);
     }
 
-    /* Texto do "ou" */
-    .divisor {
-        color: #6b7280;
-        font-size: 14px;
-        margin: 10px 0 20px 0;
-        font-style: italic;
+    /* Redes Sociais */
+    .socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 5px;
+      margin-bottom: 30px;
     }
 
-    /* ===== ÍCONES SOCIAIS ===== */
-    .social-icons {
-        display: flex;
-        gap: 15px;
-        margin-top: 30px;
-        margin-bottom: 40px;
+    .social-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #A0A0B0;
+      font-size: 20px;
+      text-decoration: none;
+      transition: all 0.2s;
     }
 
-    .social-btn {
-        width: 50px;
-        height: 50px;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        color: #9ca3af;
-        text-decoration: none;
-        transition: 0.2s;
+    .social-icon:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateY(-2px);
     }
 
-    .social-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-    }
-
-    /* ===== FOOTER ===== */
+    /* Footer */
     .footer {
-        position: absolute;
-        bottom: 30px;
-        font-size: 12px;
-        color: #6b7280;
-        display: flex;
-        align-items: center;
-        gap: 5px;
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .footer i {
-        color: #f472b6;
+      color: #E44D8C;
+      font-size: 10px;
     }
 
-    /* ===== FORMULÁRIO DE LOGIN (ESCAMOTEADO POR DEFEITO) ===== */
-    .login-form {
-        display: none; /* Escondido até clicar no botão de aventura */
-        width: 100%;
-        max-width: 350px;
-        flex-direction: column;
-        gap: 15px;
-        margin-top: 20px;
+    /* Efeito concluído */
+    .finished .time-box {
+      border-color: #16a34a;
+      box-shadow: inset 0 0 15px rgba(22, 163, 74, 0.2);
     }
-
-    .login-form input {
-        width: 100%;
-        padding: 15px;
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(0, 0, 0, 0.3);
-        color: #fff;
-        font-size: 16px;
-        outline: none;
+    .finished .time-box span {
+      color: #16a34a;
     }
-
-    .login-form input::placeholder {
-        color: #9ca3af;
-    }
-
-    .btn-entrar {
-        background: #f472b6;
-        color: #fff;
-        padding: 15px;
-        border-radius: 15px;
-        border: none;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    .btn-google {
-        background: #fff;
-        color: #333;
-        padding: 15px;
-        border-radius: 15px;
-        border: none;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 10px;
-    }
-    
-    .btn-google img { width: 20px; }
-
-    .btn-voltar {
-        background: transparent;
-        border: none;
-        color: #9ca3af;
-        margin-top: 15px;
-        cursor: pointer;
-        text-decoration: underline;
-    }
-</style>
+  </style>
 </head>
 <body>
 
-    <!-- LOGOTIPO -->
+  <div class="container">
+    
+    <!-- Logo -->
     <div class="logo-container">
-        <div class="logo-icon"><i class="fas fa-compass"></i></div>
-        <div class="logo-text">
-            <h1>YUNA</h1>
-            <span>SEU UNIVERSO</span>
-        </div>
+      <div class="logo-icon">
+        <i class="fa-regular fa-compass"></i>
+      </div>
+      <div class="logo-text">
+        <h1>YUNA</h1>
+        <span>SEU UNIVERSO</span>
+      </div>
     </div>
 
-    <!-- TEXTO INICIAL -->
-    <div class="welcome-text" id="telaInicial">
-        Explore filmes, séries, músicas, animes e<br>educação em um só lugar.<br>
-        Descubra, aprenda e conecte-se com o que<br>você ama. 🚀
+    <!-- Texto de descrição -->
+    <p class="description">
+      Explore filmes, séries, músicas, animes e educação em um só lugar. Descubra, aprenda e conecte-se com o que você ama. 🚀
+    </p>
+
+    <!-- Contador Regressivo -->
+    <div class="countdown-wrapper" id="countdown-container">
+      <div class="countdown-title">A nova atualização da V1 chega em:</div>
+      <div class="countdown-timer">
+        <div class="time-box"><span id="days">00</span><small>Dias</small></div>
+        <div class="time-box"><span id="hours">00</span><small>Horas</small></div>
+        <div class="time-box"><span id="minutes">00</span><small>Min</small></div>
+        <div class="time-box"><span id="seconds">00</span><small>Seg</small></div>
+      </div>
     </div>
 
-    <!-- BOTÕES INICIAIS -->
-    <div id="botoesIniciais" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-        <button class="btn-principal btn-aventura" onclick="mostrarFormulario()">
-            <i class="fas fa-play-circle"></i> Começar sua aventura
-        </button>
-        
-        <div class="divisor">ou entre na comunidade</div>
-        
-        <button class="btn-principal btn-discord" onclick="alert('Link do Discord em breve!')">
-            <i class="fab fa-discord"></i> Entrar no Discord
-        </button>
+    <!-- Botão Discord (Principal) -->
+    <a href="https://discord.gg/vSuvKTJxS" target="_blank" class="btn btn-discord">
+      <i class="fa-brands fa-discord"></i> Entrar no Discord
+    </a>
+
+    <!-- Ícones Sociais -->
+    <div class="socials">
+      <a href="https://discord.gg/vSuvKTJxS" target="_blank" class="social-icon"><i class="fa-brands fa-discord"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
     </div>
 
-    <!-- FORMULÁRIO DE LOGIN (APARECE AO CLICAR EM AVENTURA) -->
-    <div class="login-form" id="formLogin">
-        <input type="email" id="email" placeholder="O teu e-mail">
-        <input type="password" id="password" placeholder="A tua palavra-passe">
-        <div id="mensagemErro" style="color: #ef4444; font-size: 14px; text-align: center; display: none;"></div>
-        
-        <button class="btn-entrar" onclick="entrarComEmail()">Entrar</button>
-        
-        <button class="btn-google" onclick="entrarComGoogle()">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            Continuar com Google
-        </button>
-        
-        <button class="btn-voltar" onclick="voltarInicio()">Voltar</button>
-    </div>
-
-    <!-- ÍCONES SOCIAIS -->
-    <div class="social-icons">
-        <a href="#" class="social-btn"><i class="fab fa-discord"></i></a>
-        <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
-        <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
-        <a href="#" class="social-btn"><i class="fab fa-github"></i></a>
-    </div>
-
-    <!-- FOOTER -->
+    <!-- Footer -->
     <div class="footer">
-        <i class="fas fa-heart"></i> YUNA © 2026 · Versão 1.0
+      <i class="fa-solid fa-heart"></i> YUNA © 2025 · Versão 1.0
     </div>
 
-    <!-- FIREBASE V8 -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  </div>
 
-    <script>
-        // A TUA CONFIGURAÇÃO DO FIREBASE
-        const firebaseConfig = {
-            apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
-            authDomain: "yuna-8fe24.firebaseapp.com",
-            projectId: "yuna-8fe24",
-            storageBucket: "yuna-8fe24.firebasestorage.app",
-            messagingSenderId: "531340097112",
-            appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
-        };
+  <script>
+    (function () {
+      const SETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000; // 7 dias em milissegundos
+      const CHAVE = "yuna_v1_countdown";
+      
+      // Pega a data final salva ou define uma nova (agora + 7 dias)
+      let dataFinal = Number(localStorage.getItem(CHAVE));
+      if (!dataFinal || isNaN(dataFinal)) {
+        dataFinal = Date.now() + SETE_DIAS_MS;
+        localStorage.setItem(CHAVE, String(dataFinal));
+      }
 
-        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-        const auth = firebase.auth();
+      const elDias = document.getElementById("days");
+      const elHoras = document.getElementById("hours");
+      const elMinutos = document.getElementById("minutes");
+      const elSegundos = document.getElementById("seconds");
+      const container = document.getElementById("countdown-container");
 
-        // Manter sessão
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    // Se o utilizador já estiver logado, vai direto para o home
-                    window.location.href = "home.html";
-                }
-            });
-        });
+      let intervalo = null;
 
-        // Lógica de mostrar/esconder o formulário
-        function mostrarFormulario() {
-            document.getElementById('telaInicial').style.display = 'none';
-            document.getElementById('botoesIniciais').style.display = 'none';
-            document.getElementById('formLogin').style.display = 'flex';
+      function atualizarContagem() {
+        const restante = dataFinal - Date.now();
+
+        // Se o tempo acabar
+        if (restante <= 0) {
+          container.classList.add("finished");
+          container.querySelector('.countdown-title').innerHTML = "<strong>Atualização Disponível!</strong>";
+          elDias.textContent = "00";
+          elHoras.textContent = "00";
+          elMinutos.textContent = "00";
+          elSegundos.textContent = "00";
+          clearInterval(intervalo);
+          return;
         }
 
-        function voltarInicio() {
-            document.getElementById('telaInicial').style.display = 'block';
-            document.getElementById('botoesIniciais').style.display = 'flex';
-            document.getElementById('formLogin').style.display = 'none';
-            document.getElementById('mensagemErro').style.display = 'none';
-        }
+        const dias = Math.floor(restante / (24 * 60 * 60 * 1000));
+        const horas = Math.floor((restante % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+        const minutos = Math.floor((restante % (60 * 60 * 1000)) / (60 * 1000));
+        const segundos = Math.floor((restante % (60 * 1000)) / 1000);
 
-        // 1. LOGIN COM E-MAIL
-        function entrarComEmail() {
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('password').value;
-            const msgErro = document.getElementById('mensagemErro');
+        // Formata com zero à esquerda
+        elDias.textContent = String(dias).padStart(2, '0');
+        elHoras.textContent = String(horas).padStart(2, '0');
+        elMinutos.textContent = String(minutos).padStart(2, '0');
+        elSegundos.textContent = String(segundos).padStart(2, '0');
+      }
 
-            if (!email || !senha) {
-                msgErro.innerText = "Preenche o e-mail e a palavra-passe.";
-                msgErro.style.display = 'block';
-                return;
-            }
+      // Inicia
+      atualizarContagem();
+      intervalo = setInterval(atualizarContagem, 1000);
+    })();
+  </script>
 
-            msgErro.style.display = 'none';
-
-            auth.signInWithEmailAndPassword(email, senha)
-                .then(() => {
-                    window.location.href = "home.html";
-                })
-                .catch((error) => {
-                    msgErro.innerText = "Erro: E-mail ou palavra-passe incorretos.";
-                    msgErro.style.display = 'block';
-                });
-        }
-
-        // 2. LOGIN COM GOOGLE
-        function entrarComGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            const msgErro = document.getElementById('mensagemErro');
-            
-            msgErro.style.color = "#3b82f6";
-            msgErro.innerText = "A ligar ao Google...";
-            msgErro.style.display = 'block';
-
-            auth.signInWithPopup(provider)
-                .then(() => {
-                    window.location.href = "home.html";
-                })
-                .catch((error) => {
-                    console.error(error);
-                    msgErro.style.color = "#ef4444";
-                    msgErro.innerText = "Erro ao ligar ao Google.";
-                });
-        }
-    </script>
 </body>
 </html>
