@@ -1,354 +1,317 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YUNA - Atualização V1</title>
-  <!-- Fonte e Ícones -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0e1a">
+<title>YUNA · Entrar</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* 🎨 SISTEMA DE TEMAS E CORES */
+:root { 
+  --bg: #0a0e1a; --card-bg: rgba(15,20,35,0.7); --text-main: #f1f5f9; --text-sub: #94a3b8; 
+  --accent: #f472b6; --accent-gradient: linear-gradient(135deg,#f472b6,#a78bfa); 
+  --border: rgba(255,255,255,.08); --input-bg: rgba(255,255,255,.03);
+}
+body.theme-branco { 
+  --bg: #f8fafc; --card-bg: rgba(255,255,255,0.8); --text-main: #1e293b; --text-sub: #64748b; 
+  --accent: #8b5cf6; --accent-gradient: linear-gradient(135deg,#8b5cf6,#ec4899); 
+  --border: rgba(0,0,0,.1); --input-bg: #f1f5f9;
+}
+body.theme-azul { 
+  --bg: #0f172a; --card-bg: rgba(30,41,59,0.7); --text-main: #f8fafc; --text-sub: #94a3b8; 
+  --accent: #38bdf8; --accent-gradient: linear-gradient(135deg,#38bdf8,#0ea5e9); 
+  --border: rgba(56,189,248,.2); --input-bg: rgba(56,189,248,.05);
+}
+body.theme-amarelo { 
+  --bg: #000000; --card-bg: rgba(20,20,20,0.8); --text-main: #fef08a; --text-sub: #ca8a04; 
+  --accent: #facc15; --accent-gradient: linear-gradient(135deg,#facc15,#eab308); 
+  --border: rgba(250,204,21,.2); --input-bg: rgba(250,204,21,.05);
+}
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #0B0914;
-      /* Efeito de estrelas e gradiente de fundo */
-      background-image: 
-        radial-gradient(circle at 15% 20%, rgba(228, 77, 140, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 85% 80%, rgba(75, 93, 240, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(159, 77, 228, 0.1) 0%, transparent 60%);
-      background-attachment: fixed;
-      color: #ffffff;
-      padding: 20px;
-    }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; transition: background 0.4s; overflow: hidden; }
 
-    /* Pequenos pontos brancos para simular estrelas */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: 
-        radial-gradient(1px 1px at 10% 10%, white, transparent),
-        radial-gradient(1px 1px at 30% 40%, white, transparent),
-        radial-gradient(1px 1px at 70% 20%, white, transparent),
-        radial-gradient(1.5px 1.5px at 80% 60%, white, transparent),
-        radial-gradient(1px 1px at 40% 80%, white, transparent),
-        radial-gradient(1px 1px at 60% 90%, white, transparent);
-      background-size: 200px 200px;
-      opacity: 0.3;
-      z-index: -1;
-      pointer-events: none;
-    }
+/* 🌟 EFEITOS DE FUNDO (Luzes a mexer) */
+body::before, body::after {
+  content: ''; position: fixed; width: 300px; height: 300px; border-radius: 50%;
+  filter: blur(80px); z-index: -1; animation: flutuar 10s infinite alternate ease-in-out;
+}
+body::before {
+  background: var(--accent); top: -100px; left: -100px; opacity: 0.3;
+}
+body::after {
+  background: #8b5cf6; bottom: -100px; right: -100px; opacity: 0.2; animation-delay: -5s;
+}
+@keyframes flutuar { 
+  0% { transform: translate(0, 0) scale(1); } 
+  100% { transform: translate(50px, 50px) scale(1.2); } 
+}
 
-    .container {
-      width: 100%;
-      max-width: 420px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
+/* CARD PRINCIPAL COM EFEITO DE VIDRO */
+.login-card {
+  width: 100%; max-width: 400px; 
+  background: var(--card-bg); 
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border); border-radius: 28px; 
+  padding: 40px 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  position: relative; z-index: 10;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-    /* Logo YUNA */
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+.logo-area { text-align: center; margin-bottom: 30px; }
+.logo-area h1 { 
+  font-size: 42px; font-weight: 900; 
+  background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+  letter-spacing: 2px; filter: drop-shadow(0 2px 10px rgba(244,114,182,0.4));
+}
+.logo-area p { font-size: 14px; color: var(--text-sub); margin-top: 5px; font-weight: 500; }
 
-    .logo-icon {
-      width: 65px;
-      height: 65px;
-      background: linear-gradient(135deg, #F14B8B, #9B51E0);
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 25px rgba(228, 77, 140, 0.4);
-    }
+/* INPUTS */
+.input-group { margin-bottom: 16px; position: relative; animation: fadeIn 0.5s ease backwards; }
+.input-group:nth-child(1) { animation-delay: 0.1s; }
+.input-group:nth-child(2) { animation-delay: 0.2s; }
+.input-group:nth-child(3) { animation-delay: 0.3s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
-    .logo-icon i {
-      font-size: 28px;
-      color: white;
-    }
+.input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-sub); font-size: 16px; transition: color 0.3s; }
+.input-group input {
+  width: 100%; padding: 16px 16px 16px 48px; border-radius: 16px; border: 1px solid var(--border);
+  background: var(--input-bg); color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s;
+}
+.input-group input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(244,114,182,0.15); background: var(--bg); }
+.input-group input:focus + i { color: var(--accent); }
 
-    .logo-text {
-      text-align: left;
-    }
+/* BOTÕES */
+.btn-principal {
+  width: 100%; padding: 16px; border-radius: 16px; border: none;
+  background: var(--accent-gradient); color: #fff; font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 10px;
+  display: flex; justify-content: center; align-items: center; gap: 10px;
+  box-shadow: 0 10px 20px rgba(244,114,182,0.3);
+}
+.btn-principal:active { transform: scale(0.96); }
+.btn-principal:hover { box-shadow: 0 15px 25px rgba(244,114,182,0.5); }
 
-    .logo-text h1 {
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      background: linear-gradient(to right, #9B51E0, #4B5DF0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1.1;
-    }
+.divider { display: flex; align-items: center; text-align: center; margin: 25px 0; color: var(--text-sub); font-size: 13px; font-weight: 500;}
+.divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
+.divider::before { margin-right: 15px; }
+.divider::after { margin-left: 15px; }
 
-    .logo-text span {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: #A0A0B0;
-      text-transform: uppercase;
-    }
+.btn-google {
+  width: 100%; padding: 14px; border-radius: 16px; border: 1px solid var(--border);
+  background: var(--input-bg); color: var(--text-main); font-size: 15px; font-weight: 600;
+  cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s;
+}
+.btn-google:active { transform: scale(0.96); }
+.btn-google img { width: 22px; }
 
-    /* Descrição */
-    .description {
-      font-size: 15px;
-      color: #D1D1D6;
-      line-height: 1.5;
-      margin-bottom: 30px;
-      padding: 0 10px;
-    }
+.toggle-auth { text-align: center; margin-top: 25px; font-size: 14px; color: var(--text-sub); }
+.toggle-auth span { color: var(--accent); font-weight: 700; cursor: pointer; }
+.toggle-auth span:hover { text-decoration: underline; }
 
-    /* Área do Contador */
-    .countdown-wrapper {
-      width: 100%;
-      margin-bottom: 25px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 20px 15px;
-      backdrop-filter: blur(10px);
-    }
+/* ERRO */
+.erro-msg { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; padding: 12px; border-radius: 12px; font-size: 13px; margin-bottom: 15px; display: none; text-align: center; animation: shake 0.4s; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-    .countdown-title {
-      font-size: 13px;
-      color: #A0A0B0;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 15px;
-      font-weight: 500;
-    }
-
-    .countdown-timer {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .time-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px;
-      border-radius: 12px;
-      min-width: 70px;
-      border: 1px solid rgba(159, 77, 228, 0.3);
-      box-shadow: inset 0 0 10px rgba(159, 77, 228, 0.1);
-    }
-
-    .time-box span {
-      font-size: 22px;
-      font-weight: 700;
-      color: #FFFFFF;
-    }
-
-    .time-box small {
-      font-size: 11px;
-      color: #A0A0B0;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    /* Botões */
-    .btn {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: 600;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: transform 0.2s, opacity 0.2s;
-      margin-bottom: 20px;
-      text-decoration: none;
-    }
-
-    .btn:hover {
-      transform: scale(1.02);
-      opacity: 0.9;
-    }
-
-    .btn-discord {
-      background: #4B5DF0;
-      box-shadow: 0 8px 20px rgba(75, 93, 240, 0.3);
-    }
-
-    /* Redes Sociais */
-    .socials {
-      display: flex;
-      gap: 12px;
-      margin-top: 5px;
-      margin-bottom: 30px;
-    }
-
-    .social-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #A0A0B0;
-      font-size: 20px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .social-icon:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    /* Footer */
-    .footer {
-      font-size: 12px;
-      color: #666;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .footer i {
-      color: #E44D8C;
-      font-size: 10px;
-    }
-
-    /* Efeito concluído */
-    .finished .time-box {
-      border-color: #16a34a;
-      box-shadow: inset 0 0 15px rgba(22, 163, 74, 0.2);
-    }
-    .finished .time-box span {
-      color: #16a34a;
-    }
-  </style>
+/* ESCONDER CAMPOS DE REGISTO */
+.campos-registo { display: none; }
+</style>
 </head>
-<body>
+<body class="theme-padrao">
 
-  <div class="container">
-    
-    <!-- Logo -->
-    <div class="logo-container">
-      <div class="logo-icon">
-        <i class="fa-regular fa-compass"></i>
-      </div>
-      <div class="logo-text">
-        <h1>YUNA</h1>
-        <span>SEU UNIVERSO</span>
-      </div>
-    </div>
-
-    <!-- Texto de descrição -->
-    <p class="description">
-      Explore filmes, séries, músicas, animes e educação em um só lugar. Descubra, aprenda e conecte-se com o que você ama. 🚀
-    </p>
-
-    <!-- Contador Regressivo -->
-    <div class="countdown-wrapper" id="countdown-container">
-      <div class="countdown-title">A nova atualização da V1 chega em:</div>
-      <div class="countdown-timer">
-        <div class="time-box"><span id="days">00</span><small>Dias</small></div>
-        <div class="time-box"><span id="hours">00</span><small>Horas</small></div>
-        <div class="time-box"><span id="minutes">00</span><small>Min</small></div>
-        <div class="time-box"><span id="seconds">00</span><small>Seg</small></div>
-      </div>
-    </div>
-
-    <!-- Botão Discord (Principal) -->
-    <a href="https://discord.gg/vSuvKTJxS" target="_blank" class="btn btn-discord">
-      <i class="fa-brands fa-discord"></i> Entrar no Discord
-    </a>
-
-    <!-- Ícones Sociais -->
-    <div class="socials">
-      <a href="https://discord.gg/vSuvKTJxS" target="_blank" class="social-icon"><i class="fa-brands fa-discord"></i></a>
-      <a href="https://youtube.com/@yuna-q3e1s?si=Ukez9J8ypSkbKNdi" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-      <a href="#" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
-      <a href="https://www.tiktok.com/@yunasite6?_r=1&_t=ZS-9AylSfzHIbi" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-      <i class="fa-solid fa-heart"></i> YUNA © 2025 · Versão 1.0
-    </div>
-
+<div class="login-card">
+  <div class="logo-area">
+    <h1>YUNA</h1>
+    <p id="subtitulo">Bem-vindo de volta!</p>
   </div>
 
-  <script>
-    (function () {
-      const SETE_DIAS_MS = 7 * 24 * 60 * 60 * 1000; // 7 dias em milissegundos
-      const CHAVE = "yuna_v1_countdown";
-      
-      // Pega a data final salva ou define uma nova (agora + 7 dias)
-      let dataFinal = Number(localStorage.getItem(CHAVE));
-      if (!dataFinal || isNaN(dataFinal)) {
-        dataFinal = Date.now() + SETE_DIAS_MS;
-        localStorage.setItem(CHAVE, String(dataFinal));
+  <div class="erro-msg" id="erroMsg"></div>
+
+  <div id="formAuth">
+    <!-- CAMPOS DE REGISTO (Só aparecem se estiver a criar conta) -->
+    <div class="campos-registo" id="camposRegisto">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="inputNome" placeholder="O teu Nome">
+      </div>
+      <div class="input-group">
+        <i class="fas fa-at"></i>
+        <input type="text" id="inputUsername" placeholder="Nome de Utilizador (ex: @mzbetoff)">
+      </div>
+    </div>
+
+    <!-- CAMPOS NORMAIS -->
+    <div class="input-group">
+      <i class="fas fa-envelope"></i>
+      <input type="email" id="inputEmail" placeholder="O teu e-mail">
+    </div>
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" id="inputSenha" placeholder="A tua palavra-passe">
+    </div>
+    
+    <button class="btn-principal" id="btnAuth" onclick="autenticar()">
+      <span id="btnAuthTexto">Entrar</span>
+    </button>
+  </div>
+
+  <div class="divider">ou</div>
+
+  <button class="btn-google" onclick="loginGoogle()">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+    Continuar com Google
+  </button>
+
+  <div class="toggle-auth">
+    <span id="textoToggle">Não tens conta? </span>
+    <span onclick="alternarModo()" id="btnToggle">Regista-te</span>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script>
+// 1. APLICAR TEMA
+(function() {
+  const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+  document.body.className = 'theme-' + temaSalvo;
+})();
+
+// 2. FIREBASE CONFIG
+const firebaseConfig = {
+    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+    authDomain: "yuna-8fe24.firebaseapp.com",
+    projectId: "yuna-8fe24",
+    storageBucket: "yuna-8fe24.firebasestorage.app",
+    messagingSenderId: "531340097112",
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+};
+if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// 3. LÓGICA DE LOGIN / REGISTO
+let modoRegisto = false;
+
+function alternarModo() {
+  modoRegisto = !modoRegisto;
+  const camposRegisto = document.getElementById('camposRegisto');
+  const subtitulo = document.getElementById('subtitulo');
+  const btnAuthTexto = document.getElementById('btnAuthTexto');
+  const textoToggle = document.getElementById('textoToggle');
+  const btnToggle = document.getElementById('btnToggle');
+  const erro = document.getElementById('erroMsg');
+  erro.style.display = 'none';
+
+  if (modoRegisto) {
+    subtitulo.innerText = "Cria a tua conta";
+    btnAuthTexto.innerText = "Criar Conta";
+    textoToggle.innerText = "Já tens conta? ";
+    btnToggle.innerText = "Entra";
+    camposRegisto.style.display = 'block';
+  } else {
+    subtitulo.innerText = "Bem-vindo de volta!";
+    btnAuthTexto.innerText = "Entrar";
+    textoToggle.innerText = "Não tens conta? ";
+    btnToggle.innerText = "Regista-te";
+    camposRegisto.style.display = 'none';
+  }
+}
+
+async function autenticar() {
+  const email = document.getElementById('inputEmail').value.trim();
+  const senha = document.getElementById('inputSenha').value;
+  const btn = document.getElementById('btnAuth');
+  const erro = document.getElementById('erroMsg');
+
+  if (!email || !senha) {
+    mostrarErro("Preenche o e-mail e a palavra-passe.");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A processar...';
+  erro.style.display = 'none';
+
+  try {
+    if (modoRegisto) {
+      const nome = document.getElementById('inputNome').value.trim();
+      const username = document.getElementById('inputUsername').value.trim();
+
+      if (!nome || !username) {
+        throw new Error("Preenche o nome e o nome de utilizador.");
       }
 
-      const elDias = document.getElementById("days");
-      const elHoras = document.getElementById("hours");
-      const elMinutos = document.getElementById("minutes");
-      const elSegundos = document.getElementById("seconds");
-      const container = document.getElementById("countdown-container");
+      // Cria a conta no Auth
+      const userCredential = await auth.createUserWithEmailAndPassword(email, senha);
+      const user = userCredential.user;
 
-      let intervalo = null;
+      // Atualiza o perfil com o nome e o username
+      await user.updateProfile({
+        displayName: username // O @username fica como displayName
+      });
 
-      function atualizarContagem() {
-        const restante = dataFinal - Date.now();
+      // Guarda o nome real na base de dados Firestore
+      await db.collection("utilizadores").doc(user.uid).set({
+        nomeReal: nome,
+        username: username,
+        email: email,
+        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+      });
 
-        // Se o tempo acabar
-        if (restante <= 0) {
-          container.classList.add("finished");
-          container.querySelector('.countdown-title').innerHTML = "<strong>Atualização Disponível!</strong>";
-          elDias.textContent = "00";
-          elHoras.textContent = "00";
-          elMinutos.textContent = "00";
-          elSegundos.textContent = "00";
-          clearInterval(intervalo);
-          return;
-        }
+      alert("Conta criada com sucesso! Bem-vindo ao YUNA.");
+    } else {
+      await auth.signInWithEmailAndPassword(email, senha);
+    }
+    
+    window.location.href = "home.html";
+  } catch (error) {
+    let msg = "Ocorreu um erro.";
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = "E-mail ou palavra-passe incorretos.";
+    if (error.code === 'auth/email-already-in-use') msg = "Este e-mail já está registado.";
+    if (error.code === 'auth/weak-password') msg = "A palavra-passe deve ter pelo menos 6 caracteres.";
+    if (error.code === 'auth/invalid-email') msg = "Formato de e-mail inválido.";
+    if (error.message) msg = error.message;
+    
+    mostrarErro(msg);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<span id="btnAuthTexto">${modoRegisto ? 'Criar Conta' : 'Entrar'}</span>`;
+  }
+}
 
-        const dias = Math.floor(restante / (24 * 60 * 60 * 1000));
-        const horas = Math.floor((restante % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-        const minutos = Math.floor((restante % (60 * 60 * 1000)) / (60 * 1000));
-        const segundos = Math.floor((restante % (60 * 1000)) / 1000);
+function mostrarErro(msg) {
+  const erro = document.getElementById('erroMsg');
+  erro.innerText = msg;
+  erro.style.display = 'block';
+  setTimeout(() => { erro.style.display = 'none'; }, 4000);
+}
 
-        // Formata com zero à esquerda
-        elDias.textContent = String(dias).padStart(2, '0');
-        elHoras.textContent = String(horas).padStart(2, '0');
-        elMinutos.textContent = String(minutos).padStart(2, '0');
-        elSegundos.textContent = String(segundos).padStart(2, '0');
-      }
+// 4. LOGIN COM GOOGLE
+async function loginGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    await auth.signInWithPopup(provider);
+    window.location.href = "home.html";
+  } catch (error) {
+    if (error.code !== 'auth/popup-closed-by-user') {
+      mostrarErro("Erro ao entrar com o Google.");
+    }
+  }
+}
 
-      // Inicia
-      atualizarContagem();
-      intervalo = setInterval(atualizarContagem, 1000);
-    })();
-  </script>
+// 5. SE JÁ ESTIVER LOGADO, MANDA PARA A HOME
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    window.location.href = "home.html";
+  }
+});
+</script>
 
 </body>
 </html>
