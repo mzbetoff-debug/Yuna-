@@ -42,20 +42,7 @@ body{padding-bottom:80px}
 .user-avatar{width:40px;height:40px;border-radius:50%;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid var(--border);text-decoration:none;color:#fff}
 .user-avatar img{width:100%;height:100%;object-fit:cover}
 
-.tabs-info{display:flex;gap:8px;padding:16px;overflow-x:auto;border-bottom:1px solid var(--border)}
-.tab-info{flex:1;text-align:center;padding:10px 16px;border-radius:20px;background:var(--card-bg);border:1px solid var(--border);color:var(--text-sub);font-size:13px;font-weight:700;cursor:pointer}
-.tab-info.active{background:var(--accent-gradient);color:#fff;border:none}
-
-.novo-post{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:16px;margin:16px}
-.novo-post textarea{width:100%;height:60px;background:transparent;border:none;color:var(--text-main);font-size:15px;resize:none;outline:none}
-.novo-post textarea::placeholder{color:var(--text-sub)}
-.preview-img{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-top:10px;display:none}
-.novo-post .footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-.btn-foto{background:transparent;border:1px solid var(--border);color:var(--text-main);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.btn-publicar{background:var(--accent-gradient);color:#fff;border:none;padding:10px 20px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer}
-.btn-publicar:disabled{opacity:0.5;cursor:not-allowed;}
-
-.search-info{display:flex;gap:8px;padding:0 16px 16px}
+.search-info{display:flex;gap:8px;padding:16px 16px 10px 16px}
 .search-info input{flex:1;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-main);outline:none}
 .search-info button{padding:0 20px;border-radius:12px;border:none;background:var(--accent-gradient);color:#fff;font-weight:bold;cursor:pointer}
 
@@ -73,19 +60,6 @@ body{padding-bottom:80px}
 .post-acoes span, .post-acoes a {cursor:pointer;display:flex;align-items:center;gap:5px;text-decoration:none;color:var(--text-sub);}
 .post-acoes a:hover {color:var(--accent);}
 .btn-mais-info{width:calc(100% - 32px);margin:0 16px 20px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;color:var(--accent);font-weight:bold;cursor:pointer}
-
-.tela-videos{height:calc(100vh - 130px);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;background:#000}
-.tela-videos::-webkit-scrollbar{display:none}
-.video-slide{position:relative;height:calc(100vh - 130px);width:100%;scroll-snap-align:start;background:#000;display:flex;align-items:center;justify-content:center}
-.video-slide iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;pointer-events:auto;}
-.acoes-laterais{position:absolute;right:12px;bottom:80px;display:flex;flex-direction:column;gap:20px;z-index:10}
-.acao{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff}
-.acao-btn{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(255,255,255,.2);transition:0.2s;}
-.acao-btn.like-ativo{background:var(--accent-gradient);border:none}
-.acao span{font-size:11px;font-weight:bold;text-shadow:0 1px 3px rgba(0,0,0,.8)}
-.overlay-video{position:absolute;bottom:0;left:0;right:70px;padding:20px 16px 40px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:5;pointer-events:none}
-.overlay-video h4{font-size:15px;font-weight:bold;color:#fff;margin-bottom:4px}
-.overlay-video p{font-size:13px;color:#eee;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:flex-end}
 .modal.aberto{display:flex}
@@ -148,7 +122,7 @@ body{padding-bottom:80px}
 .btn-topo{position:fixed;bottom:90px;right:16px;width:46px;height:46px;border-radius:50%;background:var(--accent-gradient);color:#fff;border:none;display:none;align-items:center;justify-content:center;font-size:18px;z-index:990;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.4)}
 .btn-topo.mostrar{display:flex}
 </style>
-</head>
+  </head>
 <body class="theme-padrao">
 
 <header class="header">
@@ -163,25 +137,8 @@ body{padding-bottom:80px}
   </div>
 </header>
 
-<div class="tabs-info">
-  <div class="tab-info active" onclick="mudarAba('feed', this)">📰 Início</div>
-  <div class="tab-info" onclick="mudarAba('videos', this)">🎬 Vídeos</div>
-</div>
-
 <div id="aba-feed">
-  <div class="novo-post">
-    <textarea id="textoPost" placeholder="No que estás a pensar?" maxlength="280"></textarea>
-    <img id="previewImagem" class="preview-img">
-    <div class="footer">
-      <div style="display:flex;gap:10px;align-items:center">
-        <button class="btn-foto" onclick="document.getElementById('inputFotoPost').click()"><i class="fas fa-camera"></i></button>
-        <span style="color:var(--text-sub);font-size:12px">Foto</span>
-      </div>
-      <button class="btn-publicar" id="btnPublicar" onclick="criarPost()">Publicar</button>
-    </div>
-  </div>
-  
-  <input type="file" id="inputFotoPost" accept="image/*" style="display:none" onchange="previewFoto(this)">
+  <!-- CAIXA DE NOVO POST REMOVIDA DAQUI -->
 
   <div class="search-info">
     <input type="text" id="inputPesquisaInfo" placeholder="Pesquisar notícias..." onkeypress="if(event.key==='Enter') pesquisarInfo()">
@@ -191,10 +148,6 @@ body{padding-bottom:80px}
   <div class="feed" id="feedPosts"></div>
   <div class="feed" id="feedInfo"></div>
   <button class="btn-mais-info" id="btnMaisInfo" onclick="carregarMaisInfo()">Ver mais notícias 🌍</button>
-</div>
-
-<div id="aba-videos" style="display:none;">
-  <div class="tela-videos" id="telaVideos"></div>
 </div>
 
 <button class="btn-topo" id="btnTopo" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
@@ -209,11 +162,8 @@ body{padding-bottom:80px}
     <div class="perfil-modal-header">
       <img id="perfilFoto" src="">
       <h3 id="perfilNome"></h3>
-      <!-- Não tem ponto de status, conforme pediste -->
     </div>
-    <div class="perfil-posts-lista" id="perfilPosts">
-      <!-- Posts do utilizador vão aparecer aqui -->
-    </div>
+    <div class="perfil-posts-lista" id="perfilPosts"></div>
   </div>
 </div>
 
@@ -250,7 +200,8 @@ body{padding-bottom:80px}
   <a class="nav-item active" href="home.html"><i class="fas fa-home"></i><span>Início</span></a>
   <a class="nav-item" href="musica.html"><i class="fas fa-music"></i><span>Música</span></a>
   <a class="nav-item" href="animes.html"><i class="fas fa-dragon"></i><span>Animes</span></a>
-  <a class="nav-item" href="chatglobal.html"><i class="fas fa-chat"></i><span>Educação</span></a>
+  <!-- BOTÃO DO CHAT AQUI -->
+  <a class="nav-item" href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
   <a class="nav-item" href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
 </nav>
 
@@ -267,433 +218,196 @@ body{padding-bottom:80px}
   <nav class="menu-lista">
     <a class="menu-item" href="home.html"><i class="fas fa-home"></i> Início</a>
     <a class="menu-item" href="musica.html"><i class="fas fa-music"></i> Música</a>
-    <a class="menu-item" href="chatglobal.html"><i class="fas fa-chat"></i>chat</a>
+    <!-- LINK DO CHAT AQUI -->
+    <a class="menu-item" href="chat.html"><i class="fas fa-comments"></i> Chat</a>
     <a class="menu-item" href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
   </nav>
-</aside>
-<!-- IMPORTS DO FIREBASE V8 -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    </aside>
+  // ==========================================
+// 1. SISTEMA DE TEMAS GLOBAL
+// ==========================================
+(function() {
+  const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+  document.body.className = 'theme-' + temaSalvo;
+})();
 
-<script>
-  // ================= SISTEMA DE TEMAS GLOBAL =================
-  (function() {
-    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
-    document.body.className = 'theme-' + temaSalvo;
-  })();
+function mudarTemaGlobal(tema, el) { 
+  document.body.className = 'theme-' + tema; 
+  localStorage.setItem('yuna_theme', tema); 
+  document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('ativo')); 
+  el.classList.add('ativo'); 
+}
 
-  function mudarTemaGlobal(tema, el) { 
-    document.body.className = 'theme-' + tema; 
-    localStorage.setItem('yuna_theme', tema); 
-    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('ativo')); 
-    el.classList.add('ativo'); 
-  }
-
-  setTimeout(() => {
-    const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
-    document.querySelectorAll('.tema-btn').forEach(b => {
-      if(b.classList.contains(temaSalvo)) b.classList.add('ativo');
-    });
-  }, 100);
-
-  function abrirMenu(){document.getElementById('menuLateral').classList.add('aberto');document.getElementById('menuOverlay').classList.add('aberto')}
-  function fecharMenu(){document.getElementById('menuLateral').classList.remove('aberto');document.getElementById('menuOverlay').classList.remove('aberto')}
-
-  function mudarAba(aba, botaoClicado) {
-    document.getElementById('aba-feed').style.display = aba === 'feed' ? 'block' : 'none';
-    document.getElementById('aba-videos').style.display = aba === 'videos' ? 'block' : 'none';
-    document.querySelectorAll('.tab-info').forEach(t => t.classList.remove('active'));
-    botaoClicado.classList.add('active');
-    
-    if(aba === 'feed' && window.carregarInfoInicial) carregarInfoInicial();
-    if(aba === 'videos' && window.iniciarVideos) iniciarVideos();
-  }
-
-  // MOSTRAR A FOTO NA TELA
-  window.previewFoto = function(input) {
-    if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = document.getElementById('previewImagem');
-        img.src = e.target.result;
-        img.style.display = 'block'; 
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-
-  window.addEventListener('scroll', () => {
-    const btn = document.getElementById('btnTopo');
-    if (window.scrollY > 300) btn.classList.add('mostrar'); else btn.classList.remove('mostrar');
+setTimeout(() => {
+  const temaSalvo = localStorage.getItem('yuna_theme') || 'padrao';
+  document.querySelectorAll('.tema-btn').forEach(b => {
+    if(b.classList.contains(temaSalvo)) b.classList.add('ativo');
   });
+}, 100);
 
-  // ==========================================
-  // VÍDEOS SHORTS (TIKTOK)
-  // ==========================================
-  const YT_KEY = 'AIzaSyCpUuhzryLomoGzJ3lVIA7TTjJF5KfVd7s';
-  let videosCarregados = false;
+function abrirMenu(){document.getElementById('menuLateral').classList.add('aberto');document.getElementById('menuOverlay').classList.add('aberto')}
+function fecharMenu(){document.getElementById('menuLateral').classList.remove('aberto');document.getElementById('menuOverlay').classList.remove('aberto')}
 
-  window.iniciarVideos = async () => {
-    if (videosCarregados) return;
-    videosCarregados = true;
-    const el = document.getElementById('telaVideos');
-    
-    el.innerHTML = '<div style="display:flex;height:100%;align-items:center;justify-content:center;color:#fff"><i class="fas fa-spinner fa-spin fa-2x"></i></div>';
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('btnTopo');
+  if (window.scrollY > 300) btn.classList.add('mostrar'); else btn.classList.remove('mostrar');
+});
 
-    try {
-      const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=humor%20%23shorts&type=video&videoDuration=short&maxResults=10&key=${YT_KEY}`;
-      const r = await fetch(url);
-      const d = await r.json();
+// ==========================================
+// 2. NOTÍCIAS (WIKIPEDIA)
+// ==========================================
+let termoPesquisaAtual = '';
+
+window.pesquisarInfo = () => {
+  termoPesquisaAtual = document.getElementById('inputPesquisaInfo').value.trim();
+  document.getElementById('feedInfo').innerHTML = ''; 
+  carregarMaisInfo(); 
+};
+
+window.carregarMaisInfo = async () => {
+  const feed = document.getElementById('feedInfo');
+  const btn = document.getElementById('btnMaisInfo');
+  btn.style.display = 'none';
+  
+  try {
+    let url = '';
+    if (termoPesquisaAtual) {
+      url = `https://pt.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(termoPesquisaAtual)}&gsrlimit=5&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize=500&format=json&origin=*`;
+    } else {
+      url = `https://pt.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize=500&grnlimit=5&format=json&origin=*`;
+    }
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.query && data.query.pages) {
+      const pages = Object.values(data.query.pages);
       
-      if (!d.items) { el.innerHTML = '<p style="color:#fff;text-align:center;padding:20px">Erro ao carregar vídeos.</p>'; return; }
-      
-      el.innerHTML = '';
-      
-      d.items.forEach(item => {
-        if(!item.id.videoId) return;
-        const vId = item.id.videoId;
-        
-        const slide = document.createElement('div');
-        slide.className = 'video-slide';
-        slide.innerHTML = `
-          <iframe src="https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&controls=1&modestbranding=1&playsinline=1&rel=0&loop=1&playlist=${vId}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          
-          <div class="acoes-laterais">
-            <div class="acao" onclick="toggleLike('${vId}', this)">
-              <div class="acao-btn"><i class="far fa-heart"></i></div><span>Curtir</span>
-            </div>
-            <div class="acao" onclick="abrirComentariosPost('video_${vId}')">
-              <div class="acao-btn"><i class="fas fa-comment"></i></div><span>Comentar</span>
-            </div>
-            <div class="acao" onclick="baixarMidia('${vId}')">
-              <div class="acao-btn"><i class="fas fa-download"></i></div><span>Baixar</span>
-            </div>
+      if(!document.getElementById('titulo-noticias')) {
+          const t = document.createElement('div');
+          t.id = 'titulo-noticias';
+          t.style.cssText = 'margin:16px 0 10px;font-weight:bold;font-size:14px;color:var(--text-sub);border-bottom:1px solid var(--border);padding-bottom:8px';
+          t.textContent = termoPesquisaAtual ? '🌍 Resultados da Busca' : '🌍 Notícias e Informações';
+          feed.appendChild(t);
+      }
+
+      pages.forEach(p => {
+        if (!p.extract) return;
+        const infoCard = document.createElement('div');
+        infoCard.className = 'post';
+        infoCard.innerHTML = `
+          <div class="post-header">
+            <div class="post-foto" style="background:#3b82f6;color:#fff"><i class="fas fa-globe"></i></div>
+            <div class="post-info"><h4>Sabias que?</h4><p>${termoPesquisaAtual ? 'Busca' : 'Mundo'}</p></div>
           </div>
-          <div class="overlay-video">
-            <h4>@${item.snippet.channelTitle}</h4>
-            <p>${item.snippet.title}</p>
+          ${p.thumbnail ? `<img src="${p.thumbnail.source}" class="post-img">` : ''}
+          <div class="post-conteudo" style="font-weight:bold;font-size:16px;margin-bottom:8px">${p.title}</div>
+          <div class="post-conteudo" style="font-size:13px;color:var(--text-sub)">${p.extract}</div>
+          <div class="post-acoes">
+            <span onclick="abrirComentariosPost('info_${p.pageid}')"><i class="fas fa-comment"></i> Comentar</span>
+            <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank" style="color:var(--accent);text-decoration:none;margin-left:auto;font-weight:bold">Ler mais →</a>
           </div>
         `;
-        el.appendChild(slide);
+        feed.appendChild(infoCard);
       });
-    } catch(e) { console.log(e); }
-  };
-
-  window.toggleLike = (vId, el) => {
-    const btn = el.querySelector('.acao-btn');
-    const icone = el.querySelector('i');
-    btn.classList.toggle('like-ativo');
-    if(btn.classList.contains('like-ativo')) { icone.className = 'fas fa-heart'; } 
-    else { icone.className = 'far fa-heart'; }
-  };
-
-  const SERVIDORES_DOWNLOAD = [
-    'https://pipedapi.adminforge.de', 'https://pipedapi.kavin.rocks',
-    'https://api.piped.yt', 'https://pipedapi.projectsegfau.lt', 'https://pipedapi.nosebs.ru'
-  ];
-
-  window.baixarMidia = async (vId) => {
-    const btn = event.currentTarget;
-    const textoOriginal = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...';
-    btn.disabled = true;
-
-    let linkDownload = '';
-
-    for (let server of SERVIDORES_DOWNLOAD) {
-      try {
-        const res = await fetch(`${server}/streams/${vId}`);
-        if (!res.ok) continue;
-        const data = await res.json();
-        
-        if (data.videoStreams) {
-          const mp4s = data.videoStreams.filter(v => v.mimeType.includes('mp4') && v.videoOnly === false);
-          if (mp4s.length > 0) { linkDownload = mp4s[0].url; break; }
-        }
-      } catch (e) { console.log(`Servidor ${server} falhou.`); }
     }
+    btn.style.display = 'block';
+    btn.textContent = termoPesquisaAtual ? 'Ver mais resultados...' : 'Ver mais notícias 🌍';
+  } catch(e) { btn.textContent = 'Erro. Tentar novamente'; btn.style.display = 'block'; }
+};
 
-    btn.innerHTML = textoOriginal;
-    btn.disabled = false;
+// ==========================================
+// 3. FIREBASE (POSTS E COMENTÁRIOS)
+// ==========================================
+const firebaseConfig = {
+    apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
+    authDomain: "yuna-8fe24.firebaseapp.com",
+    projectId: "yuna-8fe24",
+    storageBucket: "yuna-8fe24.firebasestorage.app",
+    messagingSenderId: "531340097112",
+    appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
+};
+if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    if (linkDownload) {
-      const a = document.createElement('a');
-      a.href = linkDownload;
-      a.target = '_blank';
-      a.download = `yuna_${vId}.mp4`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    } else {
-      alert('❌ O YouTube bloqueou os servidores agora. Tenta novamente mais tarde.');
-    }
-  };
+let utilizadorAtual = null;
+let idPostAtual = null; 
+let respondendoA = null;
 
-  // ==========================================
-  // NOTÍCIAS (WIKIPEDIA)
-  // ==========================================
-  let termoPesquisaAtual = '';
-
-  window.carregarInfoInicial = () => {
-    if (document.getElementById('feedInfo').innerHTML !== '') return;
-    carregarMaisInfo();
-  };
-
-  window.pesquisarInfo = () => {
-    termoPesquisaAtual = document.getElementById('inputPesquisaInfo').value.trim();
-    document.getElementById('feedInfo').innerHTML = ''; 
-    carregarMaisInfo(); 
-  };
-
-  window.carregarMaisInfo = async () => {
-    const feed = document.getElementById('feedInfo');
-    const btn = document.getElementById('btnMaisInfo');
-    btn.style.display = 'none';
-    
-    try {
-      let url = '';
-      if (termoPesquisaAtual) {
-        url = `https://pt.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(termoPesquisaAtual)}&gsrlimit=5&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize=500&format=json&origin=*`;
-      } else {
-        url = `https://pt.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize=500&grnlimit=5&format=json&origin=*`;
-      }
-
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (data.query && data.query.pages) {
-        const pages = Object.values(data.query.pages);
-        
-        if(!document.getElementById('titulo-noticias')) {
-            const t = document.createElement('div');
-            t.id = 'titulo-noticias';
-            t.style.cssText = 'margin:16px 0 10px;font-weight:bold;font-size:14px;color:var(--text-sub);border-bottom:1px solid var(--border);padding-bottom:8px';
-            t.textContent = termoPesquisaAtual ? '🌍 Resultados da Busca' : '🌍 Notícias e Informações';
-            feed.appendChild(t);
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            utilizadorAtual = user;
+            const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+            document.getElementById('userAvatar').innerHTML = `<img src="${foto}">`;
+            carregarPosts();
+            verificarNotificacoes(); 
+            carregarMaisInfo(); // Carrega as notícias automaticamente
+        } else {
+            window.location.href = "login.html";
         }
+    });
+});
 
-        pages.forEach(p => {
-          if (!p.extract) return;
-          const infoCard = document.createElement('div');
-          infoCard.className = 'post';
-          infoCard.innerHTML = `
-            <div class="post-header">
-              <div class="post-foto" style="background:#3b82f6;color:#fff"><i class="fas fa-globe"></i></div>
-              <div class="post-info"><h4>Sabias que?</h4><p>${termoPesquisaAtual ? 'Busca' : 'Mundo'}</p></div>
-            </div>
-            ${p.thumbnail ? `<img src="${p.thumbnail.source}" class="post-img">` : ''}
-            <div class="post-conteudo" style="font-weight:bold;font-size:16px;margin-bottom:8px">${p.title}</div>
-            <div class="post-conteudo" style="font-size:13px;color:var(--text-sub)">${p.extract}</div>
-            <div class="post-acoes">
-              <span onclick="abrirComentariosPost('info_${p.pageid}')"><i class="fas fa-comment"></i> Comentar</span>
-              <a href="https://pt.wikipedia.org/?curid=${p.pageid}" target="_blank" style="color:var(--accent);text-decoration:none;margin-left:auto;font-weight:bold">Ler mais →</a>
-            </div>
-          `;
-          feed.appendChild(infoCard);
+function carregarPosts() {
+    db.collection("posts").orderBy("data", "desc").onSnapshot((snapshot) => {
+        const feed = document.getElementById('feedPosts');
+        feed.innerHTML = '';
+        if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--text-sub);">Ainda não há publicações. Vai ao perfil para publicar!</p>'; return; }
+
+        snapshot.forEach((doc) => {
+            const post = doc.data();
+            const id = doc.id;
+            const isDono = post.uid === utilizadorAtual.uid;
+            const fotoPost = post.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+            const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
+            const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora';
+            const qtdComentarios = post.comentarios ? post.comentarios.length : 0;
+            
+            const btnApagarPost = isDono ? `<button onclick="apagarPost('${id}')" style="background:none;border:none;color:#ef4444;cursor:pointer;margin-left:auto; font-size:16px;"><i class="fas fa-trash"></i></button>` : '';
+
+            feed.innerHTML += `
+                <div class="post" id="post-card-${id}">
+                    <div class="post-header">
+                        <img src="${fotoPost}" class="post-foto" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')">
+                        <div class="post-info" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')"><h4>${post.nomeUser}</h4><p>${dataFormatada}</p></div>
+                        ${btnApagarPost}
+                    </div>
+                    <div class="post-conteudo">${post.texto}</div>
+                    ${imagemHTML}
+                    <div class="post-acoes">
+                        <span onclick="darLike('${id}')" id="btn-like-${id}"><i class="far fa-heart"></i> <span id="count-like-${id}">${post.likes || 0}</span> Likes</span>
+                        <span onclick="abrirComentariosPost('${id}')"><i class="fas fa-comment"></i> ${qtdComentarios} Comentários</span>
+                    </div>
+                </div>
+            `;
         });
-      }
-      btn.style.display = 'block';
-      btn.textContent = termoPesquisaAtual ? 'Ver mais resultados...' : 'Ver mais notícias 🌍';
-    } catch(e) { btn.textContent = 'Erro. Tentar novamente'; btn.style.display = 'block'; }
-  };
-  // ==========================================
-  // FIREBASE, POSTS E COMENTÁRIOS
-  // ==========================================
-  const firebaseConfig = {
-      apiKey: "AIzaSyA7KUJeJDrU8fIbJnZCWYJ_KoMfsi2Gb08",
-      authDomain: "yuna-8fe24.firebaseapp.com",
-      projectId: "yuna-8fe24",
-      storageBucket: "yuna-8fe24.firebasestorage.app",
-      messagingSenderId: "531340097112",
-      appId: "1:531340097112:web:a5f077f9c0f81b36953c2d"
-  };
-  const IMGBB_KEY = "52ddf1c2a5509391a0edcaadd1d02009";
+    }, (error) => {
+        document.getElementById('feedPosts').innerHTML = '<p style="text-align:center; color:#ef4444;">Erro de rede. Verifica as Regras do Firestore.</p>';
+    });
+}
 
-  if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+async function darLike(id) {
+    try {
+        await db.collection("posts").doc(id).update({ likes: firebase.firestore.FieldValue.increment(1) });
+        document.getElementById(`btn-like-${id}`).style.color = 'var(--accent)';
+        document.querySelector(`#btn-like-${id} i`).className = 'fas fa-heart';
+    } catch(e) { console.log(e); }
+}
 
-  let utilizadorAtual = null;
-  let idPostAtual = null; 
-  let respondendoA = null;
-  let isPosting = false; 
-
-  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-      auth.onAuthStateChanged((user) => {
-          if (user) {
-              utilizadorAtual = user;
-              const foto = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-              document.getElementById('userAvatar').innerHTML = `<img src="${foto}">`;
-              carregarPosts();
-              verificarNotificacoes(); 
-          } else {
-              window.location.href = "login.html";
-          }
-      });
-  });
-
-  // CRIAR POST
-  async function criarPost() {
-      if (isPosting) return; 
-      
-      const texto = document.getElementById('textoPost').value;
-      const fileInput = document.getElementById('inputFotoPost');
-      const file = fileInput.files[0];
-      if (!texto && !file) return alert("Escreve algo ou escolhe uma foto!");
-      
-      isPosting = true;
-      const btn = document.getElementById('btnPublicar');
-      const textoOriginalBtn = btn.innerText;
-      btn.innerText = "A publicar...";
-      btn.disabled = true;
-
-      let urlImagem = "";
-      try {
-          if (file) {
-              const formData = new FormData();
-              formData.append('image', file);
-              const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
-              const data = await res.json();
-              if(data.success) urlImagem = data.data.url;
-          }
-          await db.collection("posts").add({
-              uid: utilizadorAtual.uid, 
-              nomeUser: utilizadorAtual.displayName || "Membro", 
-              fotoUser: utilizadorAtual.photoURL || "", 
-              texto: texto, 
-              imagem: urlImagem, 
-              likes: 0, 
-              comentarios: [], 
-              data: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          
-          document.getElementById('textoPost').value = ''; 
-          fileInput.value = ''; 
-          document.getElementById('previewImagem').style.display = 'none';
-          document.getElementById('previewImagem').src = '';
-      } catch (error) { 
-          alert("Erro ao publicar: " + error.message); 
-      } finally {
-          isPosting = false;
-          btn.innerText = textoOriginalBtn;
-          btn.disabled = false;
-      }
-  }
-
-  // CARREGAR POSTS
-  function carregarPosts() {
-      db.collection("posts").orderBy("data", "desc").onSnapshot((snapshot) => {
-          const feed = document.getElementById('feedPosts');
-          feed.innerHTML = '';
-          if(snapshot.empty) { feed.innerHTML = '<p style="text-align:center; color:var(--text-sub);">Ainda não há publicações.</p>'; return; }
-
-          snapshot.forEach((doc) => {
-              const post = doc.data();
-              const id = doc.id;
-              const isDono = post.uid === utilizadorAtual.uid;
-              const fotoPost = post.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-              const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
-              const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora';
-              const qtdComentarios = post.comentarios ? post.comentarios.length : 0;
-              
-              const btnApagarPost = isDono ? `<button onclick="apagarPost('${id}')" style="background:none;border:none;color:#ef4444;cursor:pointer;margin-left:auto; font-size:16px;"><i class="fas fa-trash"></i></button>` : '';
-
-              feed.innerHTML += `
-                  <div class="post" id="post-card-${id}">
-                      <div class="post-header">
-                          <img src="${fotoPost}" class="post-foto" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')">
-                          <div class="post-info" onclick="abrirPerfilUsuario('${post.uid}', '${post.nomeUser}', '${fotoPost}')"><h4>${post.nomeUser}</h4><p>${dataFormatada}</p></div>
-                          ${btnApagarPost}
-                      </div>
-                      <div class="post-conteudo">${post.texto}</div>
-                      ${imagemHTML}
-                      <div class="post-acoes">
-                          <span onclick="darLike('${id}')" id="btn-like-${id}"><i class="far fa-heart"></i> <span id="count-like-${id}">${post.likes || 0}</span> Likes</span>
-                          <span onclick="abrirComentariosPost('${id}')"><i class="fas fa-comment"></i> ${qtdComentarios} Comentários</span>
-                      </div>
-                  </div>
-              `;
-          });
-      }, (error) => {
-          document.getElementById('feedPosts').innerHTML = '<p style="text-align:center; color:#ef4444;">Erro de rede. Verifica as Regras do Firestore.</p>';
-      });
-  }
-
-  async function darLike(id) {
-      try {
-          await db.collection("posts").doc(id).update({ likes: firebase.firestore.FieldValue.increment(1) });
-          document.getElementById(`btn-like-${id}`).style.color = 'var(--accent)';
-          document.querySelector(`#btn-like-${id} i`).className = 'fas fa-heart';
-      } catch(e) { console.log(e); }
-  }
-
-// TESTE DE DIAGNÓSTICO PARA APAGAR POST
 window.apagarPost = function(id) {
-    alert("1. Botão clicado! O ID do post é: " + id);
-
     if(confirm("Tens a certeza que queres apagar esta publicação?")) {
-        alert("2. Confirmado. A tentar apagar do Firebase...");
-
         db.collection("posts").doc(id).delete()
         .then(() => {
-            alert("✅ 3. SUCESSO! O Firebase apagou o post.");
             const card = document.getElementById('post-card-' + id);
             if (card) card.remove();
         })
-        .catch((e) => {
-            alert("❌ 3. ERRO DO FIREBASE:\n\n" + e.message);
-            console.error(e);
-        });
-    } else {
-        alert("2. Ação cancelada.");
+        .catch((e) => { alert("Erro ao apagar: " + e.message); });
     }
 }
-
-  // INSPECIONAR PERFIL DO UTILIZADOR
-  window.abrirPerfilUsuario = async function(uid, nome, foto) {
-      const modal = document.getElementById('modalPerfil');
-      const containerPosts = document.getElementById('perfilPosts');
-      
-      document.getElementById('perfilNome').innerText = nome;
-      document.getElementById('perfilFoto').src = foto;
-      
-      modal.classList.add('aberto');
-      containerPosts.innerHTML = '<p style="text-align:center; padding:20px;"><i class="fas fa-spinner fa-spin"></i> A carregar publicações...</p>';
-
-      try {
-          const querySnapshot = await db.collection("posts").where("uid", "==", uid).get();
-          
-          if (querySnapshot.empty) {
-              containerPosts.innerHTML = '<p style="text-align:center; color:var(--text-sub);">Este utilizador ainda não fez publicações.</p>';
-              return;
-          }
-
-          let posts = [];
-          querySnapshot.forEach(doc => posts.push({ id: doc.id, ...doc.data() }));
-          posts.sort((a, b) => b.data.toMillis() - a.data.toMillis());
-
-          containerPosts.innerHTML = '';
-          posts.forEach(post => {
-              const imagemHTML = post.imagem ? `<img src="${post.imagem}" class="post-img">` : '';
-              const dataFormatada = post.data ? new Date(post.data.toDate()).toLocaleDateString() : '';
-              
-              containerPosts.innerHTML += `
-                  <div class="post" style="margin-bottom:10px; border-radius:10px;">
-                      <div class="post-conteudo" style="font-size:13px;">${post.texto}</div>
-                      ${imagemHTML}
-                      <div style="font-size:10px; color:var(--text-sub); text-align:right; margin-top:5px;">${dataFormatada}</div>
-                  </div>
-              `;
-          });
-      } catch(e) {
-          containerPosts.innerHTML = '<p style="text-align:center; color:#ef4444;">Erro ao carregar o perfil.</p>';
-          console.error(e);
-      }
-  };
-
-  // ==========================================
-  // FUNÇÕES DE COMENTÁRIOS E RESPOSTAS
+    // ==========================================
+  // 4. FUNÇÕES DE COMENTÁRIOS E RESPOSTAS
   // ==========================================
   window.abrirComentariosPost = function(idPost) {
       idPostAtual = idPost;
@@ -841,7 +555,9 @@ window.apagarPost = function(id) {
       }
   };
 
-  // SISTEMA DE NOTIFICAÇÕES
+  // ==========================================
+  // 5. NOTIFICAÇÕES
+  // ==========================================
   function verificarNotificacoes() {
       db.collection("notificacoes").where("userId", "==", utilizadorAtual.uid).where("lida", "==", false).onSnapshot((snapshot) => {
           const dot = document.getElementById('notifDot');
@@ -883,4 +599,5 @@ window.apagarPost = function(id) {
 </script>
 
 </body>
-</html>
+  </html>
+  
