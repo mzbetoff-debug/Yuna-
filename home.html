@@ -804,27 +804,77 @@ body{padding-bottom:80px}
           } else {
               const novoComentario = { ...dadosUser, id: Date.now().toString(), respostas: [] };
               await postRef.set({
-                  comentarios: firebase.firestore.FieldValue.arrayUnion(novoComentario)
-              }, { merge: true });
-              
-              if (colecaoAlvo === "posts") {
-                  const postOwnerId = docSnap.data().uid;
-                  if (postOwnerId && postOwnerId !== utilizadorAtual.uid) {
-                      await db.collection("notificacoes").add({
-                          userId: postOwnerId,
-                          deQuem: utilizadorAtual.displayName || "Alguém",
-                          texto: `comentou na tua publicação: "${texto}"`,
-                          lida: false,
-                          data: firebase.firestore.FieldValue.serverTimestamp()
-                      });
-                  }
-              }
-          }
-      } catch (error) {
-          console.error(error);
-          alert("Erro ao enviar o comentário.");
-      }
-  };
+window.enviarComentarioPost = async function() {
+    const texto = document.getElementById('inputComentarioPost').value.trim();
+    if (!texto) return;
+
+    const input = document.getElementById('inputComentarioPost');
+    input.value = '';
+
+    // Descobre se é um post normal ou externo (vídeo/notícia)
+    let colecaoAlvo = idPostAtual.startsWith('video_') || idPostAtual.startsWith('info_') ? "comentarios_externos" : "posts";
+    const postRef = db.collection(colecaoAlvo).doc(idPostAtual);
+    
+    const dadosUser = {
+        uid: utilizadorAtual.uid,
+        nome: utilizadorAtual.displayName || "Membro",
+        fotoUser: utilizadorAtual.photoURL || "",
+        texto: texto
+    };
+
+    try {
+        // 1. Vai buscar os comentários atuais
+        const docSnap = await postRef.get();
+        let comentarios = docSnap.exists && docSnap.data().comentarios ? docSnap.data().comentarios : [];
+
+        if (respondendoA) {
+            // MODO RESPOSTA
+            const index = comentarios.findIndex(c => String(c.id) === String(respondendoA.id));
+            if (index !== -1) {
+                if (!comentarios[index].respostas) comentarios[index].respostas = [];
+                comentarios[index].respostas.push(dadosUser);
+                
+                // Guarda a resposta no post
+                await postRef.update({ comentarios: comentarios });
+
+                // Envia Notificação
+                if (comentarios[index].uid !== utilizadorAtual.uid) {
+                    await db.collection("notificacoes").add({
+                        userId: comentarios[index].uid,
+                        deQuem: utilizadorAtual.displayName || "Alguém",
+                        texto: `respondeu-te: "${texto}"`,
+                        lida: false,
+                        data: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+            }
+            cancelarResposta();
+        } else {
+            // MODO NOVO COMENTÁRIO
+            const novoComentario = { ...dadosUser, id: Date.now().toString(), respostas: [] };
+            comentarios.push(novoComentario);
+            
+            await postRef.set({ comentarios: comentarios }, { merge: true });
+
+            // Envia Notificação para o dono do Post
+            if (colecaoAlvo === "posts" && docSnap.exists) {
+                const postOwnerId = docSnap.data().uid;
+                if (postOwnerId && postOwnerId !== utilizadorAtual.uid) {
+                    await db.collection("notificacoes").add({
+                        userId: postOwnerId,
+                        deQuem: utilizadorAtual.displayName || "Alguém",
+                        texto: `comentou na tua publicação: "${texto}"`,
+                        lida: false,
+                        data: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Erro detalhado:", error);
+        alert("Erro ao enviar. Verifica a ligação.");
+    }
+};
 
   window.apagarComentario = async function(index) {
       if(confirm("Apagar este comentário?")) {
