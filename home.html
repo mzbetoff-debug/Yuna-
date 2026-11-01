@@ -686,63 +686,69 @@ body{padding-bottom:80px}
   // FUNÇÕES DE COMENTÁRIOS E RESPOSTAS
   // ==========================================
   window.abrirComentariosPost = function(idPost) {
-      idPostAtual = idPost;
-      cancelarResposta();
-      const modal = document.getElementById('modalComentariosPost');
-      modal.classList.add('aberto');
-      const lista = document.getElementById('listaComentariosPost');
-      lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
+    idPostAtual = idPost;
+    cancelarResposta();
+    const modal = document.getElementById('modalComentariosPost');
+    modal.classList.add('aberto');
+    const lista = document.getElementById('listaComentariosPost');
+    lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> A carregar...</p>';
 
-      let colecaoAlvo = idPost.startsWith('video_') || idPost.startsWith('info_') ? "comentarios_externos" : "posts";
+    // Define a coleção correta
+    let colecaoAlvo = idPost.startsWith('video_') || idPost.startsWith('info_') ? "comentarios_externos" : "posts";
 
-      db.collection(colecaoAlvo).doc(idPostAtual).onSnapshot((doc) => {
-          const data = doc.exists ? doc.data() : { comentarios: [] };
-          const comentarios = data.comentarios || [];
-          lista.innerHTML = '';
+    // Usa o onSnapshot para atualizar em tempo real
+    db.collection(colecaoAlvo).doc(idPostAtual).onSnapshot((doc) => {
+        const data = doc.exists ? doc.data() : { comentarios: [] };
+        const comentarios = data.comentarios || [];
+        lista.innerHTML = '';
 
-          if (comentarios.length === 0) {
-              lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);">Nenhum comentário ainda. Sê o primeiro!</p>';
-              return;
-          }
+        if (comentarios.length === 0) {
+            lista.innerHTML = '<p style="text-align:center;color:var(--text-sub);">Nenhum comentário ainda. Sê o primeiro!</p>';
+            return;
+        }
 
-          comentarios.forEach((c, index) => {
-              const isMeuComentario = c.uid === utilizadorAtual.uid;
-              const foto = c.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-              
-              let respostasHTML = '';
-              if (c.respostas && c.respostas.length > 0) {
-                  respostasHTML = `<div class="respostas-container">`;
-                  c.respostas.forEach(r => {
-                      respostasHTML += `
-                          <div class="resposta-item">
-                              <img src="${r.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="comentario-foto">
-                              <div class="comentario-info">
-                                  <h5>${r.nome}</h5>
-                                  <p>${r.texto}</p>
-                              </div>
-                          </div>
-                      `;
-                  });
-                  respostasHTML += `</div>`;
-              }
+        comentarios.forEach((c, index) => {
+            const isMeuComentario = c.uid === utilizadorAtual.uid;
+            const foto = c.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+            
+            let respostasHTML = '';
+            if (c.respostas && c.respostas.length > 0) {
+                respostasHTML = `<div class="respostas-container">`;
+                c.respostas.forEach(r => {
+                    respostasHTML += `
+                        <div class="resposta-item">
+                            <img src="${r.fotoUser || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="comentario-foto">
+                            <div class="comentario-info">
+                                <h5>${r.nome}</h5>
+                                <p>${r.texto}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                respostasHTML += `</div>`;
+            }
 
-              lista.innerHTML += `
-                  <div class="comentario">
-                      <div class="comentario-header">
-                          <img src="${foto}" class="comentario-foto">
-                          <div class="comentario-info">
-                              <h5>${c.nome}</h5>
-                              <p>${c.texto}</p>
-                          </div>
-                          ${isMeuComentario ? `<button class="btn-eliminar" onclick="apagarComentario(${index})"><i class="fas fa-trash"></i></button>` : ''}
-                      </div>
-                      <button class="btn-responder" onclick="prepararResposta('${c.id || index}', '${c.nome}')"><i class="fas fa-reply"></i> Responder</button>
-                      ${respostasHTML}
-                  </div>
-              `;
-          });
-      });
-  };
+            lista.innerHTML += `
+                <div class="comentario">
+                    <div class="comentario-header">
+                        <img src="${foto}" class="comentario-foto">
+                        <div class="comentario-info">
+                            <h5>${c.nome}</h5>
+                            <p>${c.texto}</p>
+                        </div>
+                        ${isMeuComentario ? `<button class="btn-eliminar" onclick="apagarComentario(${index})"><i class="fas fa-trash"></i></button>` : ''}
+                    </div>
+                    <button class="btn-responder" onclick="prepararResposta('${c.id || index}', '${c.nome}')"><i class="fas fa-reply"></i> Responder</button>
+                    ${respostasHTML}
+                </div>
+            `;
+        });
+    }, (error) => {
+        // Se der erro (ex: permissão negada), mostra um aviso
+        lista.innerHTML = `<p style="text-align:center;color:#ef4444;">Erro ao carregar comentários. Verifica as regras do Firestore.</p>`;
+        console.error(error);
+    });
+};
 
   window.prepararResposta = function(commentId, nome) {
       respondendoA = { id: commentId, nome: nome };
