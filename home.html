@@ -7,6 +7,7 @@
 <title>YUNA · Início</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
+<link rel="manifest" href="manifest.json">
 /* 🎨 SISTEMA DE TEMAS GLOBAL */
 :root { 
   --bg: #0a0e1a; --card-bg: rgba(18,24,42,.7); --text-main: #f1f5f9; --text-sub: #94a3b8; 
@@ -927,6 +928,13 @@ window.enviarComentarioPost = async function() {
   };
 
 </script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js');
+    });
+  }
+  </script>
 
 </body>
 </html>
