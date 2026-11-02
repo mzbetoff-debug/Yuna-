@@ -1,0 +1,11 @@
+{
+  "background_color": "#b82727",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "mzbetoff-debug.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "mzbetoff-debug.github",
+  "start_url": "/",
+  "theme_color": "#0a0e1a"
+}
