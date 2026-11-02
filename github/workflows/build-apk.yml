@@ -1,0 +1,36 @@
+name: Build Android APK
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Bubblewrap CLI
+        run: npm i -g @bubblewrap/cli
+
+      - name: Init Bubblewrap
+        run: |
+          echo '{"packageId":"com.yuna.app","host":"mzbetoff-debug.github.io","name":"YUNA","startUrl":"/Yuna-/home.html","webManifestUrl":"https://mzbetoff-debug.github.io/Yuna-/manifest.json","display":"standalone"}' > twa-manifest.json
+          bubblewrap init --manifest twa-manifest.json --directory=./android
+
+      - name: Build APK
+        run: |
+          cd android
+          bubblewrap build --skipPwaValidation
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: YUNA-APK
+          path: android/app-release-signed.apk
