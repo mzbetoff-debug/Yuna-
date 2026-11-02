@@ -13,59 +13,25 @@
   --accent: #f472b6; --accent-gradient: linear-gradient(135deg,#f472b6,#a78bfa); 
   --border: rgba(255,255,255,.08); --input-bg: rgba(255,255,255,.03);
 }
-body.theme-branco { 
-  --bg: #f8fafc; --card-bg: rgba(255,255,255,0.8); --text-main: #1e293b; --text-sub: #64748b; 
-  --accent: #8b5cf6; --accent-gradient: linear-gradient(135deg,#8b5cf6,#ec4899); 
-  --border: rgba(0,0,0,.1); --input-bg: #f1f5f9;
-}
-body.theme-azul { 
-  --bg: #0f172a; --card-bg: rgba(30,41,59,0.7); --text-main: #f8fafc; --text-sub: #94a3b8; 
-  --accent: #38bdf8; --accent-gradient: linear-gradient(135deg,#38bdf8,#0ea5e9); 
-  --border: rgba(56,189,248,.2); --input-bg: rgba(56,189,248,.05);
-}
-body.theme-amarelo { 
-  --bg: #000000; --card-bg: rgba(20,20,20,0.8); --text-main: #fef08a; --text-sub: #ca8a04; 
-  --accent: #facc15; --accent-gradient: linear-gradient(135deg,#facc15,#eab308); 
-  --border: rgba(250,204,21,.2); --input-bg: rgba(250,204,21,.05);
-}
+body.theme-branco { --bg: #f8fafc; --card-bg: rgba(255,255,255,0.8); --text-main: #1e293b; --text-sub: #64748b; --accent: #8b5cf6; --accent-gradient: linear-gradient(135deg,#8b5cf6,#ec4899); --border: rgba(0,0,0,.1); --input-bg: #f1f5f9; }
+body.theme-azul { --bg: #0f172a; --card-bg: rgba(30,41,59,0.7); --text-main: #f8fafc; --text-sub: #94a3b8; --accent: #38bdf8; --accent-gradient: linear-gradient(135deg,#38bdf8,#0ea5e9); --border: rgba(56,189,248,.2); --input-bg: rgba(56,189,248,.05); }
+body.theme-amarelo { --bg: #000000; --card-bg: rgba(20,20,20,0.8); --text-main: #fef08a; --text-sub: #ca8a04; --accent: #facc15; --accent-gradient: linear-gradient(135deg,#facc15,#eab308); --border: rgba(250,204,21,.2); --input-bg: rgba(250,204,21,.05); }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
 body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; transition: background 0.4s; overflow: hidden; }
 
-/* 🌟 EFEITOS DE FUNDO (Luzes a mexer) */
-body::before, body::after {
-  content: ''; position: fixed; width: 300px; height: 300px; border-radius: 50%;
-  filter: blur(80px); z-index: -1; animation: flutuar 10s infinite alternate ease-in-out;
-}
-body::before {
-  background: var(--accent); top: -100px; left: -100px; opacity: 0.3;
-}
-body::after {
-  background: #8b5cf6; bottom: -100px; right: -100px; opacity: 0.2; animation-delay: -5s;
-}
-@keyframes flutuar { 
-  0% { transform: translate(0, 0) scale(1); } 
-  100% { transform: translate(50px, 50px) scale(1.2); } 
-}
+/* 🌟 EFEITOS DE FUNDO */
+body::before, body::after { content: ''; position: fixed; width: 300px; height: 300px; border-radius: 50%; filter: blur(80px); z-index: -1; animation: flutuar 10s infinite alternate ease-in-out; }
+body::before { background: var(--accent); top: -100px; left: -100px; opacity: 0.3; }
+body::after { background: #8b5cf6; bottom: -100px; right: -100px; opacity: 0.2; animation-delay: -5s; }
+@keyframes flutuar { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.2); } }
 
-/* CARD PRINCIPAL COM EFEITO DE VIDRO */
-.login-card {
-  width: 100%; max-width: 400px; 
-  background: var(--card-bg); 
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border); border-radius: 28px; 
-  padding: 40px 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-  position: relative; z-index: 10;
-  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
+/* CARD PRINCIPAL */
+.login-card { width: 100%; max-width: 400px; background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 28px; padding: 40px 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); position: relative; z-index: 10; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 .logo-area { text-align: center; margin-bottom: 30px; }
-.logo-area h1 { 
-  font-size: 42px; font-weight: 900; 
-  background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-  letter-spacing: 2px; filter: drop-shadow(0 2px 10px rgba(244,114,182,0.4));
-}
+.logo-area h1 { font-size: 42px; font-weight: 900; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; filter: drop-shadow(0 2px 10px rgba(244,114,182,0.4)); }
 .logo-area p { font-size: 14px; color: var(--text-sub); margin-top: 5px; font-weight: 500; }
 
 /* INPUTS */
@@ -76,46 +42,21 @@ body::after {
 @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
 .input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-sub); font-size: 16px; transition: color 0.3s; }
-.input-group input {
-  width: 100%; padding: 16px 16px 16px 48px; border-radius: 16px; border: 1px solid var(--border);
-  background: var(--input-bg); color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s;
-}
+.input-group input { width: 100%; padding: 16px 16px 16px 48px; border-radius: 16px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s; }
 .input-group input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(244,114,182,0.15); background: var(--bg); }
 .input-group input:focus + i { color: var(--accent); }
 
 /* BOTÕES */
-.btn-principal {
-  width: 100%; padding: 16px; border-radius: 16px; border: none;
-  background: var(--accent-gradient); color: #fff; font-size: 16px; font-weight: 700;
-  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 10px;
-  display: flex; justify-content: center; align-items: center; gap: 10px;
-  box-shadow: 0 10px 20px rgba(244,114,182,0.3);
-}
+.btn-principal { width: 100%; padding: 16px; border-radius: 16px; border: none; background: var(--accent-gradient); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(244,114,182,0.3); }
 .btn-principal:active { transform: scale(0.96); }
-.btn-principal:hover { box-shadow: 0 15px 25px rgba(244,114,182,0.5); }
-
-.divider { display: flex; align-items: center; text-align: center; margin: 25px 0; color: var(--text-sub); font-size: 13px; font-weight: 500;}
-.divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
-.divider::before { margin-right: 15px; }
-.divider::after { margin-left: 15px; }
-
-.btn-google {
-  width: 100%; padding: 14px; border-radius: 16px; border: 1px solid var(--border);
-  background: var(--input-bg); color: var(--text-main); font-size: 15px; font-weight: 600;
-  cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s;
-}
-.btn-google:active { transform: scale(0.96); }
-.btn-google img { width: 22px; }
 
 .toggle-auth { text-align: center; margin-top: 25px; font-size: 14px; color: var(--text-sub); }
 .toggle-auth span { color: var(--accent); font-weight: 700; cursor: pointer; }
-.toggle-auth span:hover { text-decoration: underline; }
 
 /* ERRO */
 .erro-msg { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; padding: 12px; border-radius: 12px; font-size: 13px; margin-bottom: 15px; display: none; text-align: center; animation: shake 0.4s; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-/* ESCONDER CAMPOS DE REGISTO */
 .campos-registo { display: none; }
 </style>
 </head>
@@ -130,7 +71,6 @@ body::after {
   <div class="erro-msg" id="erroMsg"></div>
 
   <div id="formAuth">
-    <!-- CAMPOS DE REGISTO (Só aparecem se estiver a criar conta) -->
     <div class="campos-registo" id="camposRegisto">
       <div class="input-group">
         <i class="fas fa-user"></i>
@@ -138,11 +78,10 @@ body::after {
       </div>
       <div class="input-group">
         <i class="fas fa-at"></i>
-        <input type="text" id="inputUsername" placeholder="Nome de Utilizador (ex: @mzbetoff)">
+        <input type="text" id="inputUsername" placeholder="Nome de Utilizador">
       </div>
     </div>
 
-    <!-- CAMPOS NORMAIS -->
     <div class="input-group">
       <i class="fas fa-envelope"></i>
       <input type="email" id="inputEmail" placeholder="O teu e-mail">
@@ -156,13 +95,6 @@ body::after {
       <span id="btnAuthTexto">Entrar</span>
     </button>
   </div>
-
-  <div class="divider">ou</div>
-
-  <button class="btn-google" onclick="loginGoogle()">
-    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-    Continuar com Google
-  </button>
 
   <div class="toggle-auth">
     <span id="textoToggle">Não tens conta? </span>
@@ -205,8 +137,7 @@ function alternarModo() {
   const btnAuthTexto = document.getElementById('btnAuthTexto');
   const textoToggle = document.getElementById('textoToggle');
   const btnToggle = document.getElementById('btnToggle');
-  const erro = document.getElementById('erroMsg');
-  erro.style.display = 'none';
+  document.getElementById('erroMsg').style.display = 'none';
 
   if (modoRegisto) {
     subtitulo.innerText = "Cria a tua conta";
@@ -227,57 +158,42 @@ async function autenticar() {
   const email = document.getElementById('inputEmail').value.trim();
   const senha = document.getElementById('inputSenha').value;
   const btn = document.getElementById('btnAuth');
-  const erro = document.getElementById('erroMsg');
 
-  if (!email || !senha) {
-    mostrarErro("Preenche o e-mail e a palavra-passe.");
-    return;
-  }
+  if (!email || !senha) { mostrarErro("Preenche todos os campos."); return; }
+  if (!email.includes('@')) { mostrarErro("O e-mail tem de ter um @."); return; }
 
   btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A processar...';
-  erro.style.display = 'none';
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
   try {
     if (modoRegisto) {
       const nome = document.getElementById('inputNome').value.trim();
       const username = document.getElementById('inputUsername').value.trim();
+      if (!nome || !username) throw new Error("Preenche o nome e o username.");
 
-      if (!nome || !username) {
-        throw new Error("Preenche o nome e o nome de utilizador.");
-      }
-
-      // Cria a conta no Auth
       const userCredential = await auth.createUserWithEmailAndPassword(email, senha);
-      const user = userCredential.user;
-
-      // Atualiza o perfil com o nome e o username
-      await user.updateProfile({
-        displayName: username // O @username fica como displayName
+      await userCredential.user.updateProfile({ displayName: username });
+      await db.collection("utilizadores").doc(userCredential.user.uid).set({
+        nomeReal: nome, username: username, email: email, criadoEm: firebase.firestore.FieldValue.serverTimestamp()
       });
-
-      // Guarda o nome real na base de dados Firestore
-      await db.collection("utilizadores").doc(user.uid).set({
-        nomeReal: nome,
-        username: username,
-        email: email,
-        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      alert("Conta criada com sucesso! Bem-vindo ao YUNA.");
     } else {
       await auth.signInWithEmailAndPassword(email, senha);
     }
-    
     window.location.href = "home.html";
   } catch (error) {
+    // TRADUÇÃO DOS ERROS DO FIREBASE
     let msg = "Ocorreu um erro.";
-    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') msg = "E-mail ou palavra-passe incorretos.";
-    if (error.code === 'auth/email-already-in-use') msg = "Este e-mail já está registado.";
-    if (error.code === 'auth/weak-password') msg = "A palavra-passe deve ter pelo menos 6 caracteres.";
-    if (error.code === 'auth/invalid-email') msg = "Formato de e-mail inválido.";
-    if (error.message) msg = error.message;
-    
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-login-credentials') {
+        msg = "E-mail ou palavra-passe incorretos.";
+    } else if (error.code === 'auth/email-already-in-use') {
+        msg = "Este e-mail já está registado.";
+    } else if (error.code === 'auth/weak-password') {
+        msg = "A palavra-passe deve ter pelo menos 6 caracteres.";
+    } else if (error.code === 'auth/invalid-email') {
+        msg = "Escreve um e-mail válido (ex: nome@gmail.com).";
+    } else if (error.message) {
+        msg = error.message; 
+    }
     mostrarErro(msg);
   } finally {
     btn.disabled = false;
@@ -289,25 +205,11 @@ function mostrarErro(msg) {
   const erro = document.getElementById('erroMsg');
   erro.innerText = msg;
   erro.style.display = 'block';
-  setTimeout(() => { erro.style.display = 'none'; }, 4000);
 }
 
-// 4. LOGIN COM GOOGLE
-async function loginGoogle() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  try {
-    await auth.signInWithPopup(provider);
-    window.location.href = "home.html";
-  } catch (error) {
-    if (error.code !== 'auth/popup-closed-by-user') {
-      mostrarErro("Erro ao entrar com o Google.");
-    }
-  }
-}
-
-// 5. SE JÁ ESTIVER LOGADO, MANDA PARA A HOME
+// 4. VERIFICAÇÃO DE SESSÃO ATIVA
 auth.onAuthStateChanged((user) => {
-  if (user) {
+  if (user && !window.location.href.includes('home.html')) {
     window.location.href = "home.html";
   }
 });
